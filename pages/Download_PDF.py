@@ -33,7 +33,7 @@ st.info("Klik tombol di bawah untuk menjalankan script `perfecfast.py` melalui a
 # ========================
 # INPUT API URL (ngrok atau server)
 # ========================
-default_api_url = "https://luscious-eliseo-unsolemnly.ngrok-free.dev/run"  # URL ngrokmu
+default_api_url = "https://web-production-bd41.up.railway.app/run"  # URL ngrokmu
 api_url = st.text_input(
     "Masukkan URL agent API:",
     default_api_url
