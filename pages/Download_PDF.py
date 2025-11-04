@@ -32,7 +32,7 @@ st.info("Klik tombol di bawah untuk memberi sinyal ke agent lokal melalui Railwa
 # ========================
 # INPUT URL RAILWAY API
 # ========================
-default_api_url = "https://solusihanif.up.railway.app"  # URL Flask Railway kamu
+default_api_url = "https://api-web.up.railway.app"
 api_url = st.text_input(
     "Masukkan URL Railway API:",
     default_api_url
