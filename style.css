@@ -1,0 +1,215 @@
+/* ===============================
+   🌐 Navbar Fixed / Modern Streamlit
+   =============================== */
+.navbar {
+  background: linear-gradient(90deg, #1e88e5, #42a5f5);
+  color: white;
+  padding: 14px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  border-bottom: 2px solid #1565c0;
+  border-radius: 0 0 10px 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  position: fixed;
+  top: 0;
+  left: 230px; /* sejajar dengan sidebar */
+  right: 0;
+  z-index: 100001 !important;
+}
+
+.nav-left .title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.nav-left .logo {
+  width: 28px;
+  height: 28px;
+  margin-right: 10px;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.nav-right a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: background 0.2s, color 0.2s;
+}
+
+.nav-right a:hover {
+  color: #1e88e5;
+  background: white;
+}
+
+/* Spacer agar konten tidak ketimpa navbar */
+.navbar-spacer {
+  height: 70px; 
+}
+
+/* ===============================
+   🧱 Sembunyikan Sidebar Streamlit Bawaan
+   =============================== */
+[data-testid="stSidebar"],
+[data-testid="stSidebarNav"],
+[data-testid="stSidebarNavItems"] {
+  display: none !important;
+}
+
+/* ============================
+   🧭 SIDEBAR FIXED + HOVER SUBMENU
+   ============================ */
+.custom-sidebar {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  width: 220px;
+  height: 100vh;
+  background-color: #f8f9fa;
+  border-right: 1px solid #ddd;
+  padding: 20px 10px;
+  z-index: 99999 !important;
+  overflow-y: auto;
+  overflow-x: visible !important;
+  box-shadow: 2px 0 6px rgba(0, 0, 0, 0.08);
+}
+
+/* Geser konten utama supaya tidak ketimpa */
+main, .block-container {
+  margin-left: 230px !important;
+  padding-top: 80px !important; /* tambahkan jarak supaya tidak ketutup navbar */
+}
+
+/* Geser navbar bawaan Streamlit */
+header, .stApp header {
+  margin-left: 230px !important;
+}
+
+/* ---------- MENU ITEM ---------- */
+.custom-sidebar .menu-item {
+  margin-bottom: 10px;
+  position: relative;
+}
+
+.custom-sidebar a,
+.custom-sidebar .menu-title {
+  color: #222;
+  text-decoration: none;
+  display: block;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 15px;
+  transition: background 0.2s, color 0.2s;
+  cursor: pointer;
+}
+
+.custom-sidebar a:hover,
+.custom-sidebar .menu-title:hover {
+  background-color: #e8f0fe;
+  color: #000;
+}
+
+/* ======== HILANGKAN HEADER PUTIH ATAS (LOGO STREAMLIT) ======== */
+header[data-testid="stHeader"] {
+  display: none !important;
+}
+
+/* ============================
+   📂 SUBMENU (MUNCUL DI HOVER)
+   ============================ */
+.has-submenu {
+  position: relative;
+}
+
+/* Submenu tersembunyi dulu */
+.has-submenu .submenu {
+  display: none;
+  position: fixed;
+  top: auto;        /* biar pakai posisi relatif */
+  left: 220px;      /* tetap di kanan sidebar */
+  margin-top: -30px; /* ⬇️ ini yang bikin submenu-nya turun sejajar item */
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  min-width: 180px;
+  z-index: 100000 !important;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(5px);
+  transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s;
+}
+
+/* Saat di-hover submenu muncul halus */
+.has-submenu:hover .submenu {
+  display: block;
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* Tambahkan “jembatan” agar pointer tidak kehilangan hover */
+.has-submenu::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: -10px;
+  width: 20px;
+  height: 100%;
+  background: transparent;
+}
+
+/* Submenu item */
+.submenu a {
+  padding: 8px 12px;
+  color: #333;
+  font-size: 14px;
+  display: block;
+  transition: background 0.2s;
+}
+
+.submenu a:hover {
+  background-color: #f1f3f4;
+}
+
+/* ---------- SCROLLBAR ---------- */
+.custom-sidebar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.custom-sidebar::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 4px;
+}
+
+.custom-sidebar::-webkit-scrollbar-thumb:hover {
+  background: #999;
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 768px) {
+  .custom-sidebar {
+    width: 180px;
+  }
+
+  main, .block-container {
+    margin-left: 190px !important;
+  }
+
+  .has-submenu .submenu {
+    left: 180px;
+  }
+
+  .navbar {
+    left: 180px;
+  }
+}
