@@ -1,8 +1,7 @@
 # ==============================================
-# app_streamlit.py
+# Download_PDF.py (Streamlit UI)
 # ==============================================
-# Streamlit interface untuk menjalankan perfecfast.py via agent API
-# Ngrok URL sudah langsung diset
+# UI untuk memicu agent lokal via Railway Flask API
 # ==============================================
 
 import streamlit as st
@@ -28,41 +27,58 @@ include_sidebar()
 # KONTEN HALAMAN
 # ========================
 st.markdown("## ⬇️ Download PDF")
-st.info("Klik tombol di bawah untuk menjalankan script `perfecfast.py` melalui agent di server Anda.")
+st.info("Klik tombol di bawah untuk memberi sinyal ke agent lokal melalui Railway API.")
 
 # ========================
-# INPUT API URL (ngrok atau server)
+# INPUT URL RAILWAY API
 # ========================
-default_api_url = "https://solusihanif.up.railway.app/run"  # URL ngrokmu
+default_api_url = "https://solusihanif.up.railway.app"  # URL Flask Railway kamu
 api_url = st.text_input(
-    "Masukkan URL agent API:",
+    "Masukkan URL Railway API:",
     default_api_url
 )
 
 # ========================
-# TOMBOL JALANKAN perfecfast.py via API
+# STATUS AGENT
 # ========================
-if st.button("🚀 Jalankan Excel Checker via API"):
-    st.info("Mengirim request ke agent...")
+st.markdown("### 🟢 Status Agent")
+
+try:
+    res = requests.get(f"{api_url}/state", timeout=5)
+    if res.status_code == 200:
+        flag = res.json().get("flag", "UNKNOWN")
+        if flag == "RUN":
+            st.warning("⚙️ Agent sedang **berjalan** (flag = RUN)")
+        elif flag == "IDLE":
+            st.success("✅ Agent **siap menerima perintah** (flag = IDLE)")
+        else:
+            st.info(f"ℹ️ Status agent tidak diketahui: {flag}")
+    else:
+        st.error(f"❌ Tidak dapat mengambil status agent (HTTP {res.status_code})")
+except Exception as e:
+    st.error(f"⚠️ Gagal menghubungi Railway API: {e}")
+
+# ========================
+# TOMBOL TRIGGER AGENT
+# ========================
+st.markdown("---")
+if st.button("🚀 Jalankan Excel Checker via Agent"):
+    st.info("Mengirim sinyal ke Railway...")
 
     try:
-        response = requests.post(api_url, timeout=15)
+        # Kirim POST /trigger ke Railway Flask
+        response = requests.post(f"{api_url}/trigger", timeout=10)
 
-        # cek jika response kosong
         if not response.text.strip():
-            st.error("❌ Response kosong dari agent. Pastikan agent dan Chrome debug aktif di server.")
+            st.error("❌ Response kosong dari Railway server.")
         else:
-            try:
-                data = response.json()
-                if data.get("status") == "success":
-                    st.success("✅ Script berhasil dijalankan oleh agent!")
-                else:
-                    st.error(f"❌ Gagal dijalankan: {data.get('message', 'Tidak ada detail error')}")
-            except Exception:
-                st.error(f"❌ Response tidak valid JSON:\n{response.text}")
-
+            data = response.json()
+            if data.get("status") == "success":
+                st.success("✅ Perintah dikirim ke Railway! Agent lokal akan segera berjalan.")
+            else:
+                st.error(f"❌ Gagal kirim: {data.get('message', 'Tidak ada detail error')}")
     except requests.exceptions.RequestException as e:
-        st.error(f"❌ Gagal menghubungi agent: {e}")
+        st.error(f"❌ Gagal menghubungi Railway: {e}")
 
 # ========================
 # FOOTER
