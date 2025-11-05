@@ -3,10 +3,13 @@ import os
 
 st.title("⬇️ Download Perlengkapan")
 
-# Path relatif (berdasarkan lokasi file ini)
+# Ambil path absolut ke folder di mana st.py berada
 base_dir = os.path.dirname(os.path.abspath(__file__))
 file_path = os.path.join(base_dir, "static", "zip.rar")
 
+st.write("📁 Path file:", file_path)  # debug (hapus nanti kalau udah oke)
+
+# Cek apakah file ada
 if not os.path.exists(file_path):
     st.error(f"❌ File tidak ditemukan di: {file_path}")
 else:
