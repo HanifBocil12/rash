@@ -1,6 +1,10 @@
 import streamlit as st
 import os
+from components.utils import include_navbar, load_css, include_sidebar
 
+
+load_css()
+include_sidebar()
 st.set_page_config(page_title="Download Perlengkapan", page_icon="⬇️", layout="centered")
 st.title("⬇️ Download Perlengkapan")
 

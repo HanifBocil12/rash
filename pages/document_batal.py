@@ -4,7 +4,7 @@ from components.utils import include_navbar, load_css, include_sidebar
 
 # ========================
 st.set_page_config(
-    page_title="Pdf Selesai",
+    page_title="PDF Batal",
     page_icon="📋",
     layout="centered",
 )
