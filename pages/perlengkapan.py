@@ -1,13 +1,17 @@
 import streamlit as st
 import os
 
+st.set_page_config(page_title="Download Perlengkapan", page_icon="⬇️", layout="centered")
 st.title("⬇️ Download Perlengkapan")
 
-# Ambil path absolut ke folder di mana st.py berada
+# Path absolut ke file zip.rar
+# Base directory /app/pages
 base_dir = os.path.dirname(os.path.abspath(__file__))
-file_path = os.path.join(base_dir, "static", "zip.rar")
+# Karena file ada di /app/static, kita naik satu level dari pages
+root_dir = os.path.dirname(base_dir)
+file_path = os.path.join(root_dir, "static", "zip.rar")
 
-st.write("📁 Path file:", file_path)  # debug (hapus nanti kalau udah oke)
+st.write("📁 Path file:", file_path)  # Debug, bisa dihapus nanti
 
 # Cek apakah file ada
 if not os.path.exists(file_path):
@@ -19,6 +23,6 @@ else:
     st.download_button(
         label="💾 Download ZIP",
         data=file_data,
-        file_name="web.rar",
+        file_name="web.rar",  # nama file saat di-download
         mime="application/x-rar-compressed"
     )
