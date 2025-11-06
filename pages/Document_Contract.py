@@ -1,7 +1,12 @@
+# ==============================================
+# document_contract.py
+# ==============================================
+# Halaman Streamlit untuk memicu agent via Railway API
+# Mirip dengan Pdf Selesai, tapi khusus untuk pemeriksaan dokumen kontrak
+# ==============================================
+
 import streamlit as st
-import importlib.util
-import os
-import sys
+import requests
 from components.utils import include_sidebar, load_css
 
 # ========================
@@ -14,81 +19,81 @@ st.set_page_config(
 )
 
 # ========================
-# LOAD CSS EKSTERNAL
+# LOAD CSS DAN SIDEBAR
 # ========================
 load_css()
-
-# ========================
-# SIDEBAR GLOBAL
-# ========================
 include_sidebar()
 
 # ========================
 # KONTEN HALAMAN
 # ========================
 st.markdown("## 📄 Document Contract")
-st.info("Ikuti langkah di bawah ini secara berurutan untuk menjalankan pemeriksaan dokumen.")
+st.info("Gunakan tombol di bawah untuk mengirim perintah ke agent Railway agar menjalankan proses pemeriksaan dokumen kontrak otomatis.")
 
 # ========================
-# PATH DASAR
+# KONFIGURASI API RAILWAY
 # ========================
-base_dir = os.path.dirname(os.path.dirname(__file__))
-xls_path = os.path.join(base_dir, "xls.py")
-sheet_path = os.path.join(base_dir, "sheet.py")
+default_api_url = "https://api-web.up.railway.app"
+api_url = st.text_input("Masukkan URL Railway API:", default_api_url)
 
 # ========================
-# FUNGSI JALANKAN SCRIPT
+# STATUS AGENT
 # ========================
-def jalankan_script(script_path, nama_script):
-    """Fungsi untuk load dan eksekusi file Python eksternal"""
-    if not os.path.exists(script_path):
-        st.error(f"❌ File '{os.path.basename(script_path)}' tidak ditemukan!")
-        return False
-
-    try:
-        spec = importlib.util.spec_from_file_location(nama_script, script_path)
-        module = importlib.util.module_from_spec(spec)
-        spec.loader.exec_module(module)
-
-        if hasattr(module, "main"):
-            module.main()
-            st.success(f"✅ Script {os.path.basename(script_path)} selesai dijalankan!")
+st.markdown("### 🟢 Status Agent")
+try:
+    res = requests.get(f"{api_url}/state", timeout=5)
+    if res.status_code == 200:
+        flag = res.json().get("flag", "UNKNOWN")
+        if flag == "RUN":
+            st.warning("⚙️ Agent sedang **berjalan** (flag = RUN)")
+        elif flag == "IDLE":
+            st.success("✅ Agent **siap menerima perintah** (flag = IDLE)")
         else:
-            st.warning(f"⚠️ Script {os.path.basename(script_path)} tidak memiliki fungsi main().")
-
-        return True
-    except Exception as e:
-        st.error(f"❌ Gagal menjalankan {nama_script}: {e}")
-        return False
-
+            st.info(f"ℹ️ Status agent tidak diketahui: {flag}")
+    else:
+        st.error(f"❌ Tidak dapat mengambil status agent (HTTP {res.status_code})")
+except Exception as e:
+    st.error(f"⚠️ Gagal menghubungi Railway API: {e}")
 
 # ========================
-# LANGKAH 1: XLS
+# AKSI: TRIGGER AGENT UNTUK XLS
 # ========================
-st.markdown("### 🧩 Langkah 1 — Jalankan Excel Checker (`xls.py`)")
-if st.button("▶️ Jalankan XLS Checker"):
-    with st.spinner("Menjalankan xls.py..."):
-        jalankan_script(xls_path, "xls")
+st.markdown("### 🧩 Langkah 1 — Jalankan Excel Checker (xls.py)")
+if st.button("▶️ Jalankan XLS Checker via Agent"):
+    st.info("Mengirim perintah ke Railway untuk menjalankan XLS Checker...")
+    try:
+        response = requests.post(f"{api_url}/trigger", json={"task": "xls"}, timeout=10)
+        if not response.text.strip():
+            st.error("❌ Response kosong dari Railway server.")
+        else:
+            data = response.json()
+            if data.get("status") == "success":
+                st.success("✅ Perintah XLS Checker berhasil dikirim ke Railway agent!")
+            else:
+                st.error(f"❌ Gagal kirim: {data.get('message', 'Tidak ada detail error')}")
+    except requests.exceptions.RequestException as e:
+        st.error(f"❌ Gagal menghubungi Railway: {e}")
 
 # ========================
-# LANGKAH 2: SHEET
+# AKSI: TRIGGER AGENT UNTUK SHEET
 # ========================
-st.markdown("### 📊 Langkah 2 — Jalankan Sheet Uploader (`sheet.py`)")
-st.caption("Pastikan langkah 1 sudah selesai sebelum menjalankan ini.")
+st.markdown("### 📊 Langkah 2 — Jalankan Sheet Uploader (sheet.py)")
+st.caption("Pastikan XLS Checker sudah selesai sebelum menjalankan ini.")
 
-if st.button("🚀 Jalankan Sheet Uploader"):
-    with st.spinner("Menjalankan sheet.py..."):
-        jalankan_script(sheet_path, "sheet")
-
-# ========================
-# DEBUG INFO (Opsional)
-# ========================
-with st.expander("⚙️ Debug Info"):
-    st.write("Python executable:", sys.executable)
-    st.write("Current working dir:", os.getcwd())
-    st.write("Base dir:", base_dir)
-    st.write("XLS path:", xls_path)
-    st.write("Sheet path:", sheet_path)
+if st.button("🚀 Jalankan Sheet Uploader via Agent"):
+    st.info("Mengirim perintah ke Railway untuk menjalankan Sheet Uploader...")
+    try:
+        response = requests.post(f"{api_url}/trigger", json={"task": "sheet"}, timeout=10)
+        if not response.text.strip():
+            st.error("❌ Response kosong dari Railway server.")
+        else:
+            data = response.json()
+            if data.get("status") == "success":
+                st.success("✅ Perintah Sheet Uploader berhasil dikirim ke Railway agent!")
+            else:
+                st.error(f"❌ Gagal kirim: {data.get('message', 'Tidak ada detail error')}")
+    except requests.exceptions.RequestException as e:
+        st.error(f"❌ Gagal menghubungi Railway: {e}")
 
 # ========================
 # FOOTER
