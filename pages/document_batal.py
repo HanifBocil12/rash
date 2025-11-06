@@ -1,3 +1,6 @@
+# ==============================================
+# pdf_excel_batal.py — Streamlit Controller
+# ==============================================
 import streamlit as st
 import requests
 from components.utils import include_sidebar, load_css
@@ -6,7 +9,7 @@ from components.utils import include_sidebar, load_css
 # KONFIGURASI HALAMAN
 # ========================
 st.set_page_config(
-    page_title="PDF Batal",
+    page_title="PDF & Excel Batal",
     page_icon="📋",
     layout="centered",
 )
@@ -43,7 +46,7 @@ except Exception as e:
     st.error(f"⚠️ Gagal menghubungi Railway API: {e}")
 
 # ========================
-# AKSI: BAGIAN 1 — PDF BATAL
+# BAGIAN 1 — PDF BATAL
 # ========================
 st.markdown("### 📕 Langkah 1 — Jalankan PDF Batal")
 if st.button("🚀 Jalankan PDF Batal via Agent"):
@@ -62,26 +65,31 @@ if st.button("🚀 Jalankan PDF Batal via Agent"):
         st.error(f"❌ Gagal menghubungi Railway: {e}")
 
 # ========================
-# AKSI: BAGIAN 2 — EXCEL CHECKER
+# BAGIAN 2 — EXCEL BATAL
 # ========================
-st.markdown("### 📊 Langkah 2 — Jalankan Excel Checker (xls.py)")
-if st.button("▶️ Jalankan Excel Checker via Agent"):
-    st.info("Mengirim perintah ke Railway untuk menjalankan XLS Checker...")
+st.markdown("### 📊 Langkah 2 — Jalankan Excel Batal (batal_excel.py)")
+start_row = st.number_input(
+    "Masukkan baris mulai (biarkan 0 untuk otomatis lanjut):", min_value=0, value=0, step=1
+)
+
+if st.button("▶️ Jalankan Excel Batal via Agent"):
+    st.info("Mengirim perintah ke Railway untuk menjalankan Excel Batal...")
     try:
-        response = requests.post(f"{api_url}/trigger", json={"task": "xls"}, timeout=10)
+        payload = {"task": "batal_excel", "start_row": int(start_row)}
+        response = requests.post(f"{api_url}/trigger", json=payload, timeout=10)
         if not response.text.strip():
             st.error("❌ Response kosong dari Railway server.")
         else:
             data = response.json()
             if data.get("status") == "success":
-                st.success("✅ XLS Checker berhasil dikirim ke Railway agent!")
+                st.success(f"✅ Excel Batal berhasil dikirim ke Railway agent! (mulai dari baris {start_row or 'otomatis'})")
             else:
                 st.error(f"❌ Gagal kirim: {data.get('message', 'Tidak ada detail error')}")
     except requests.exceptions.RequestException as e:
         st.error(f"❌ Gagal menghubungi Railway: {e}")
 
 # ========================
-# AKSI: BAGIAN 3 — SEARCH BATAL
+# BAGIAN 3 — SEARCH BATAL
 # ========================
 st.markdown("### 🔍 Langkah 3 — Jalankan Search Batal (search_batal.py)")
 if st.button("🔎 Jalankan Search Batal via Agent"):
