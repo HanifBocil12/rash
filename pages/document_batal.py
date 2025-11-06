@@ -1,5 +1,5 @@
 # ==============================================
-# pdf_excel_batal.py — Streamlit Controller
+# pdf_excel_batal.py — Streamlit Controller (3 task)
 # ==============================================
 import streamlit as st
 import requests
@@ -9,7 +9,7 @@ from components.utils import include_sidebar, load_css
 # KONFIGURASI HALAMAN
 # ========================
 st.set_page_config(
-    page_title="PDF & Excel Batal",
+    page_title="PDF, Search & Sheet Batal",
     page_icon="📋",
     layout="centered",
 )
@@ -17,7 +17,7 @@ st.set_page_config(
 load_css()
 include_sidebar()
 
-st.markdown("## ⬇️ PDF & Excel Batal")
+st.markdown("## ⬇️ PDF, Search & Sheet Batal")
 st.info("Gunakan tombol di bawah untuk mengirim perintah ke Railway agent agar menjalankan proses otomatis yang diinginkan.")
 
 # ========================
@@ -89,6 +89,27 @@ if st.button("🔎 Jalankan Search Batal via Agent"):
             data = response.json()
             if data.get("status") == "success":
                 st.success("✅ Search Batal berhasil dikirim ke Railway agent!")
+            else:
+                st.error(f"❌ Gagal kirim: {data.get('message', 'Tidak ada detail error')}")
+    except requests.exceptions.RequestException as e:
+        st.error(f"❌ Gagal menghubungi Railway: {e}")
+
+# ========================
+# BAGIAN 3 — SHEET BATAL
+# ========================
+st.markdown("### 📄 Langkah 3 — Jalankan Sheet Batal (sheet_batal.py)")
+
+if st.button("🗂 Jalankan Sheet Batal via Agent"):
+    st.info("Mengirim perintah ke Railway untuk menjalankan Sheet Batal...")
+    try:
+        payload = {"task": "sheet_batal"}
+        response = requests.post(f"{api_url}/trigger", json=payload, timeout=10)
+        if not response.text.strip():
+            st.error("❌ Response kosong dari Railway server.")
+        else:
+            data = response.json()
+            if data.get("status") == "success":
+                st.success("✅ Sheet Batal berhasil dikirim ke Railway agent!")
             else:
                 st.error(f"❌ Gagal kirim: {data.get('message', 'Tidak ada detail error')}")
     except requests.exceptions.RequestException as e:
