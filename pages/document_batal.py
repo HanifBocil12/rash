@@ -1,5 +1,5 @@
 # ==============================================
-# pdf_excel_batal.py — Streamlit Controller (3 task)
+# pdf_excel_batal.py — Streamlit Controller (3 task + input param)
 # ==============================================
 import streamlit as st
 import requests
@@ -46,28 +46,30 @@ except Exception as e:
     st.error(f"⚠️ Gagal menghubungi Railway API: {e}")
 
 # ========================
-# BAGIAN 1 — PDF BATAL
+# INPUT PARAMETER UMUM
 # ========================
-st.markdown("### 📕 Langkah 1 — Jalankan PDF Batal")
-
-pdf_start_row = st.number_input(
-    "Masukkan baris mulai untuk PDF Batal (biarkan 0 untuk otomatis):",
+start_row_input = st.number_input(
+    "Masukkan baris mulai (biarkan 0 untuk otomatis):",
     min_value=0,
     value=0,
     step=1
 )
 
+# ========================
+# BAGIAN 1 — PDF BATAL
+# ========================
+st.markdown("### 📕 Langkah 1 — Jalankan PDF Batal")
 if st.button("🚀 Jalankan PDF Batal via Agent"):
     st.info("Mengirim perintah ke Railway untuk menjalankan PDF Batal...")
     try:
-        payload = {"task": "batal", "start_row": int(pdf_start_row)}
+        payload = {"task": "batal", "start_row": int(start_row_input)}
         response = requests.post(f"{api_url}/trigger", json=payload, timeout=10)
         if not response.text.strip():
             st.error("❌ Response kosong dari Railway server.")
         else:
             data = response.json()
             if data.get("status") == "success":
-                st.success(f"✅ PDF Batal berhasil dikirim ke Railway agent! (mulai dari baris {pdf_start_row or 'otomatis'})")
+                st.success(f"✅ PDF Batal berhasil dikirim! (mulai dari baris {start_row_input or 'otomatis'})")
             else:
                 st.error(f"❌ Gagal kirim: {data.get('message', 'Tidak ada detail error')}")
     except requests.exceptions.RequestException as e:
@@ -76,19 +78,18 @@ if st.button("🚀 Jalankan PDF Batal via Agent"):
 # ========================
 # BAGIAN 2 — SEARCH BATAL
 # ========================
-st.markdown("### 🔍 Langkah 2 — Jalankan Search Batal (search_batal.py)")
-
+st.markdown("### 🔍 Langkah 2 — Jalankan Search Batal")
 if st.button("🔎 Jalankan Search Batal via Agent"):
     st.info("Mengirim perintah ke Railway untuk menjalankan Search Batal...")
     try:
-        payload = {"task": "search_batal"}
+        payload = {"task": "search_batal", "start_row": int(start_row_input)}
         response = requests.post(f"{api_url}/trigger", json=payload, timeout=10)
         if not response.text.strip():
             st.error("❌ Response kosong dari Railway server.")
         else:
             data = response.json()
             if data.get("status") == "success":
-                st.success("✅ Search Batal berhasil dikirim ke Railway agent!")
+                st.success(f"✅ Search Batal berhasil dikirim! (mulai dari baris {start_row_input or 'otomatis'})")
             else:
                 st.error(f"❌ Gagal kirim: {data.get('message', 'Tidak ada detail error')}")
     except requests.exceptions.RequestException as e:
@@ -97,19 +98,18 @@ if st.button("🔎 Jalankan Search Batal via Agent"):
 # ========================
 # BAGIAN 3 — SHEET BATAL
 # ========================
-st.markdown("### 📄 Langkah 3 — Jalankan Sheet Batal (sheet_batal.py)")
-
+st.markdown("### 📄 Langkah 3 — Jalankan Sheet Batal")
 if st.button("🗂 Jalankan Sheet Batal via Agent"):
     st.info("Mengirim perintah ke Railway untuk menjalankan Sheet Batal...")
     try:
-        payload = {"task": "sheet_batal"}
+        payload = {"task": "sheet_batal", "start_row": int(start_row_input)}
         response = requests.post(f"{api_url}/trigger", json=payload, timeout=10)
         if not response.text.strip():
             st.error("❌ Response kosong dari Railway server.")
         else:
             data = response.json()
             if data.get("status") == "success":
-                st.success("✅ Sheet Batal berhasil dikirim ke Railway agent!")
+                st.success(f"✅ Sheet Batal berhasil dikirim! (mulai dari baris {start_row_input or 'otomatis'})")
             else:
                 st.error(f"❌ Gagal kirim: {data.get('message', 'Tidak ada detail error')}")
     except requests.exceptions.RequestException as e:
