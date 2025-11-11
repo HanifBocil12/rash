@@ -62,7 +62,12 @@ st.markdown("### 🧩 Langkah 1 — Jalankan Excel Checker (xls.py)")
 if st.button("▶️ Jalankan XLS Checker via Agent"):
     st.info("Mengirim perintah ke Railway untuk menjalankan XLS Checker...")
     try:
-        response = requests.post(f"{api_url}/trigger", json={"task": "xls"}, timeout=10)
+        response = requests.post(
+            f"{api_url}/trigger",
+            json={"task": "xls"}, 
+            timeout=10
+        
+        )
         if not response.text.strip():
             st.error("❌ Response kosong dari Railway server.")
         else:
