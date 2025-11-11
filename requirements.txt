@@ -1,6 +1,0 @@
-selenium
-requests
-PyPDF2
-flask
-streamlit
-gunicorn==21.2.0
