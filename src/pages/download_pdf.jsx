@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { AlertCircle, CheckCircle, Clock, Zap, AlertTriangle } from 'lucide-react';
 
 export default function App() {
-  const [apiUrl, setApiUrl] = useState('https://api-web.up.railway.app    ');
+  const [apiUrl, setApiUrl] = useState('https://api-web.up.railway.app');
   const [agentStatus, setAgentStatus] = useState(null);
   const [loadingStatus, setLoadingStatus] = useState(true);
   const [loadingTrigger, setLoadingTrigger] = useState(false);
