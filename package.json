@@ -9,13 +9,13 @@
     "start": "serve -s dist"
   },
   "dependencies": {
+    "lucide-react": "^0.370.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
-    "lucide-react": "^0.370.0",
-    "serve": "^14.0.1"
+    "serve": "^14.2.5"
   },
   "devDependencies": {
-    "vite": "^5.0.0",
-    "@vitejs/plugin-react": "^4.0.0"
+    "@vitejs/plugin-react": "^4.0.0",
+    "vite": "^5.0.0"
   }
 }
