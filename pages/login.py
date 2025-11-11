@@ -1,9 +1,10 @@
 import streamlit as st
 from streamlit.components.v1 import html
 
+# Set page config
 st.set_page_config(page_title="Login", layout="centered")
 
-# Custom CSS
+# CSS styling for login card
 css = """
 <style>
     .login-card {
@@ -109,9 +110,8 @@ css = """
 </style>
 """
 
-# HTML + JS Form
-html_content = f"""
-{css}
+# HTML + JS Form (without f-string to avoid syntax error)
+html_content = css + """
 <div class="login-card">
     <div class="login-title">Log In</div>
     
@@ -143,23 +143,18 @@ html_content = f"""
 
 <script>
 function togglePassword() {
-    var passwordField = document.getElementById("password");
-    if (passwordField.type === "password") {
-        passwordField.type = "text";
-    } else {
-        passwordField.type = "password";
-    }
+    var pf = document.getElementById("password");
+    pf.type = pf.type === "password" ? "text" : "password";
 }
 
-// Prevent form submission (for demo)
 document.getElementById("loginForm").addEventListener("submit", function(e) {
     e.preventDefault();
-    alert("Login functionality would be implemented here.");
+    alert("Login successful! (Demo only)");
 });
 </script>
 """
 
-# ✅ PENTING: Gunakan components.v1.html() agar JS & form berjalan!
+# Render the form using components.v1.html()
 html(html_content, height=600)
 
 # Footer
