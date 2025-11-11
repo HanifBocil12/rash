@@ -14,9 +14,9 @@ function App() {
 
       {/* Layout route: semua route protected dibungkus Sidebar */}
       <Route element={<Sidebar />}>
-        <Route path="home" element={<HomePage />} />
-        <Route path="download_pdf" element={<DownloadPDFPage />} />
-        <Route path="status_pensanan_ina" element={<StatusPesananIna />} />
+        <Route path="/home" element={<HomePage />} />
+        <Route path="/download_pdf" element={<DownloadPDFPage />} />
+        <Route path="/status_pensanan_ina" element={<StatusPesananIna />} />
         {/* Tambahkan route lain di sini */}
       </Route>
     </Routes>
