@@ -157,8 +157,9 @@ document.getElementById("loginForm").addEventListener("submit", function(e) {
 </script>
 """
 
+# 🔥 PENTING: Gunakan unsafe_allow_html=True agar HTML dirender!
 st.markdown(html_form, unsafe_allow_html=True)
 
-# Optional: Add footer
+# Footer
 st.markdown("---")
 st.markdown("<small>© 2025 Your Company. All rights reserved.</small>", unsafe_allow_html=True)
