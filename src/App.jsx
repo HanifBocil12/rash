@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import Sidebar from './components/sidebar';
-import HomePage from './pages/Home.jsx';
+import HomePage from './pages/home.jsx';
 import DownloadPDFPage from './pages/download_pdf.jsx';
 import StatusPesananIna from './pages/status_pensanan_ina.jsx';
 
