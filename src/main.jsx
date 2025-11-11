@@ -1,10 +1,13 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App.jsx'   // 👈 React App utama kamu
-import './index.css'   // ⬅️ ini baris paling penting untuk aktifkan Tailwind
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom'; // ⬅️ Tambahkan ini
+import App from './App.jsx';
+import './index.css';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <App />                   // 👈 ini yang tampil di browser
+    <BrowserRouter>        {/* ⬅️ Bungkus App dengan BrowserRouter */}
+      <App />              {/* Komponen utama */}
+    </BrowserRouter>
   </React.StrictMode>
-)
+);

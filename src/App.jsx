@@ -1,8 +1,19 @@
-// src/App.jsx
+import { Routes, Route } from 'react-router-dom';
+import Sidebar from './components/sidebar';
+import HomePage from './pages/Home.jsx';
 import DownloadPDFPage from './pages/download_pdf.jsx';
+import StatusPesananIna from './pages/status_pensanan_ina.jsx';
 
 function App() {
-  return <DownloadPDFPage />;
+  return (
+    <Sidebar>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/download_pdf" element={<DownloadPDFPage />} />
+        <Route path="/status_pensanan_ina" element={<StatusPesananIna />} />
+      </Routes>
+    </Sidebar>
+  );
 }
 
 export default App;
