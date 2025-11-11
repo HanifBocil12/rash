@@ -16,10 +16,15 @@ export default function App() {
     return () => clearInterval(interval);
   }, [apiUrl]);
 
+  // ===== Fetch Status Agent =====
   const fetchAgentStatus = async () => {
     setLoadingStatus(true);
+
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 5000); // 5 detik timeout
+
     try {
-      const response = await fetch(`${apiUrl.trim()}/state`, { timeout: 5000 });
+      const response = await fetch(`${apiUrl.trim()}/state`, { signal: controller.signal });
       if (response.ok) {
         const data = await response.json();
         setAgentStatus(data);
@@ -30,21 +35,31 @@ export default function App() {
       }
     } catch (error) {
       setAgentStatus(null);
-      setMessage({ type: 'error', text: error.message || 'Gagal menghubungi API' });
+      if (error.name === 'AbortError') {
+        setMessage({ type: 'error', text: 'Request timeout' });
+      } else {
+        setMessage({ type: 'error', text: error.message || 'Gagal menghubungi API' });
+      }
     } finally {
+      clearTimeout(timeout);
       setLoadingStatus(false);
     }
   };
 
+  // ===== Handle Trigger Task =====
   const handleTrigger = async () => {
     setLoadingTrigger(true);
     setMessage({ type: '', text: '' });
+
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 10000); // 10 detik
+
     try {
       const response = await fetch(`${apiUrl.trim()}/trigger`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ task: 'perfect' }),
-        timeout: 10000
+        signal: controller.signal
       });
 
       if (!response.ok) {
@@ -61,12 +76,18 @@ export default function App() {
         setMessage({ type: 'error', text: data.message || 'Gagal mengirim perintah.' });
       }
     } catch (error) {
-      setMessage({ type: 'error', text: error.message || 'Gagal menghubungi Railway API.' });
+      if (error.name === 'AbortError') {
+        setMessage({ type: 'error', text: 'Request timeout' });
+      } else {
+        setMessage({ type: 'error', text: error.message || 'Gagal menghubungi Railway API.' });
+      }
     } finally {
+      clearTimeout(timeout);
       setLoadingTrigger(false);
     }
   };
 
+  // ===== Display Status Agent =====
   const getStatusDisplay = () => {
     if (!agentStatus) return null;
 
@@ -84,6 +105,9 @@ export default function App() {
         <div className="flex items-center space-x-2 text-green-700 bg-green-50 p-3 rounded-lg">
           <CheckCircle className="w-5 h-5" />
           <span><strong>Agent siap menerima perintah</strong> (flag = IDLE)</span>
+          {agentStatus.message && (
+            <div className="text-gray-600 mt-1">{agentStatus.message}</div>
+          )}
         </div>
       );
     } else {
@@ -101,7 +125,7 @@ export default function App() {
       {/* Sidebar */}
       <Sidebar />
 
-      {/* Konten utama full kanan */}
+      {/* Konten utama */}
       <main className="flex-1 w-full overflow-x-auto p-6 md:p-10 bg-gray-50">
         <div className="w-full bg-white rounded-xl shadow-md p-8 md:p-10">
           <h1 className="text-3xl font-bold text-gray-800 mb-4">📋 PDF Selesai</h1>
