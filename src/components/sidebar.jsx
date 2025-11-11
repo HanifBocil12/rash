@@ -1,6 +1,6 @@
 // src/components/Sidebar.jsx
 import { useState, useRef, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom'; // ⬅️ Tambahkan Outlet
 import { 
   Home, 
   FileText, 
@@ -11,7 +11,7 @@ import {
   ChevronRight
 } from 'lucide-react';
 
-export default function Sidebar({ children }) {
+export default function Sidebar() { // ⬅️ Hapus { children }
   const [submenuOpen, setSubmenuOpen] = useState(false);
   const submenuRef = useRef(null);
 
@@ -27,6 +27,7 @@ export default function Sidebar({ children }) {
 
   return (
     <div className="flex min-h-screen bg-gray-100">
+      {/* Sidebar — full height & fixed */}
       <div className="fixed left-0 top-0 h-full w-64 bg-white shadow-md border-r border-gray-200 z-50">
         <div className="p-4">
           <h1 className="text-xl font-bold text-gray-800 mb-6">📁 Dashboard</h1>
@@ -35,6 +36,7 @@ export default function Sidebar({ children }) {
             <MenuItem icon={Home} to="/home" label="Home" />
             <MenuItem icon={FileText} to="/status_pensanan_ina" label="Document Contract" />
             
+            {/* Submenu Daftar Project */}
             <div 
               className="menu-item has-submenu relative"
               ref={submenuRef}
@@ -69,18 +71,18 @@ export default function Sidebar({ children }) {
         </div>
       </div>
 
+      {/* Konten Utama — isi ruang sisa */}
       <div className="ml-64 flex-1 p-6">
-        {children}
+        <Outlet /> {/* ✅ INI YANG MENENTUKAN! */}
       </div>
     </div>
   );
 }
 
-// ✅ FIX DI SINI: Ganti "href" menjadi "to"
 function MenuItem({ icon: Icon, to, label, small = false, active = false }) {
   return (
     <Link
-      to={to} // ✅ Sekarang pakai "to" yang benar
+      to={to}
       className={`flex items-center space-x-2 px-3 py-2.5 transition-colors ${
         small 
           ? 'text-sm pl-8' 
