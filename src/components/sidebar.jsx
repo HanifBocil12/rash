@@ -1,5 +1,6 @@
 // src/components/Sidebar.jsx
 import { useState, useRef, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { 
   Home, 
   FileText, 
@@ -33,7 +34,7 @@ export default function Sidebar({ children }) {
           <h1 className="text-xl font-bold text-gray-800 mb-6">📁 Dashboard</h1>
           
           <nav className="space-y-1">
-            <MenuItem icon={Home} href="/" label="Home" />
+            <MenuItem icon={Home} href="/home" label="Home" />
             <MenuItem icon={FileText} href="/status_pensanan_ina" label="Document Contract" />
             
             {/* Submenu Daftar Project */}
@@ -81,9 +82,8 @@ export default function Sidebar({ children }) {
 
 function MenuItem({ icon: Icon, href, label, small = false, active = false }) {
   return (
-    <a
-      href={href}
-      target="_self"
+    <Link
+      to={href} // 👈 ganti href → to
       className={`flex items-center space-x-2 px-3 py-2.5 transition-colors ${
         small 
           ? 'text-sm pl-8' 
@@ -96,6 +96,6 @@ function MenuItem({ icon: Icon, href, label, small = false, active = false }) {
     >
       <Icon className={`flex-shrink-0 ${small ? 'w-3.5 h-3.5' : 'w-4 h-4'}`} />
       <span>{label}</span>
-    </a>
+    </Link>
   );
 }
