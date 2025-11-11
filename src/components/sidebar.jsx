@@ -34,8 +34,8 @@ export default function Sidebar({ children }) {
           <h1 className="text-xl font-bold text-gray-800 mb-6">📁 Dashboard</h1>
           
           <nav className="space-y-1">
-            <MenuItem icon={Home} href="/home" label="Home" />
-            <MenuItem icon={FileText} href="/status_pensanan_ina" label="Document Contract" />
+            <MenuItem icon={Home} to="/home" label="Home" />
+            <MenuItem icon={FileText} to="/status_pensanan_ina" label="Document Contract" />
             
             {/* Submenu Daftar Project */}
             <div 
@@ -59,15 +59,15 @@ export default function Sidebar({ children }) {
               
               {submenuOpen && (
                 <div className="submenu ml-6 mt-1 space-y-1 bg-gray-50 py-2 border-l-2 border-gray-200">
-                  <MenuItem icon={Download} href="/gabung_pdf" label="Gabung PDF" small />
-                  <MenuItem icon={Download} href="/download_pdf" label="Download PDF Selesai" small active />
+                  <MenuItem icon={Download} to="/gabung_pdf" label="Gabung PDF" small />
+                  <MenuItem icon={Download} to="/download_pdf" label="Download PDF Selesai" small active />
                 </div>
               )}
             </div>
             
-            <MenuItem icon={Package} href="/perlengkapan" label="Download Zip" />
-            <MenuItem icon={FileText} href="/document_batal" label="PDF Batal" />
-            <MenuItem icon={LogIn} href="/login" label="login Zip" />
+            <MenuItem icon={Package} to="/perlengkapan" label="Download Zip" />
+            <MenuItem icon={FileText} to="/document_batal" label="PDF Batal" />
+            <MenuItem icon={LogIn} to="/login" label="login Zip" />
           </nav>
         </div>
       </div>
