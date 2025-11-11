@@ -1,3 +1,4 @@
+// src/components/Sidebar.jsx
 import { useState, useRef, useEffect } from 'react';
 import { 
   Home, 
@@ -9,7 +10,7 @@ import {
   ChevronRight
 } from 'lucide-react';
 
-export default function App() {
+export default function Sidebar({ children }) {
   const [submenuOpen, setSubmenuOpen] = useState(false);
   const submenuRef = useRef(null);
 
@@ -25,50 +26,54 @@ export default function App() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-100 p-4">
-      <div className="max-w-xs">
-        {/* Sidebar murni — sesuai dengan sidebar.html */}
-        <div className="custom-sidebar bg-white rounded-lg shadow-md overflow-hidden border border-gray-200">
-          <MenuItem icon={Home} href="/" label="Home" />
-          <MenuItem icon={FileText} href="/Document_Contract" label="Document Contract" />
+    <div className="flex min-h-screen bg-gray-100">
+      {/* Sidebar — full height & fixed */}
+      <div className="fixed left-0 top-0 h-full w-64 bg-white shadow-md border-r border-gray-200 z-50">
+        <div className="p-4">
+          <h1 className="text-xl font-bold text-gray-800 mb-6">📁 Dashboard</h1>
           
-          {/* Submenu Daftar Project */}
-          <div 
-            className="menu-item has-submenu relative"
-            ref={submenuRef}
-          >
-            <button
-              className="w-full flex items-center justify-between p-3 text-left font-medium text-gray-700 hover:bg-gray-50 transition-colors"
-              onClick={() => setSubmenuOpen(!submenuOpen)}
-            >
-              <div className="flex items-center space-x-2">
-                <Folder className="w-4 h-4" />
-                <span>Daftar Project</span>
-              </div>
-              <ChevronRight 
-                className={`w-4 h-4 text-gray-500 transition-transform ${
-                  submenuOpen ? 'rotate-90' : ''
-                }`} 
-              />
-            </button>
+          <nav className="space-y-1">
+            <MenuItem icon={Home} href="/" label="Home" />
+            <MenuItem icon={FileText} href="/Document_Contract" label="Document Contract" />
             
-            {submenuOpen && (
-              <div className="submenu ml-6 mt-1 space-y-1 bg-gray-50 py-2 border-l-2 border-gray-200">
-                <MenuItem icon={Download} href="/gabung_pdf" label="Gabung PDF" small />
-                <MenuItem icon={Download} href="/Download_PDF" label="Download PDF Selesai" small active />
-              </div>
-            )}
-          </div>
-          
-          <MenuItem icon={Package} href="/perlengkapan" label="Download Zip" />
-          <MenuItem icon={FileText} href="/document_batal" label="PDF Batal" />
-          <MenuItem icon={LogIn} href="/login" label="login Zip" />
+            {/* Submenu Daftar Project */}
+            <div 
+              className="menu-item has-submenu relative"
+              ref={submenuRef}
+            >
+              <button
+                className="w-full flex items-center justify-between p-3 text-left font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+                onClick={() => setSubmenuOpen(!submenuOpen)}
+              >
+                <div className="flex items-center space-x-2">
+                  <Folder className="w-4 h-4" />
+                  <span>Daftar Project</span>
+                </div>
+                <ChevronRight 
+                  className={`w-4 h-4 text-gray-500 transition-transform ${
+                    submenuOpen ? 'rotate-90' : ''
+                  }`} 
+                />
+              </button>
+              
+              {submenuOpen && (
+                <div className="submenu ml-6 mt-1 space-y-1 bg-gray-50 py-2 border-l-2 border-gray-200">
+                  <MenuItem icon={Download} href="/gabung_pdf" label="Gabung PDF" small />
+                  <MenuItem icon={Download} href="/Download_PDF" label="Download PDF Selesai" small active />
+                </div>
+              )}
+            </div>
+            
+            <MenuItem icon={Package} href="/perlengkapan" label="Download Zip" />
+            <MenuItem icon={FileText} href="/document_batal" label="PDF Batal" />
+            <MenuItem icon={LogIn} href="/login" label="login Zip" />
+          </nav>
         </div>
-        
-        {/* Penjelasan kecil (opsional, bisa dihapus) */}
-        <p className="mt-4 text-sm text-gray-500">
-          Ini adalah komponen <code>sidebar</code> terpisah, sesuai struktur dari <code>sidebar.html</code>.
-        </p>
+      </div>
+
+      {/* Konten Utama — isi ruang sisa */}
+      <div className="ml-64 flex-1 p-6">
+        {children}
       </div>
     </div>
   );
