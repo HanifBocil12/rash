@@ -1,8 +1,9 @@
-// src/pages/download_pdf.jsx
+// C:\raja iblis\download_pdf.jsx
+import Sidebar from '../components/sidebar.jsx';
 import { useState, useEffect } from 'react';
 import { AlertCircle, CheckCircle, Clock, Zap, AlertTriangle } from 'lucide-react';
 
-export default function DownloadPDFPage() {
+export default function App() {
   const [apiUrl, setApiUrl] = useState('https://api-web.up.railway.app');
   const [agentStatus, setAgentStatus] = useState(null);
   const [loadingStatus, setLoadingStatus] = useState(true);
@@ -68,7 +69,7 @@ export default function DownloadPDFPage() {
 
   const getStatusDisplay = () => {
     if (!agentStatus) return null;
-    
+
     if (agentStatus.flag === 'RUN') {
       return (
         <div className="flex items-center space-x-2 text-yellow-700 bg-yellow-50 p-3 rounded-lg">
@@ -96,86 +97,88 @@ export default function DownloadPDFPage() {
   };
 
   return (
-    <div className="max-w-3xl mx-auto bg-white rounded-xl shadow-lg p-6 md:p-8">
-      <div className="flex items-center space-x-3 mb-6">
-        <div className="p-2 bg-orange-100 rounded-lg">
-          <Zap className="w-6 h-6 text-orange-600" />
-        </div>
-        <h1 className="text-2xl md:text-3xl font-bold text-gray-800">PDF Selesai</h1>
-      </div>
+    <div className="flex min-h-screen bg-gray-50">
+      {/* Sidebar */}
+      <Sidebar />
 
-      <p className="text-gray-600 mb-6 leading-relaxed">
-        Klik tombol di bawah untuk memberi sinyal ke agent lokal melalui Railway API agar menjalankan{' '}
-        <code className="bg-gray-100 px-1 rounded font-mono text-sm">perfecfast.py</code>.
-      </p>
+      {/* Konten utama full kanan */}
+      <main className="flex-1 w-full overflow-x-auto p-6 md:p-10 bg-gray-50">
+        <div className="w-full bg-white rounded-xl shadow-md p-8 md:p-10">
+          <h1 className="text-3xl font-bold text-gray-800 mb-4">📋 PDF Selesai</h1>
+          <p className="text-gray-600 mb-6">
+            Klik tombol di bawah untuk memberi sinyal ke agent lokal melalui Railway API agar menjalankan{' '}
+            <code className="bg-gray-100 px-1 rounded">perfecfast.py</code>.
+          </p>
 
-      <div className="mb-6">
-        <label className="block text-sm font-medium text-gray-700 mb-2">
-          Masukkan URL Railway API:
-        </label>
-        <input
-          type="text"
-          value={apiUrl}
-          onChange={(e) => setApiUrl(e.target.value)}
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
-          placeholder="https://api-web.up.railway.app"
-        />
-      </div>
-
-      <div className="mb-6">
-        <h2 className="text-xl font-semibold text-gray-800 mb-3 flex items-center">
-          <span className="mr-2">🟢</span> Status Agent
-        </h2>
-
-        {loadingStatus ? (
-          <div className="text-gray-500">Memuat status...</div>
-        ) : message.type === 'error' ? (
-          <div className="flex items-center space-x-2 text-red-700 bg-red-50 p-3 rounded-lg">
-            <AlertTriangle className="w-5 h-5" />
-            <span>Tidak dapat mengambil status agent ({message.text})</span>
+          <div className="mb-6">
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Masukkan URL Railway API:
+            </label>
+            <input
+              type="text"
+              value={apiUrl}
+              onChange={(e) => setApiUrl(e.target.value)}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+              placeholder="https://api-web.up.railway.app"
+            />
           </div>
-        ) : (
-          getStatusDisplay()
-        )}
-      </div>
 
-      <div className="border-t pt-6 mt-6">
-        <button
-          onClick={handleTrigger}
-          disabled={loadingTrigger}
-          className="w-full bg-orange-500 hover:bg-orange-600 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center space-x-2 disabled:opacity-70 disabled:cursor-not-allowed"
-        >
-          {loadingTrigger ? (
-            <>
-              <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-              <span>Mengirim sinyal...</span>
-            </>
-          ) : (
-            <>
-              <Zap className="w-5 h-5" />
-              <span>Jalankan Downloader PDF via Agent</span>
-            </>
+          <div className="mb-6">
+            <h2 className="text-xl font-semibold text-gray-800 mb-3 flex items-center">
+              <span className="mr-2">🟢</span> Status Agent
+            </h2>
+
+            {loadingStatus ? (
+              <div className="text-gray-500">Memuat status...</div>
+            ) : message.type === 'error' ? (
+              <div className="flex items-center space-x-2 text-red-700 bg-red-50 p-3 rounded-lg">
+                <AlertTriangle className="w-5 h-5" />
+                <span>Tidak dapat mengambil status agent ({message.text})</span>
+              </div>
+            ) : (
+              getStatusDisplay()
+            )}
+          </div>
+
+          <div className="border-t pt-6 mt-6">
+            <button
+              onClick={handleTrigger}
+              disabled={loadingTrigger}
+              className="w-full bg-orange-500 hover:bg-orange-600 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center space-x-2 disabled:opacity-70 disabled:cursor-not-allowed"
+            >
+              {loadingTrigger ? (
+                <>
+                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                  <span>Mengirim sinyal...</span>
+                </>
+              ) : (
+                <>
+                  <Zap className="w-5 h-5" />
+                  <span>Jalankan Downloader PDF via Agent</span>
+                </>
+              )}
+            </button>
+          </div>
+
+          {message.text && message.type !== 'error' && (
+            <div
+              className={`mt-4 p-3 rounded-lg ${
+                message.type === 'success'
+                  ? 'bg-green-50 text-green-700'
+                  : message.type === 'warning'
+                  ? 'bg-yellow-50 text-yellow-700'
+                  : 'bg-blue-50 text-blue-700'
+              }`}
+            >
+              {message.text}
+            </div>
           )}
-        </button>
-      </div>
 
-      {message.text && message.type !== 'error' && (
-        <div
-          className={`mt-4 p-3 rounded-lg ${
-            message.type === 'success'
-              ? 'bg-green-50 text-green-700'
-              : message.type === 'warning'
-              ? 'bg-yellow-50 text-yellow-700'
-              : 'bg-blue-50 text-blue-700'
-          }`}
-        >
-          {message.text}
+          <div className="mt-8 pt-6 border-t text-center text-gray-500 text-sm">
+            Dibuat dengan ❤️ menggunakan <strong>React</strong> & <strong>Tailwind CSS</strong>
+          </div>
         </div>
-      )}
-
-      <div className="mt-8 pt-6 border-t text-center text-gray-500 text-sm">
-        Dibuat dengan ❤️ menggunakan <strong>React</strong> & <strong>Tailwind CSS</strong>
-      </div>
+      </main>
     </div>
   );
 }
