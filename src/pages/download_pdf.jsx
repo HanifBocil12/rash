@@ -1,5 +1,5 @@
 // C:\raja iblis\download_pdf.jsx
-import Sidebar from './components/sidebar';
+import Sidebar from '../components/sidebar';
 import { useState, useEffect } from 'react';
 import { AlertCircle, CheckCircle, Clock, Zap, AlertTriangle } from 'lucide-react';
 
