@@ -3,7 +3,7 @@ import { useState } from 'react';
 export default function Perlengkapan() {
   // Simulasi file tersedia (di React, kita tidak bisa akses filesystem server)
   // Jadi kita asumsikan file tersedia di URL publik: /static/web.rar
-  const fileUrl = "/static/web.rar";
+  const fileUrl = "/web.rar";
   
   return (
     <div className="min-h-screen bg-gray-50 py-8 px-4">
