@@ -1,7 +1,6 @@
 import streamlit as st
 from streamlit.components.v1 import html
 
-# Set page config
 st.set_page_config(page_title="Login", layout="centered")
 
 # CSS styling for login card
@@ -65,6 +64,28 @@ css = """
         cursor: pointer;
         color: #888;
         font-size: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+        height: 24px;
+        border-radius: 4px;
+    }
+    
+    .toggle-password:hover {
+        background-color: #f0f0f0;
+    }
+    
+    .toggle-password svg {
+        width: 16px;
+        height: 16px;
+        stroke: #666;
+        fill: none;
+        transition: stroke 0.2s;
+    }
+    
+    .toggle-password:hover svg {
+        stroke: #333;
     }
     
     .login-btn {
@@ -110,7 +131,7 @@ css = """
 </style>
 """
 
-# HTML + JS Form (without f-string to avoid syntax error)
+# HTML + JS Form
 html_content = css + """
 <div class="login-card">
     <div class="login-title">Log In</div>
@@ -125,7 +146,12 @@ html_content = css + """
             <label class="input-label">Password</label>
             <div class="password-container">
                 <input type="password" id="password" class="input-field" placeholder="Password" required>
-                <span class="toggle-password" onclick="togglePassword()">👁️</span>
+                <span class="toggle-password" onclick="togglePassword()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                        <circle cx="12" cy="12" r="3"></circle>
+                    </svg>
+                </span>
             </div>
         </div>
         
@@ -144,19 +170,33 @@ html_content = css + """
 <script>
 function togglePassword() {
     var pf = document.getElementById("password");
-    pf.type = pf.type === "password" ? "text" : "password";
+    var toggleBtn = document.querySelector(".toggle-password svg");
+    
+    if (pf.type === "password") {
+        pf.type = "text";
+        // Ubah ikon jadi "mata tertutup"
+        toggleBtn.outerHTML = `
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+                <line x1="1" y1="1" x2="23" y2="23"></line>
+            </svg>
+        `;
+    } else {
+        pf.type = "password";
+        // Kembalikan ke ikon "mata terbuka"
+        toggleBtn.outerHTML = `
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+        `;
+    }
 }
-
-document.getElementById("loginForm").addEventListener("submit", function(e) {
-    e.preventDefault();
-    alert("Login successful! (Demo only)");
-});
 </script>
 """
 
-# Render the form using components.v1.html()
 html(html_content, height=600)
 
-# Footer
 st.markdown("---")
 st.markdown("<small>© 2025 Your Company. All rights reserved.</small>", unsafe_allow_html=True)
