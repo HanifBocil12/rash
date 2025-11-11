@@ -1,9 +1,8 @@
 // C:\raja iblis\home.jsx
-import Sidebar from '../components/sidebar.jsx';
 import { useState, useEffect } from 'react';
 import { AlertCircle, CheckCircle, Clock, Zap, AlertTriangle } from 'lucide-react';
 
-export default function App() {
+export default function HomePage() {
   return (
     <div className="min-h-screen bg-gray-50 py-8 px-4">
       <div className="max-w-2xl mx-auto bg-white rounded-xl shadow-md p-6 md:p-8">
@@ -12,7 +11,7 @@ export default function App() {
           Selamat datang di <strong>Excel Checker</strong> — aplikasi berbasis <em>Streamlit</em> untuk membantu
           mengecek hal-hal yang berhubungan dengan data Inaproc secara otomatis, saya raja ai.
         </p>
-        
+
         <p className="text-gray-700 mb-4">
           Gunakan menu di bawah untuk berpindah ke halaman:
         </p>
