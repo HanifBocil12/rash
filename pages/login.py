@@ -1,9 +1,10 @@
 import streamlit as st
+from streamlit.components.v1 import html
 
 st.set_page_config(page_title="Login", layout="centered")
 
 # Custom CSS
-st.markdown("""
+css = """
 <style>
     .login-card {
         max-width: 450px;
@@ -106,10 +107,11 @@ st.markdown("""
         font-weight: 500;
     }
 </style>
-""", unsafe_allow_html=True)
+"""
 
-# HTML Form inside card
-html_form = """
+# HTML + JS Form
+html_content = f"""
+{css}
 <div class="login-card">
     <div class="login-title">Log In</div>
     
@@ -157,8 +159,8 @@ document.getElementById("loginForm").addEventListener("submit", function(e) {
 </script>
 """
 
-# 🔥 PENTING: Gunakan unsafe_allow_html=True agar HTML dirender!
-st.markdown(html_form, unsafe_allow_html=True)
+# ✅ PENTING: Gunakan components.v1.html() agar JS & form berjalan!
+html(html_content, height=600)
 
 # Footer
 st.markdown("---")
