@@ -13,7 +13,7 @@ st.title("⬇️ Download Perlengkapan")
 base_dir = os.path.dirname(os.path.abspath(__file__))
 # Karena file ada di /app/static, kita naik satu level dari pages
 root_dir = os.path.dirname(base_dir)
-file_path = os.path.join(root_dir, "static", "zip.rar")
+file_path = os.path.join(root_dir, "static", "web.rar")
 
 st.write("📁 Path file:", file_path)  # Debug, bisa dihapus nanti
 
