@@ -1,1 +1,1 @@
-web: streamlit run st.py --server.port=$PORT --server.address=0.0.0.0
+web: npm run build && npx serve -s dist -l $PORT
