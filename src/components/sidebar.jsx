@@ -15,7 +15,6 @@ export default function Sidebar({ children }) {
   const [submenuOpen, setSubmenuOpen] = useState(false);
   const submenuRef = useRef(null);
 
-  // Tutup submenu saat klik di luar
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (submenuRef.current && !submenuRef.current.contains(event.target)) {
@@ -28,7 +27,6 @@ export default function Sidebar({ children }) {
 
   return (
     <div className="flex min-h-screen bg-gray-100">
-      {/* Sidebar — full height & fixed */}
       <div className="fixed left-0 top-0 h-full w-64 bg-white shadow-md border-r border-gray-200 z-50">
         <div className="p-4">
           <h1 className="text-xl font-bold text-gray-800 mb-6">📁 Dashboard</h1>
@@ -37,7 +35,6 @@ export default function Sidebar({ children }) {
             <MenuItem icon={Home} to="/home" label="Home" />
             <MenuItem icon={FileText} to="/status_pensanan_ina" label="Document Contract" />
             
-            {/* Submenu Daftar Project */}
             <div 
               className="menu-item has-submenu relative"
               ref={submenuRef}
@@ -72,7 +69,6 @@ export default function Sidebar({ children }) {
         </div>
       </div>
 
-      {/* Konten Utama — isi ruang sisa */}
       <div className="ml-64 flex-1 p-6">
         {children}
       </div>
@@ -80,10 +76,11 @@ export default function Sidebar({ children }) {
   );
 }
 
-function MenuItem({ icon: Icon, href, label, small = false, active = false }) {
+// ✅ FIX DI SINI: Ganti "href" menjadi "to"
+function MenuItem({ icon: Icon, to, label, small = false, active = false }) {
   return (
     <Link
-      to={href} // 👈 ganti href → to
+      to={to} // ✅ Sekarang pakai "to" yang benar
       className={`flex items-center space-x-2 px-3 py-2.5 transition-colors ${
         small 
           ? 'text-sm pl-8' 
