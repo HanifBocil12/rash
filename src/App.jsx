@@ -5,6 +5,7 @@ import HomePage from './pages/home';
 import Login from './pages/login';
 import DownloadPDFPage from './pages/download_pdf';
 import StatusPesananIna from './pages/status_pensanan_ina';
+import Perlengkapan from './pages/perlengkapan';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/home" element={<HomePage />} />
         <Route path="/download_pdf" element={<DownloadPDFPage />} />
         <Route path="/status_pensanan_ina" element={<StatusPesananIna />} />
+        <Route path="/perlengkapan" element={<Perlengkapan />} />
         {/* Tambahkan route lain di sini */}
       </Route>
     </Routes>
