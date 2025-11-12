@@ -101,7 +101,7 @@ export default function HomePage() {
       />
 
       {/* ✅ Latar transparan dengan blur halus */}
-      <div className="relative z-10 min-h-screen bg-white/50 backdrop-blur-sm py-8 px-4">
+      <div className="relative z-10 min-h-screen bg-white/50 py-8 px-4">
         <div className="w-full max-w-4xl mx-auto">
           <div className="bg-white/90 rounded-xl shadow-md p-6 md:p-8 backdrop-blur-md">
             <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-2">📊 Excel Checker Dashboard</h1>
