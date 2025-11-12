@@ -9,6 +9,8 @@ export default function App() {
   const [loadingXls, setLoadingXls] = useState(false);
   const [loadingSheet, setLoadingSheet] = useState(false);
   const [message, setMessage] = useState({ type: '', text: '' });
+  const [excelPath, setExcelPath] = useState('');
+  const [loadingExcelPath, setLoadingExcelPath] = useState(false);
   const canvasRef = useRef(null);
 
   // =============================
@@ -151,6 +153,29 @@ export default function App() {
     }
   };
 
+  const handleSetExcelPath = async () => {
+    if (!excelPath.trim()) return;
+    setLoadingExcelPath(true);
+    setMessage({ type: '', text: '' });
+    try {
+      const response = await fetch(`${apiUrl.trim()}/excel_path`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ path: excelPath.trim() }),
+      });
+      const data = await response.json();
+      if (response.ok && data.status === 'success') {
+        setMessage({ type: 'success', text: `Excel path berhasil disimpan: ${data.excel_path}` });
+      } else {
+        setMessage({ type: 'error', text: data.message || 'Gagal menyimpan Excel path.' });
+      }
+    } catch (error) {
+      setMessage({ type: 'error', text: error.message || 'Gagal menghubungi Railway API.' });
+    } finally {
+      setLoadingExcelPath(false);
+    }
+  };
+
   const getStatusDisplay = () => {
     if (!agentStatus) return null;
     if (agentStatus.flag === 'RUN')
@@ -205,6 +230,27 @@ export default function App() {
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
                     placeholder="https://api-web.up.railway.app"
                     />
+                </div>
+
+                {/* 🔹 Input Excel Path */}
+                <div className="mb-6">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Masukkan Path Excel:</label>
+                  <div className="flex space-x-2">
+                    <input
+                      type="text"
+                      value={excelPath}
+                      onChange={(e) => setExcelPath(e.target.value)}
+                      placeholder="/path/to/file.xlsx"
+                      className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+                    />
+                    <button
+                      onClick={handleSetExcelPath}
+                      disabled={loadingExcelPath}
+                      className="bg-orange-500 hover:bg-orange-600 text-white font-medium px-4 py-2 rounded-lg disabled:opacity-70"
+                    >
+                      {loadingExcelPath ? 'Menyimpan...' : 'Simpan Path'}
+                    </button>
+                  </div>
                 </div>
 
                 <div className="mb-6">
