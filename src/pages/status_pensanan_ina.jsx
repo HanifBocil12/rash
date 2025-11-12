@@ -234,10 +234,8 @@ export default function App() {
 
                 {/* 🔹 Input Excel Path */}
                 <div className="mb-6">
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Masukkan Path Excel:
-                  </label>
-                  <div className="flex items-center space-x-2">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Masukkan Path Excel:</label>
+                  <div className="flex space-x-2">
                     <input
                       type="text"
                       value={excelPath}
@@ -245,21 +243,13 @@ export default function App() {
                       placeholder="/path/to/file.xlsx"
                       className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
                     />
-
-                    {/* Choose File Button */}
-                    <label className="bg-orange-500 hover:bg-orange-600 text-white font-medium px-4 py-2 rounded-lg cursor-pointer">
-                      Pilih File
-                      <input
-                        type="file"
-                        accept=".xlsx"
-                        onChange={(e) => {
-                          if (e.target.files && e.target.files[0]) {
-                            setExcelPath(e.target.files[0].path || e.target.files[0].name);
-                          }
-                        }}
-                        className="hidden"
-                      />
-                    </label>
+                    <button
+                      onClick={handleSetExcelPath}
+                      disabled={loadingExcelPath}
+                      className="bg-orange-500 hover:bg-orange-600 text-white font-medium px-4 py-2 rounded-lg disabled:opacity-70"
+                    >
+                      {loadingExcelPath ? 'Menyimpan...' : 'Simpan Path'}
+                    </button>
                   </div>
                 </div>
 
