@@ -189,7 +189,9 @@ export default function App() {
 
       {/* 🔸 Foreground content */}
       <div className="relative z-10 min-h-screen py-8 px-4 flex flex-col items-center">
-        <div className="max-w-2xl w-full bg-white/90 backdrop-blur-md rounded-xl shadow-md p-6 md:p-8">
+        <div className="min-h-screen bg-gray-50 py-8 px-4">
+          <div className="max-w-2xl mx-auto bg-white rounded-xl shadow-md p-6 md:p-8">
+            <div className="max-w-2xl w-full bg-white/90 backdrop-blur-md rounded-xl shadow-md p-6 md:p-8">
           <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-2">📄 Document Contract</h1>
           <p className="text-gray-600 mb-6">
             Gunakan tombol di bawah untuk mengirim perintah ke agent Railway agar menjalankan proses pemeriksaan dokumen kontrak otomatis.
@@ -290,6 +292,8 @@ export default function App() {
 
           <div className="mt-8 pt-6 border-t text-center text-gray-500 text-sm">
             Dibuat dengan ❤️ menggunakan <strong>React</strong> & <strong>Tailwind CSS</strong>
+          </div>
+            </div>
           </div>
         </div>
       </div>
