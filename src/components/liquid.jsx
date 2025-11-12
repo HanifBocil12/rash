@@ -87,4 +87,12 @@ export default function LiquidBackground() {
 
         return () => window.removeEventListener('resize', resize);
     }, []);
+
+    // ✅ Tambahkan ini
+  return (
+    <canvas
+      ref={canvasRef}
+      className="absolute top-0 left-0 w-full h-full z-0"
+    />
+  );
 }
