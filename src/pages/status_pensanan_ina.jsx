@@ -188,7 +188,7 @@ export default function App() {
       />
 
       {/* 🔸 Foreground content */}
-      <div className="relative z-10 min-h-screen bg-gray-100/90 backdrop-blur-md py-8 px-4">
+      <div className="relative z-10 min-h-screen bg-gray-100/30 backdrop-blur-md py-8 px-4">
             <div className="relative z-10 min-h-screen py-8 px-4 flex flex-col items-center">
                 <div className="max-w-2xl w-full bg-white/90 backdrop-blur-md rounded-xl shadow-md p-6 md:p-8">
                 <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-2">📄 Document Contract</h1>
