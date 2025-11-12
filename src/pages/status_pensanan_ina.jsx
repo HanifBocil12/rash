@@ -1,5 +1,4 @@
 // C:\raja iblis\status_pesanan_ina.jsx
-import Sidebar from '../components/sidebar.jsx';
 import { useState, useEffect, useRef } from 'react';
 import { AlertCircle, CheckCircle, Clock, Zap, AlertTriangle } from 'lucide-react';
 
@@ -49,7 +48,6 @@ export default function App() {
     function animate() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Hubungkan partikel yang berdekatan
       for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
           const dx = particles[j].x - particles[i].x;
@@ -69,7 +67,6 @@ export default function App() {
         }
       }
 
-      // Gambar partikel
       for (let i = 0; i < particles.length; i++) {
         const p = particles[i];
         ctx.beginPath();
@@ -97,7 +94,6 @@ export default function App() {
 
     window.addEventListener('resize', resize);
     animate();
-
     return () => window.removeEventListener('resize', resize);
   }, []);
 
@@ -139,12 +135,10 @@ export default function App() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ task }),
       });
-
       if (!response.ok) {
         setMessage({ type: 'error', text: `HTTP ${response.status}` });
         return;
       }
-
       const data = await response.json();
       if (data.status === 'success') {
         setMessage({ type: 'success', text: successMessage });
@@ -160,7 +154,6 @@ export default function App() {
 
   const getStatusDisplay = () => {
     if (!agentStatus) return null;
-
     if (agentStatus.flag === 'RUN') {
       return (
         <div className="flex items-center space-x-2 text-yellow-700 bg-yellow-50 p-3 rounded-lg">
@@ -185,9 +178,6 @@ export default function App() {
     }
   };
 
-  // =============================
-  // 🧩 UI
-  // =============================
   return (
     <div className="relative min-h-screen bg-gray-50 flex justify-center items-start py-8 px-4">
       {/* Background canvas */}
@@ -197,13 +187,8 @@ export default function App() {
         style={{ background: '#f8f9fa' }}
       />
 
-      {/* Blur layer belakang card */}
-      <div className="absolute z-10 top-0 left-0 w-full h-full flex justify-center items-start pointer-events-none">
-        <div className="w-full max-w-2xl h-full backdrop-blur-[60px] bg-white/10 rounded-2xl mt-8" />
-      </div>
-
-      {/* Card utama */}
-      <div className="relative z-20 w-full max-w-2xl bg-white/80 backdrop-blur-md rounded-2xl shadow-xl p-6 md:p-8">
+      {/* Card utama dengan blur */}
+      <div className="relative z-10 w-full max-w-2xl bg-white/80 backdrop-blur-md rounded-2xl shadow-xl p-6 md:p-8">
         <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-2">📄 Document Contract</h1>
         <p className="text-gray-600 mb-6">
           Gunakan tombol di bawah untuk mengirim perintah ke agent Railway agar menjalankan proses pemeriksaan dokumen kontrak otomatis.
@@ -289,7 +274,7 @@ export default function App() {
           </button>
         </div>
 
-        {/* Message Success / Info */}
+        {/* Message */}
         {message.text && message.type !== 'error' && (
           <div className={`mt-4 p-3 rounded-lg ${
             message.type === 'success' ? 'bg-green-50 text-green-700' :
