@@ -1,16 +1,15 @@
 // C:\raja iblis\home.jsx
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react'; // ✅ useRef ditambahkan
 import { AlertCircle, CheckCircle, Clock, Zap, AlertTriangle } from 'lucide-react';
 
 export default function HomePage() {
   const canvasRef = useRef(null);
-  // =============================
-  // 💧 LIQUID BACKGROUND EFFECT
-  // =============================
+
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
+    let animationFrameId;
 
     const resize = () => {
       canvas.width = window.innerWidth;
@@ -18,52 +17,31 @@ export default function HomePage() {
     };
     resize();
 
-    const particleCount = 80;
+    const particleCount = 50; // Kurangi untuk performa lebih baik
     const particles = [];
     const colors = [
-      'rgba(234, 88, 12, 0.6)',
-      'rgba(245, 98, 20, 0.5)',
-      'rgba(220, 70, 5, 0.4)',
-      'rgba(255, 105, 30, 0.5)',
+      'rgba(234, 88, 12, 0.7)', // ✅ Alpha lebih tinggi
+      'rgba(245, 98, 20, 0.6)',
+      'rgba(220, 70, 5, 0.8)',
+      'rgba(255, 105, 30, 0.7)',
     ];
 
     for (let i = 0; i < particleCount; i++) {
       particles.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
-        radius: Math.random() * 20 + 10,
-        vx: (Math.random() - 0.5) * 0.3,
-        vy: (Math.random() - 0.5) * 0.3,
+        radius: Math.random() * 15 + 5, // ✅ Ukuran lebih kecil
+        vx: (Math.random() - 0.5) * 0.5,
+        vy: (Math.random() - 0.5) * 0.5,
         color: colors[Math.floor(Math.random() * colors.length)],
       });
     }
 
-    function animate() {
+    const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Hubungkan partikel yang berdekatan
-      for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
-          const dx = particles[j].x - particles[i].x;
-          const dy = particles[j].y - particles[i].y;
-          const distance = Math.sqrt(dx * dx + dy * dy);
-          if (distance < 120) {
-            ctx.beginPath();
-            ctx.strokeStyle = particles[i].color.replace(
-              '0.6',
-              (0.05 + (120 - distance) / 120 * 0.2).toString()
-            );
-            ctx.lineWidth = 0.3;
-            ctx.moveTo(particles[i].x, particles[i].y);
-            ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.stroke();
-          }
-        }
-      }
-
-      // Gambar partikel
-      for (let i = 0; i < particles.length; i++) {
-        const p = particles[i];
+      // 1. Gambar partikel
+      particles.forEach(p => {
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
         ctx.fillStyle = p.color;
@@ -82,29 +60,52 @@ export default function HomePage() {
         p.y += p.vy;
         if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
         if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+      });
+
+      // 2. Gambar garis penghubung (dengan perhitungan benar)
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[j].x - particles[i].x;
+          const dy = particles[j].y - particles[i].y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+          
+          if (distance < 150) { // ✅ Jarak lebih besar
+            ctx.beginPath();
+            const alpha = (150 - distance) / 500;
+            ctx.strokeStyle = `rgba(234, 88, 12, ${Math.min(alpha, 0.4)})`;
+            ctx.lineWidth = 0.3 + (150 - distance) / 200;
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.stroke();
+          }
+        }
       }
 
-      requestAnimationFrame(animate);
-    }
+      animationFrameId = requestAnimationFrame(animate);
+    };
 
     window.addEventListener('resize', resize);
     animate();
 
-    return () => window.removeEventListener('resize', resize);
+    return () => {
+      window.removeEventListener('resize', resize);
+      cancelAnimationFrame(animationFrameId); // ✅ Penting untuk cleanup
+    };
   }, []);
 
   return (
     <div className="relative min-h-screen overflow-hidden">
       {/* 🔸 Background canvas */}
-        <canvas
-          ref={canvasRef}
-          className="fixed inset-0 z-0"
-          style={{ background: '#f8f9fa' }}
-        />
+      <canvas
+        ref={canvasRef}
+        className="fixed inset-0 z-0"
+        style={{ background: '#fdf2e9' }} // ✅ Background krem lembut
+      />
 
-      <div className="relative z-10 min-h-screen bg-gray-500/30 backdrop-blur-md py-8 px-4">
+      {/* ✅ Latar transparan dengan blur halus */}
+      <div className="relative z-10 min-h-screen bg-white/60 backdrop-blur-sm py-8 px-4">
         <div className="w-full max-w-4xl mx-auto">
-          <div className="bg-white rounded-xl shadow-md p-6 md:p-8">
+          <div className="bg-white/90 rounded-xl shadow-md p-6 md:p-8 backdrop-blur-md">
             <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-2">📊 Excel Checker Dashboard</h1>
             <p className="text-gray-600 mb-6">
               Selamat datang di <strong>Excel Checker</strong> — aplikasi berbasis <em>Streamlit</em> untuk membantu
