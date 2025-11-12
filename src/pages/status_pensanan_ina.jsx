@@ -1,8 +1,6 @@
-// C:\raja iblis\status_pesanan_ina.jsx
 import Sidebar from '../components/sidebar.jsx';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { AlertCircle, CheckCircle, Clock, Zap, AlertTriangle } from 'lucide-react';
-import '../index.css'; // pastikan global CSS import di sini
 
 export default function App() {
   const [apiUrl, setApiUrl] = useState('https://api-web.up.railway.app');
@@ -11,7 +9,95 @@ export default function App() {
   const [loadingXls, setLoadingXls] = useState(false);
   const [loadingSheet, setLoadingSheet] = useState(false);
   const [message, setMessage] = useState({ type: '', text: '' });
+  const canvasRef = useRef(null);
 
+  // =============================
+  // 💧 LIQUID BACKGROUND EFFECT
+  // =============================
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+
+    const resize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+    resize();
+
+    const particleCount = 80;
+    const particles = [];
+    const colors = [
+      'rgba(234, 88, 12, 0.6)',
+      'rgba(245, 98, 20, 0.5)',
+      'rgba(220, 70, 5, 0.4)',
+      'rgba(255, 105, 30, 0.5)',
+    ];
+
+    for (let i = 0; i < particleCount; i++) {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        radius: Math.random() * 20 + 10,
+        vx: (Math.random() - 0.5) * 0.3,
+        vy: (Math.random() - 0.5) * 0.3,
+        color: colors[Math.floor(Math.random() * colors.length)],
+      });
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[j].x - particles[i].x;
+          const dy = particles[j].y - particles[i].y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+          if (distance < 120) {
+            ctx.beginPath();
+            ctx.strokeStyle = particles[i].color.replace(
+              '0.6',
+              (0.05 + (120 - distance) / 120 * 0.2).toString()
+            );
+            ctx.lineWidth = 0.3;
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.stroke();
+          }
+        }
+      }
+
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
+        ctx.beginPath();
+        const gradient = ctx.createRadialGradient(
+          p.x, p.y, 0,
+          p.x, p.y, p.radius * 1.5
+        );
+        gradient.addColorStop(0, p.color);
+        gradient.addColorStop(1, 'transparent');
+        ctx.fillStyle = gradient;
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fill();
+
+        p.x += p.vx;
+        p.y += p.vy;
+        if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+        if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    window.addEventListener('resize', resize);
+    animate();
+
+    return () => window.removeEventListener('resize', resize);
+  }, []);
+
+  // =============================
+  // 🚀 FETCH STATUS & HANDLERS
+  // =============================
   useEffect(() => {
     fetchAgentStatus();
     const interval = setInterval(fetchAgentStatus, 5000);
@@ -21,7 +107,7 @@ export default function App() {
   const fetchAgentStatus = async () => {
     setLoadingStatus(true);
     try {
-      const response = await fetch(`${apiUrl.trim()}/state`, { timeout: 5000 });
+      const response = await fetch(`${apiUrl.trim()}/state`);
       if (response.ok) {
         const data = await response.json();
         setAgentStatus(data);
@@ -46,16 +132,9 @@ export default function App() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ task: task }),
-        timeout: 10000
       });
-
-      if (!response.ok) {
-        setMessage({ type: 'error', text: `HTTP ${response.status}` });
-        return;
-      }
-
       const data = await response.json();
-      if (data.status === 'success') {
+      if (response.ok && data.status === 'success') {
         setMessage({ type: 'success', text: successMessage });
       } else {
         setMessage({ type: 'error', text: data.message || 'Gagal mengirim perintah.' });
@@ -69,50 +148,57 @@ export default function App() {
 
   const getStatusDisplay = () => {
     if (!agentStatus) return null;
-    if (agentStatus.flag === 'RUN') {
+    if (agentStatus.flag === 'RUN')
       return (
         <div className="flex items-center space-x-2 text-yellow-700 bg-yellow-50 p-3 rounded-lg">
           <Clock className="w-5 h-5" />
           <span><strong>Agent sedang berjalan</strong> (flag = RUN)</span>
         </div>
       );
-    } else if (agentStatus.flag === 'IDLE') {
+    if (agentStatus.flag === 'IDLE')
       return (
         <div className="flex items-center space-x-2 text-green-700 bg-green-50 p-3 rounded-lg">
           <CheckCircle className="w-5 h-5" />
           <span><strong>Agent siap menerima perintah</strong> (flag = IDLE)</span>
         </div>
       );
-    } else {
-      return (
-        <div className="flex items-center space-x-2 text-blue-700 bg-blue-50 p-3 rounded-lg">
-          <AlertCircle className="w-5 h-5" />
-          <span>Status agent tidak diketahui: {agentStatus.flag}</span>
-        </div>
-      );
-    }
+    return (
+      <div className="flex items-center space-x-2 text-blue-700 bg-blue-50 p-3 rounded-lg">
+        <AlertCircle className="w-5 h-5" />
+        <span>Status agent tidak diketahui: {agentStatus.flag}</span>
+      </div>
+    );
   };
 
+  // =============================
+  // 🧩 UI
+  // =============================
   return (
     <div className="relative min-h-screen overflow-hidden">
-      {/* 🔮 Background animasi */}
-      <div className="absolute inset-0 animate-liquid bg-gradient-to-br from-orange-300 via-pink-200 to-blue-300 opacity-70"></div>
+      {/* 🔮 Gradient background animasi */}
+      <div className="absolute inset-0 bg-gradient-to-br from-orange-100 via-pink-100 to-blue-100 animate-gradient opacity-80"></div>
+
+      {/* 💧 Liquid blur canvas */}
+      <canvas
+        ref={canvasRef}
+        className="fixed inset-0 z-0 mix-blend-soft-light"
+        style={{ background: 'transparent' }}
+      />
 
       {/* 🌫️ Lapisan blur */}
-      <div className="absolute inset-0 backdrop-blur-lg"></div>
+      <div className="absolute inset-0 backdrop-blur-xl"></div>
 
-      {/* 🧊 Konten utama */}
-      <div className="relative z-10 py-8 px-4">
-        <div className="max-w-2xl mx-auto bg-white/80 rounded-xl shadow-md p-6 md:p-8 backdrop-blur-sm">
+      {/* 🌟 Konten utama */}
+      <div className="relative z-10 min-h-screen py-8 px-4 flex flex-col items-center">
+        <div className="max-w-2xl w-full bg-white/80 backdrop-blur-md rounded-xl shadow-lg p-6 md:p-8 border border-white/30">
           <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-2">📄 Document Contract</h1>
           <p className="text-gray-600 mb-6">
             Gunakan tombol di bawah untuk mengirim perintah ke agent Railway agar menjalankan proses pemeriksaan dokumen kontrak otomatis.
           </p>
 
+          {/* Input URL API */}
           <div className="mb-6">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Masukkan URL Railway API:
-            </label>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Masukkan URL Railway API:</label>
             <input
               type="text"
               value={apiUrl}
@@ -122,6 +208,7 @@ export default function App() {
             />
           </div>
 
+          {/* Status Agent */}
           <div className="mb-6">
             <h2 className="text-xl font-semibold text-gray-800 mb-3 flex items-center">
               <span className="mr-2">🟢</span> Status Agent
@@ -148,7 +235,7 @@ export default function App() {
                 handleTrigger('xls', setLoadingXls, 'Perintah XLS Checker berhasil dikirim ke Railway agent!')
               }
               disabled={loadingXls}
-              className="w-full bg-orange-500 hover:bg-orange-600 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center space-x-2 disabled:opacity-70 disabled:cursor-not-allowed"
+              className="w-full bg-orange-500 hover:bg-orange-600 text-white font-medium py-3 px-4 rounded-lg flex items-center justify-center space-x-2 transition-all disabled:opacity-70"
             >
               {loadingXls ? (
                 <>
@@ -169,15 +256,13 @@ export default function App() {
             <h2 className="text-xl font-semibold text-gray-800 mb-3 flex items-center">
               <span className="mr-2">📊</span> Langkah 2 — Jalankan Sheet Uploader (sheet.py)
             </h2>
-            <p className="text-gray-600 mb-3 text-sm">
-              Pastikan XLS Checker sudah selesai sebelum menjalankan ini.
-            </p>
+            <p className="text-gray-600 mb-3 text-sm">Pastikan XLS Checker sudah selesai sebelum menjalankan ini.</p>
             <button
               onClick={() =>
                 handleTrigger('sheet', setLoadingSheet, 'Perintah Sheet Uploader berhasil dikirim ke Railway agent!')
               }
               disabled={loadingSheet}
-              className="w-full bg-orange-500 hover:bg-orange-600 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center space-x-2 disabled:opacity-70 disabled:cursor-not-allowed"
+              className="w-full bg-orange-500 hover:bg-orange-600 text-white font-medium py-3 px-4 rounded-lg flex items-center justify-center space-x-2 transition-all disabled:opacity-70"
             >
               {loadingSheet ? (
                 <>
@@ -215,3 +300,18 @@ export default function App() {
     </div>
   );
 }
+
+// Tambahkan di global CSS kamu (misal index.css atau globals.css)
+const style = document.createElement("style");
+style.innerHTML = `
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradientMove 10s ease-in-out infinite;
+}
+`;
+document.head.appendChild(style);
