@@ -1,5 +1,6 @@
 // C:\raja iblis\status_pesanan_ina.jsx
-import { useState, useEffect, useRef } from 'react';
+import Sidebar from '../components/sidebar.jsx';
+import { useState, useEffect } from 'react';
 import { AlertCircle, CheckCircle, Clock, Zap, AlertTriangle } from 'lucide-react';
 
 export default function App() {
@@ -9,97 +10,8 @@ export default function App() {
   const [loadingXls, setLoadingXls] = useState(false);
   const [loadingSheet, setLoadingSheet] = useState(false);
   const [message, setMessage] = useState({ type: '', text: '' });
-  const canvasRef = useRef(null);
 
-  // =============================
-  // 💧 LIQUID BACKGROUND EFFECT
-  // =============================
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-
-    const resize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    };
-    resize();
-
-    const particleCount = 80;
-    const particles = [];
-    const colors = [
-      'rgba(234, 88, 12, 0.6)',
-      'rgba(245, 98, 20, 0.5)',
-      'rgba(220, 70, 5, 0.4)',
-      'rgba(255, 105, 30, 0.5)',
-    ];
-
-    for (let i = 0; i < particleCount; i++) {
-      particles.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        radius: Math.random() * 20 + 10,
-        vx: (Math.random() - 0.5) * 0.3,
-        vy: (Math.random() - 0.5) * 0.3,
-        color: colors[Math.floor(Math.random() * colors.length)],
-      });
-    }
-
-    function animate() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      // Hubungkan partikel yang berdekatan
-      for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
-          const dx = particles[j].x - particles[i].x;
-          const dy = particles[j].y - particles[i].y;
-          const distance = Math.sqrt(dx * dx + dy * dy);
-          if (distance < 120) {
-            ctx.beginPath();
-            ctx.strokeStyle = particles[i].color.replace(
-              '0.6',
-              (0.05 + ((120 - distance) / 120) * 0.2).toString()
-            );
-            ctx.lineWidth = 0.3;
-            ctx.moveTo(particles[i].x, particles[i].y);
-            ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.stroke();
-          }
-        }
-      }
-
-      // Gambar partikel
-      for (let i = 0; i < particles.length; i++) {
-        const p = particles[i];
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fillStyle = p.color;
-        ctx.fill();
-
-        const gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.radius * 1.5);
-        gradient.addColorStop(0, p.color);
-        gradient.addColorStop(1, 'transparent');
-        ctx.fillStyle = gradient;
-        ctx.fill();
-
-        p.x += p.vx;
-        p.y += p.vy;
-        if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
-        if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
-      }
-
-      requestAnimationFrame(animate);
-    }
-
-    window.addEventListener('resize', resize);
-    animate();
-
-    return () => window.removeEventListener('resize', resize);
-  }, []);
-
-  // =============================
-  // 🚀 FETCH STATUS & HANDLERS
-  // =============================
+  // Fetch agent status on load and periodically
   useEffect(() => {
     fetchAgentStatus();
     const interval = setInterval(fetchAgentStatus, 5000);
@@ -109,7 +21,7 @@ export default function App() {
   const fetchAgentStatus = async () => {
     setLoadingStatus(true);
     try {
-      const response = await fetch(`${apiUrl.trim()}/state`);
+      const response = await fetch(`${apiUrl.trim()}/state`, { timeout: 5000 });
       if (response.ok) {
         const data = await response.json();
         setAgentStatus(data);
@@ -134,9 +46,16 @@ export default function App() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ task: task }),
+        timeout: 10000
       });
+
+      if (!response.ok) {
+        setMessage({ type: 'error', text: `HTTP ${response.status}` });
+        return;
+      }
+
       const data = await response.json();
-      if (response.ok && data.status === 'success') {
+      if (data.status === 'success') {
         setMessage({ type: 'success', text: successMessage });
       } else {
         setMessage({ type: 'error', text: data.message || 'Gagal mengirim perintah.' });
@@ -150,67 +69,57 @@ export default function App() {
 
   const getStatusDisplay = () => {
     if (!agentStatus) return null;
-    if (agentStatus.flag === 'RUN')
+    
+    if (agentStatus.flag === 'RUN') {
       return (
         <div className="flex items-center space-x-2 text-yellow-700 bg-yellow-50 p-3 rounded-lg">
           <Clock className="w-5 h-5" />
-          <span><strong>Agent sedang berjalan</strong> (flag = RUN)</span>
+          <span>
+            <strong>Agent sedang berjalan</strong> (flag = RUN)
+          </span>
         </div>
       );
-    if (agentStatus.flag === 'IDLE')
+    } else if (agentStatus.flag === 'IDLE') {
       return (
         <div className="flex items-center space-x-2 text-green-700 bg-green-50 p-3 rounded-lg">
           <CheckCircle className="w-5 h-5" />
           <span><strong>Agent siap menerima perintah</strong> (flag = IDLE)</span>
         </div>
       );
-    return (
-      <div className="flex items-center space-x-2 text-blue-700 bg-blue-50 p-3 rounded-lg">
-        <AlertCircle className="w-5 h-5" />
-        <span>Status agent tidak diketahui: {agentStatus.flag}</span>
-      </div>
-    );
+    } else {
+      return (
+        <div className="flex items-center space-x-2 text-blue-700 bg-blue-50 p-3 rounded-lg">
+          <AlertCircle className="w-5 h-5" />
+          <span>Status agent tidak diketahui: {agentStatus.flag}</span>
+        </div>
+      );
+    }
   };
 
-  // =============================
-  // 🧩 UI
-  // =============================
   return (
-    <div className="relative min-h-screen flex justify-center items-start py-8 px-4">
-      {/* 🔸 Background animasi */}
-      <canvas
-        ref={canvasRef}
-        className="fixed inset-0 z-0"
-        style={{ background: '#f8f9fa' }}
-      />
-
-      {/* 🔸 Blur layer hanya di belakang card */}
-      <div className="absolute top-16 w-full max-w-2xl h-[600px] z-5 left-1/2 -translate-x-1/2 rounded-2xl backdrop-blur-md bg-white/20 pointer-events-none" />
-
-      {/* 🔸 Card */}
-      <div className="relative z-10 w-full max-w-2xl bg-white rounded-2xl shadow-xl p-6 md:p-8">
+    <div className="min-h-screen bg-gray-50 py-8 px-4">
+      <div className="max-w-2xl mx-auto bg-white rounded-xl shadow-md p-6 md:p-8">
         <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-2">📄 Document Contract</h1>
-        <p className="text-gray-600 mb-6">
-          Gunakan tombol di bawah untuk mengirim perintah ke agent Railway agar menjalankan proses pemeriksaan dokumen kontrak otomatis.
-        </p>
-
-        {/* Input API */}
+        <p className="text-gray-600 mb-6">Gunakan tombol di bawah untuk mengirim perintah ke agent Railway agar menjalankan proses pemeriksaan dokumen kontrak otomatis.</p>
+        
         <div className="mb-6">
-          <label className="block text-sm font-medium text-gray-700 mb-2">Masukkan URL Railway API:</label>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Masukkan URL Railway API:
+          </label>
           <input
             type="text"
             value={apiUrl}
             onChange={(e) => setApiUrl(e.target.value)}
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
-            placeholder="https://api-web.up.railway.app"
+            placeholder="https://api-web.up.railway.app    "
           />
         </div>
 
-        {/* Status Agent */}
         <div className="mb-6">
           <h2 className="text-xl font-semibold text-gray-800 mb-3 flex items-center">
             <span className="mr-2">🟢</span> Status Agent
           </h2>
+          
           {loadingStatus ? (
             <div className="text-gray-500">Memuat status...</div>
           ) : message.type === 'error' ? (
