@@ -179,7 +179,7 @@ export default function App() {
   // 🧩 UI
   // =============================
   return (
-    <div className="relative min-h-screen overflow-hidden">
+    <div className="relative min-h-screen overflow-hidden pl-4 m-0">
       {/* 🔸 Background canvas */}
       <canvas
         ref={canvasRef}
@@ -188,7 +188,7 @@ export default function App() {
       />
 
       {/* 🔸 Foreground content */}
-      <div className="relative z-10 min-h-screen bg-gray-500/30 backdrop-blur-md pl-4 m-0">
+      <div className="relative z-10 min-h-screen bg-gray-500/30 backdrop-blur-md">
             <div className="relative z-10 min-h-screen py-8 px-4 flex flex-col items-center">
                 <div className="max-w-2xl w-full bg-white/90 backdrop-blur-md rounded-xl shadow-md p-6 md:p-8">
                 <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-2">📄 Document Contract</h1>
