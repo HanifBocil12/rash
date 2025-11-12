@@ -234,23 +234,27 @@ export default function App() {
 
                 {/* 🔹 Input Excel Path */}
                 <div className="mb-6">
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Masukkan Path Excel:</label>
-                  <div className="flex space-x-2">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Pilih File Excel:</label>
+                  <div className="flex space-x-2 items-center">
                     <input
-                      type="text"
-                      value={excelPath}
-                      onChange={(e) => setExcelPath(e.target.value)}
-                      placeholder="/path/to/file.xlsx"
+                      type="file"
+                      accept=".xls,.xlsx"
+                      onChange={(e) => {
+                        if (e.target.files.length > 0) {
+                          setExcelPath(e.target.files[0].name); // Hanya nama file
+                        }
+                      }}
                       className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
                     />
                     <button
                       onClick={handleSetExcelPath}
-                      disabled={loadingExcelPath}
+                      disabled={loadingExcelPath || !excelPath}
                       className="bg-orange-500 hover:bg-orange-600 text-white font-medium px-4 py-2 rounded-lg disabled:opacity-70"
                     >
-                      {loadingExcelPath ? 'Menyimpan...' : 'Simpan Path'}
+                      {loadingExcelPath ? 'Menyimpan...' : 'Buka/Set File'}
                     </button>
                   </div>
+                  {excelPath && <p className="text-gray-600 mt-1 text-sm">File terpilih: {excelPath}</p>}
                 </div>
 
                 <div className="mb-6">
