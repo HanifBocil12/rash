@@ -48,7 +48,7 @@ export default function App() {
     function animate() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Hubungkan partikel yang berdekatan
+      // Garis antar partikel
       for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
           const dx = particles[j].x - particles[i].x;
@@ -76,10 +76,7 @@ export default function App() {
         ctx.fillStyle = p.color;
         ctx.fill();
 
-        const gradient = ctx.createRadialGradient(
-          p.x, p.y, 0,
-          p.x, p.y, p.radius * 1.5
-        );
+        const gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.radius * 1.5);
         gradient.addColorStop(0, p.color);
         gradient.addColorStop(1, 'transparent');
         ctx.fillStyle = gradient;
@@ -183,22 +180,24 @@ export default function App() {
       {/* 🔸 Background canvas */}
       <canvas
         ref={canvasRef}
-        className="fixed inset-0 z-0"
+        className="fixed inset-0 -z-10"
         style={{ background: '#f8f9fa' }}
       />
 
       {/* 🔸 Foreground content */}
-      <div className="relative z-10 min-h-screen py-8 px-4 flex flex-col items-center">
-        <div className="min-h-screen bg-gray-50 py-8 px-4">
-          <div className="max-w-2xl mx-auto bg-white rounded-xl shadow-md p-6 md:p-8">
-            <div className="max-w-2xl w-full bg-white/90 backdrop-blur-md rounded-xl shadow-md p-6 md:p-8">
-          <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-2">📄 Document Contract</h1>
+      <div className="relative z-10 min-h-screen bg-gray-50 py-8 px-4">
+        <div className="max-w-2xl mx-auto bg-white/90 backdrop-blur-md rounded-xl shadow-md p-6 md:p-8">
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-2">
+            📄 Document Contract
+          </h1>
           <p className="text-gray-600 mb-6">
             Gunakan tombol di bawah untuk mengirim perintah ke agent Railway agar menjalankan proses pemeriksaan dokumen kontrak otomatis.
           </p>
 
           <div className="mb-6">
-            <label className="block text-sm font-medium text-gray-700 mb-2">Masukkan URL Railway API:</label>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Masukkan URL Railway API:
+            </label>
             <input
               type="text"
               value={apiUrl}
@@ -212,7 +211,6 @@ export default function App() {
             <h2 className="text-xl font-semibold text-gray-800 mb-3 flex items-center">
               <span className="mr-2">🟢</span> Status Agent
             </h2>
-
             {loadingStatus ? (
               <div className="text-gray-500">Memuat status...</div>
             ) : message.type === 'error' ? (
@@ -254,7 +252,9 @@ export default function App() {
             <h2 className="text-xl font-semibold text-gray-800 mb-3 flex items-center">
               <span className="mr-2">📊</span> Langkah 2 — Jalankan Sheet Uploader (sheet.py)
             </h2>
-            <p className="text-gray-600 mb-3 text-sm">Pastikan XLS Checker sudah selesai sebelum menjalankan ini.</p>
+            <p className="text-gray-600 mb-3 text-sm">
+              Pastikan XLS Checker sudah selesai sebelum menjalankan ini.
+            </p>
             <button
               onClick={() =>
                 handleTrigger('sheet', setLoadingSheet, 'Perintah Sheet Uploader berhasil dikirim ke Railway agent!')
@@ -292,8 +292,6 @@ export default function App() {
 
           <div className="mt-8 pt-6 border-t text-center text-gray-500 text-sm">
             Dibuat dengan ❤️ menggunakan <strong>React</strong> & <strong>Tailwind CSS</strong>
-          </div>
-            </div>
           </div>
         </div>
       </div>
