@@ -89,10 +89,11 @@ export default function LiquidBackground() {
     }, []);
 
     // ✅ Tambahkan ini
-  return (
+   return (
     <canvas
       ref={canvasRef}
-      className="absolute top-0 left-0 w-full h-full z-0"
+      className="fixed inset-0 z-0"
+      style={{ background: '#f8f9fa' }}
     />
   );
 }
