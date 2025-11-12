@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 export default function LiquidBackground() {
-    const canvasRef = useRef<HTMLCanvasElement>(null); // ✅ tambahkan ini
+    const canvasRef = useRef(null); // ✅ tambahkan ini
 
     useEffect(() => {
         const canvas = canvasRef.current;
