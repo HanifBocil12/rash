@@ -48,6 +48,7 @@ export default function App() {
     function animate() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+      // Hubungkan partikel yang berdekatan
       for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
           const dx = particles[j].x - particles[i].x;
@@ -67,6 +68,7 @@ export default function App() {
         }
       }
 
+      // Gambar partikel
       for (let i = 0; i < particles.length; i++) {
         const p = particles[i];
         ctx.beginPath();
@@ -74,10 +76,7 @@ export default function App() {
         ctx.fillStyle = p.color;
         ctx.fill();
 
-        const gradient = ctx.createRadialGradient(
-          p.x, p.y, 0,
-          p.x, p.y, p.radius * 1.5
-        );
+        const gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.radius * 1.5);
         gradient.addColorStop(0, p.color);
         gradient.addColorStop(1, 'transparent');
         ctx.fillStyle = gradient;
@@ -94,6 +93,7 @@ export default function App() {
 
     window.addEventListener('resize', resize);
     animate();
+
     return () => window.removeEventListener('resize', resize);
   }, []);
 
@@ -133,14 +133,10 @@ export default function App() {
       const response = await fetch(`${apiUrl.trim()}/trigger`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ task }),
+        body: JSON.stringify({ task: task }),
       });
-      if (!response.ok) {
-        setMessage({ type: 'error', text: `HTTP ${response.status}` });
-        return;
-      }
       const data = await response.json();
-      if (data.status === 'success') {
+      if (response.ok && data.status === 'success') {
         setMessage({ type: 'success', text: successMessage });
       } else {
         setMessage({ type: 'error', text: data.message || 'Gagal mengirim perintah.' });
@@ -154,41 +150,45 @@ export default function App() {
 
   const getStatusDisplay = () => {
     if (!agentStatus) return null;
-    if (agentStatus.flag === 'RUN') {
+    if (agentStatus.flag === 'RUN')
       return (
         <div className="flex items-center space-x-2 text-yellow-700 bg-yellow-50 p-3 rounded-lg">
           <Clock className="w-5 h-5" />
           <span><strong>Agent sedang berjalan</strong> (flag = RUN)</span>
         </div>
       );
-    } else if (agentStatus.flag === 'IDLE') {
+    if (agentStatus.flag === 'IDLE')
       return (
         <div className="flex items-center space-x-2 text-green-700 bg-green-50 p-3 rounded-lg">
           <CheckCircle className="w-5 h-5" />
           <span><strong>Agent siap menerima perintah</strong> (flag = IDLE)</span>
         </div>
       );
-    } else {
-      return (
-        <div className="flex items-center space-x-2 text-blue-700 bg-blue-50 p-3 rounded-lg">
-          <AlertCircle className="w-5 h-5" />
-          <span>Status agent tidak diketahui: {agentStatus.flag}</span>
-        </div>
-      );
-    }
+    return (
+      <div className="flex items-center space-x-2 text-blue-700 bg-blue-50 p-3 rounded-lg">
+        <AlertCircle className="w-5 h-5" />
+        <span>Status agent tidak diketahui: {agentStatus.flag}</span>
+      </div>
+    );
   };
 
+  // =============================
+  // 🧩 UI
+  // =============================
   return (
-    <div className="relative min-h-screen bg-gray-50 flex justify-center items-start py-8 px-4">
-      {/* Background canvas */}
+    <div className="relative min-h-screen flex justify-center items-start py-8 px-4">
+      {/* 🔸 Background animasi */}
       <canvas
         ref={canvasRef}
         className="fixed inset-0 z-0"
         style={{ background: '#f8f9fa' }}
       />
 
-      {/* Card utama dengan blur */}
-      <div className="relative z-10 w-full max-w-2xl bg-white/80 backdrop-blur-md rounded-2xl shadow-xl p-6 md:p-8">
+      {/* 🔸 Blur layer hanya di belakang card */}
+      <div className="absolute top-16 w-full max-w-2xl h-[600px] z-5 left-1/2 -translate-x-1/2 rounded-2xl backdrop-blur-md bg-white/20 pointer-events-none" />
+
+      {/* 🔸 Card */}
+      <div className="relative z-10 w-full max-w-2xl bg-white rounded-2xl shadow-xl p-6 md:p-8">
         <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-2">📄 Document Contract</h1>
         <p className="text-gray-600 mb-6">
           Gunakan tombol di bawah untuk mengirim perintah ke agent Railway agar menjalankan proses pemeriksaan dokumen kontrak otomatis.
@@ -274,10 +274,9 @@ export default function App() {
           </button>
         </div>
 
-        {/* Message */}
         {message.text && message.type !== 'error' && (
           <div className={`mt-4 p-3 rounded-lg ${
-            message.type === 'success' ? 'bg-green-50 text-green-700' :
+            message.type === 'success' ? 'bg-green-50 text-green-700' : 
             message.type === 'warning' ? 'bg-yellow-50 text-yellow-700' : 'bg-blue-50 text-blue-700'
           }`}>
             {message.text}
