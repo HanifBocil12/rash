@@ -125,7 +125,7 @@ export default function DownloadPDFPage() {
   return (
     <div className="relative min-h-screen overflow-hidden">
        <Liquid />
-      <div className="relative z-10 min-h-screen bg-gray-500/30 backdrop-blur-md py-8 px-4">
+      <div className="relative z-10 min-h-screen bg-white/50 py-8 px-4">
         <div className="w-full max-w-4xl mx-auto">
           <div className="bg-white rounded-xl shadow-md p-6 md:p-8">
             <div className="flex items-center mb-4">
