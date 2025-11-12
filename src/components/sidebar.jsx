@@ -72,7 +72,7 @@ export default function Sidebar() { // ⬅️ Hapus { children }
       </div>
 
       {/* Konten Utama — isi ruang sisa */}
-      <div className="ml-64 flex-1 p-6">
+      <div className="ml-64 flex-1 p-0 pl-6">
         <Outlet /> {/* ✅ INI YANG MENENTUKAN! */}
       </div>
     </div>
