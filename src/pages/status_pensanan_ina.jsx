@@ -48,6 +48,7 @@ export default function App() {
     function animate() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+      // Hubungkan partikel yang berdekatan
       for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
           const dx = particles[j].x - particles[i].x;
@@ -67,9 +68,14 @@ export default function App() {
         }
       }
 
+      // Gambar partikel
       for (let i = 0; i < particles.length; i++) {
         const p = particles[i];
         ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.fill();
+
         const gradient = ctx.createRadialGradient(
           p.x, p.y, 0,
           p.x, p.y, p.radius * 1.5
@@ -77,7 +83,6 @@ export default function App() {
         gradient.addColorStop(0, p.color);
         gradient.addColorStop(1, 'transparent');
         ctx.fillStyle = gradient;
-        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
         ctx.fill();
 
         p.x += p.vx;
@@ -175,28 +180,21 @@ export default function App() {
   // =============================
   return (
     <div className="relative min-h-screen overflow-hidden">
-      {/* 🔮 Gradient background animasi */}
-      <div className="absolute inset-0 bg-gradient-to-br from-orange-100 via-pink-100 to-blue-100 animate-gradient opacity-80"></div>
-
-      {/* 💧 Liquid blur canvas */}
+      {/* 🔸 Background canvas */}
       <canvas
         ref={canvasRef}
-        className="fixed inset-0 z-0 mix-blend-soft-light"
-        style={{ background: 'transparent' }}
+        className="fixed inset-0 z-0"
+        style={{ background: '#f8f9fa' }}
       />
 
-      {/* 🌫️ Lapisan blur */}
-      <div className="absolute inset-0 backdrop-blur-xl"></div>
-
-      {/* 🌟 Konten utama */}
+      {/* 🔸 Foreground content */}
       <div className="relative z-10 min-h-screen py-8 px-4 flex flex-col items-center">
-        <div className="max-w-2xl w-full bg-white/80 backdrop-blur-md rounded-xl shadow-lg p-6 md:p-8 border border-white/30">
+        <div className="max-w-2xl w-full bg-white/90 backdrop-blur-md rounded-xl shadow-md p-6 md:p-8">
           <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-2">📄 Document Contract</h1>
           <p className="text-gray-600 mb-6">
             Gunakan tombol di bawah untuk mengirim perintah ke agent Railway agar menjalankan proses pemeriksaan dokumen kontrak otomatis.
           </p>
 
-          {/* Input URL API */}
           <div className="mb-6">
             <label className="block text-sm font-medium text-gray-700 mb-2">Masukkan URL Railway API:</label>
             <input
@@ -208,11 +206,11 @@ export default function App() {
             />
           </div>
 
-          {/* Status Agent */}
           <div className="mb-6">
             <h2 className="text-xl font-semibold text-gray-800 mb-3 flex items-center">
               <span className="mr-2">🟢</span> Status Agent
             </h2>
+
             {loadingStatus ? (
               <div className="text-gray-500">Memuat status...</div>
             ) : message.type === 'error' ? (
@@ -225,7 +223,6 @@ export default function App() {
             )}
           </div>
 
-          {/* Langkah 1 */}
           <div className="mb-6">
             <h2 className="text-xl font-semibold text-gray-800 mb-3 flex items-center">
               <span className="mr-2">🧩</span> Langkah 1 — Jalankan Excel Checker (xls.py)
@@ -235,7 +232,7 @@ export default function App() {
                 handleTrigger('xls', setLoadingXls, 'Perintah XLS Checker berhasil dikirim ke Railway agent!')
               }
               disabled={loadingXls}
-              className="w-full bg-orange-500 hover:bg-orange-600 text-white font-medium py-3 px-4 rounded-lg flex items-center justify-center space-x-2 transition-all disabled:opacity-70"
+              className="w-full bg-orange-500 hover:bg-orange-600 text-white font-medium py-3 px-4 rounded-lg flex items-center justify-center space-x-2 transition-colors disabled:opacity-70"
             >
               {loadingXls ? (
                 <>
@@ -251,7 +248,6 @@ export default function App() {
             </button>
           </div>
 
-          {/* Langkah 2 */}
           <div className="mb-6">
             <h2 className="text-xl font-semibold text-gray-800 mb-3 flex items-center">
               <span className="mr-2">📊</span> Langkah 2 — Jalankan Sheet Uploader (sheet.py)
@@ -262,7 +258,7 @@ export default function App() {
                 handleTrigger('sheet', setLoadingSheet, 'Perintah Sheet Uploader berhasil dikirim ke Railway agent!')
               }
               disabled={loadingSheet}
-              className="w-full bg-orange-500 hover:bg-orange-600 text-white font-medium py-3 px-4 rounded-lg flex items-center justify-center space-x-2 transition-all disabled:opacity-70"
+              className="w-full bg-orange-500 hover:bg-orange-600 text-white font-medium py-3 px-4 rounded-lg flex items-center justify-center space-x-2 transition-colors disabled:opacity-70"
             >
               {loadingSheet ? (
                 <>
@@ -300,18 +296,3 @@ export default function App() {
     </div>
   );
 }
-
-// Tambahkan di global CSS kamu (misal index.css atau globals.css)
-const style = document.createElement("style");
-style.innerHTML = `
-@keyframes gradientMove {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-.animate-gradient {
-  background-size: 200% 200%;
-  animation: gradientMove 10s ease-in-out infinite;
-}
-`;
-document.head.appendChild(style);
