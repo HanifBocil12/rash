@@ -63,7 +63,7 @@ export default function Gabung_Pdf() {
                           value={inputFolder}
                           onChange={(e) => setInputFolder(e.target.value)}
                           className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
-                          placeholder="/path/to/input/folder"
+                          placeholder="C:\web\zip\Perlengkapan\download\hal 1"
                         />
                       </div>
                       
@@ -76,7 +76,7 @@ export default function Gabung_Pdf() {
                           value={outputFolder}
                           onChange={(e) => setOutputFolder(e.target.value)}
                           className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
-                          placeholder="/path/to/output/folder"
+                          placeholder="C:\web\zip\Perlengkapan\download\output"
                         />
                       </div>
                     </div>
