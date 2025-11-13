@@ -1,7 +1,9 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { Eye, EyeOff } from 'lucide-react';
 
 const LiquidFlowLogin = () => {
   const canvasRef = useRef(null);
+  const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -174,13 +176,24 @@ const LiquidFlowLogin = () => {
                 />
               </div>
               
-              <div>
+              <div className="relative">
                 <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
                 <input 
-                  type="password" 
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors"
-                  placeholder="••••••••"
+                  type={showPassword ? "text" : "password"} 
+                  className="w-full px-4 py-2 pl-4 pr-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors"
+                  placeholder={showPassword ? "••••••••" : "••••••••"}
                 />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                >
+                  {showPassword ? (
+                    <EyeOff className="h-5 w-5 text-gray-500 hover:text-gray-700" />
+                  ) : (
+                    <Eye className="h-5 w-5 text-gray-500 hover:text-gray-700" />
+                  )}
+                </button>
               </div>
               
               <div className="flex items-center justify-between">
