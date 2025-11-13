@@ -6,16 +6,22 @@ export default function Gabung_Pdf() {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState({ type: '', text: '' });
   const [debugOpen, setDebugOpen] = useState(false);
+  const [inputFolder, setInputFolder] = useState('/app/input_pdf');
+  const [outputFolder, setOutputFolder] = useState('/app/output_pdf');
 
   const handleRunScript = async () => {
     setLoading(true);
     setMessage({ type: '', text: '' });
     
     try {
-      // Simulasi API call ke backend untuk menjalankan gabung.py
+      // Simulasi API call ke backend untuk menjalankan gabung.py dengan parameter folder
       const response = await fetch('/api/run-gabung', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          input_folder: inputFolder,
+          output_folder: outputFolder
+        }),
         timeout: 30000
       });
 
@@ -47,6 +53,34 @@ export default function Gabung_Pdf() {
                     Gunakan tombol di bawah untuk menjalankan script <code className="bg-blue-100 px-1 rounded">gabung.py</code>.
                     </div>
                     
+                    <div className="mb-6 space-y-4">
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          Folder Input PDF:
+                        </label>
+                        <input
+                          type="text"
+                          value={inputFolder}
+                          onChange={(e) => setInputFolder(e.target.value)}
+                          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+                          placeholder="/path/to/input/folder"
+                        />
+                      </div>
+                      
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          Folder Output PDF:
+                        </label>
+                        <input
+                          type="text"
+                          value={outputFolder}
+                          onChange={(e) => setOutputFolder(e.target.value)}
+                          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+                          placeholder="/path/to/output/folder"
+                        />
+                      </div>
+                    </div>
+
                     <div className="mb-6">
                     <button
                         onClick={() => setDebugOpen(!debugOpen)}
