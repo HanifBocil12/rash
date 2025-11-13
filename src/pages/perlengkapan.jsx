@@ -10,7 +10,7 @@ export default function Perlengkapan() {
       <Liquid />
 
       {/* 🔳 Konten utama */}
-      <div className="relative z-10 min-h-screen bg-white/50 py-8 px-4">
+      <div className="relative z-10 min-h-screen bg-white/40 py-8 px-4">
         <div className="max-w-2xl mx-auto bg-white rounded-xl shadow-md p-6 md:p-8">
           <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-2">
             ⬇️ Download Perlengkapan
