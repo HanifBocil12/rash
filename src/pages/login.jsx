@@ -156,8 +156,8 @@ const LiquidFlowLogin = () => {
           {/* Title */}
           <h1 className="text-4xl md:text-5xl font-bold text-gray-800 text-center leading-tight">
             solusi hanif
-            <span className="block text-orange-600">Ai</span>
-            Revolution
+            <span className="block text-orange-600">Revolution</span>
+            Ai
           </h1>
   
           {/* Login Form */}
