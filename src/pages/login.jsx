@@ -152,15 +152,6 @@ const LiquidFlowLogin = () => {
         {/* Main Content */}
         <div className="max-w-md w-full space-y-8">
           {/* Badge */}
-          <div className="bg-white bg-opacity-70 backdrop-blur-sm rounded-full px-4 py-2 inline-block mx-auto">
-            <div className="flex items-center space-x-2">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M12 18a6 6 0 0 0 6-6V6a6 6 0 0 0-12 0v6a6 6 0 0 0 6 6z"></path>
-                <path d="M12 18v-6"></path>
-              </svg>
-              <span className="text-orange-600 font-medium">Now with Liquid Motion</span>
-            </div>
-          </div>
           
           {/* Title */}
           <h1 className="text-4xl md:text-5xl font-bold text-gray-800 text-center leading-tight">
