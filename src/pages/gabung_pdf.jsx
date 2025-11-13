@@ -10,7 +10,7 @@ export default function Gabung_Pdf() {
   const [outputFolder, setOutputFolder] = useState('C:\web\zip\Perlengkapan\download\output');
 
   // Ganti ini sesuai alamat Railway API kamu
-  const API_BASE = "https://<YOUR-RAILWAY-APP>.up.railway.app";
+  const API_BASE = "https://api-web.up.railway.app";
 
   const handleRunScript = async () => {
     setLoading(true);
