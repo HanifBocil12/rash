@@ -243,7 +243,7 @@ const LiquidFlowLogin = () => {
         
         {/* Footer */}
         <footer className="absolute bottom-6 text-center text-sm text-gray-600">
-          © 2025 LiquidFlow. All rights reserved.
+          © 2025 Muhammad Hanif. Smkn 4 Tangerang.
         </footer>
       </div>
     </div>
