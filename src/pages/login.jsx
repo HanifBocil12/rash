@@ -164,16 +164,11 @@ const LiquidFlowLogin = () => {
           
           {/* Title */}
           <h1 className="text-4xl md:text-5xl font-bold text-gray-800 text-center leading-tight">
-            Experience the
-            <span className="block text-orange-600">Liquid Flow</span>
+            solusi hanif
+            <span className="block text-orange-600">Ai</span>
             Revolution
           </h1>
-          
-          {/* Description */}
-          <p className="text-gray-600 text-center mt-4 mb-8">
-            Transform your digital experience with our mesmerizing liquid-style animations that flow seamlessly like orange nectar.
-          </p>
-          
+  
           {/* Login Form */}
           <div className="bg-white bg-opacity-80 backdrop-blur-sm p-8 rounded-2xl shadow-xl">
             <h2 className="text-2xl font-bold text-gray-800 mb-6">Sign In</h2>
