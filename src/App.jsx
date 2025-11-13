@@ -8,7 +8,7 @@ import StatusPesananIna from './pages/status_pensanan_ina';
 import Perlengkapan from './pages/perlengkapan';
 import Gabung_pdf from './pages/gabung_pdf';
 import Document_batal from './pages/daftar_contract_batal';
-import ProtectedRoute from './components/ProtectedRoute.jsx'; // ✅ import baru
+import ProtectedRoute from './components/ProtectedRoute.jsx';
 
 function App() {
   return (
@@ -17,7 +17,7 @@ function App() {
       <Route path="/" element={<Login />} />
 
       {/* Route protected: dibungkus ProtectedRoute + Sidebar */}
-      <Route element={<ProtectedRoute />}>
+      <Route /*element={<ProtectedRoute />}*/>
         <Route element={<Sidebar />}>
           <Route path="/home" element={<HomePage />} />
           <Route path="/gabung_pdf" element={<Gabung_pdf />} />
