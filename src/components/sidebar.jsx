@@ -1,6 +1,5 @@
-// src/components/Sidebar.jsx
 import { useState, useRef, useEffect } from 'react';
-import { Link, Outlet } from 'react-router-dom'; // ⬅️ Tambahkan Outlet
+import { Link, Outlet, useLocation } from 'react-router-dom';
 import { 
   Home, 
   FileText, 
@@ -11,9 +10,16 @@ import {
   ChevronRight
 } from 'lucide-react';
 
-export default function Sidebar() { // ⬅️ Hapus { children }
+export default function Sidebar() {
   const [submenuOpen, setSubmenuOpen] = useState(false);
   const submenuRef = useRef(null);
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.pathname === '/gabung_pdf' || location.pathname === '/download_pdf') {
+      setSubmenuOpen(true);
+    }
+  }, [location.pathname]);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -27,7 +33,6 @@ export default function Sidebar() { // ⬅️ Hapus { children }
 
   return (
     <div className="flex min-h-screen bg-gray-100">
-      {/* Sidebar — full height & fixed */}
       <div className="fixed left-0 top-0 h-full w-64 bg-white shadow-md border-r border-gray-200 z-50">
         <div className="p-4">
           <h1 className="text-xl font-bold text-gray-800 mb-6">📁 Dashboard</h1>
@@ -36,11 +41,7 @@ export default function Sidebar() { // ⬅️ Hapus { children }
             <MenuItem icon={Home} to="/home" label="Home" />
             <MenuItem icon={FileText} to="/status_pensanan_ina" label="Document Contract" />
             
-            {/* Submenu Daftar Project */}
-            <div 
-              className="menu-item has-submenu relative"
-              ref={submenuRef}
-            >
+            <div className="menu-item has-submenu relative" ref={submenuRef}>
               <button
                 className="w-full flex items-center justify-between p-3 text-left font-medium text-gray-700 hover:bg-gray-50 transition-colors"
                 onClick={() => setSubmenuOpen(!submenuOpen)}
@@ -50,16 +51,26 @@ export default function Sidebar() { // ⬅️ Hapus { children }
                   <span>Daftar Project</span>
                 </div>
                 <ChevronRight 
-                  className={`w-4 h-4 text-gray-500 transition-transform ${
+                  className={`w-4 h-4 text-gray-500 transition-transform duration-200 ${
                     submenuOpen ? 'rotate-90' : ''
                   }`} 
                 />
               </button>
               
               {submenuOpen && (
-                <div className="submenu ml-6 mt-1 space-y-1 bg-gray-50 py-2 border-l-2 border-gray-200">
-                  <MenuItem icon={Download} to="/gabung_pdf" label="Gabung PDF" small />
-                  <MenuItem icon={Download} to="/download_pdf" label="Download PDF Selesai" small active />
+                <div className="ml-6 mt-1 space-y-1 py-2">
+                  <SubMenuItem 
+                    icon={Download} 
+                    to="/gabung_pdf" 
+                    label="Gabung PDF" 
+                    isActive={location.pathname === '/gabung_pdf'}
+                  />
+                  <SubMenuItem 
+                    icon={Download} 
+                    to="/download_pdf" 
+                    label="Download PDF Selesai" 
+                    isActive={location.pathname === '/download_pdf'}
+                  />
                 </div>
               )}
             </div>
@@ -71,29 +82,36 @@ export default function Sidebar() { // ⬅️ Hapus { children }
         </div>
       </div>
 
-      {/* Konten Utama — isi ruang sisa */}
       <div className="ml-64 flex-1 p-0 pl-6">
-        <Outlet /> {/* ✅ INI YANG MENENTUKAN! */}
+        <Outlet />
       </div>
     </div>
   );
 }
 
-function MenuItem({ icon: Icon, to, label, small = false, active = false }) {
+function MenuItem({ icon: Icon, to, label }) {
   return (
     <Link
       to={to}
-      className={`flex items-center space-x-2 px-3 py-2.5 transition-colors ${
-        small 
-          ? 'text-sm pl-8' 
-          : 'font-medium'
-      } ${
-        active
-          ? 'bg-orange-100 text-orange-700 border-r-2 border-orange-500'
-          : 'text-gray-700 hover:bg-gray-50'
+      className="flex items-center space-x-2 px-3 py-2.5 font-medium text-gray-700 transition-colors rounded-lg hover:bg-gray-50"
+    >
+      <Icon className="w-4 h-4" />
+      <span>{label}</span>
+    </Link>
+  );
+}
+
+function SubMenuItem({ icon: Icon, to, label, isActive }) {
+  return (
+    <Link
+      to={to}
+      className={`flex items-center space-x-2 px-3 py-2 text-sm transition-colors rounded-lg ${
+        isActive 
+          ? 'bg-orange-100 text-orange-700 font-medium border-r-2 border-orange-500' 
+          : 'text-gray-700 hover:bg-orange-50 hover:text-orange-700'
       }`}
     >
-      <Icon className={`flex-shrink-0 ${small ? 'w-3.5 h-3.5' : 'w-4 h-4'}`} />
+      <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-orange-600' : ''}`} />
       <span>{label}</span>
     </Link>
   );
