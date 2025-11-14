@@ -7,7 +7,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "start": "serve -s dist -l $PORT",
-    "postinstall": "node user.js"
+    "postinstall": "src/node user.js"
   },
   "dependencies": {
     "lucide-react": "^0.370.0",
