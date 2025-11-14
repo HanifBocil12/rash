@@ -1,6 +1,5 @@
 // src/components/ProtectedRoute.jsx
 import { Navigate, Outlet, useLocation, useParams } from "react-router-dom";
-import base64 from "base-64";
 
 export default function ProtectedRoute() {
   const location = useLocation();
@@ -8,14 +7,16 @@ export default function ProtectedRoute() {
 
   const user = JSON.parse(localStorage.getItem("user"));
 
+  // Jika belum login, redirect ke login
   if (!user) {
     return <Navigate to="/" replace state={{ from: location }} />;
   }
 
   // Decode ID dari URL untuk dicek
-  let decodedId = id;
+  let decodedId;
   try {
-    decodedId = base64.decode(id);
+    // atob() untuk decode Base64 standar
+    decodedId = atob(id);
   } catch (e) {
     // Jika decode gagal, redirect ke home user
     return <Navigate to={`/${user.id}/home`} replace />;
