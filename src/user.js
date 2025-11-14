@@ -6,7 +6,7 @@ async function seed() {
     const now = new Date();
 
     // 1️⃣ Hash password
-    const plainPassword = "password123";
+    const plainPassword = "pass123";
     const hashedPassword = await bcrypt.hash(plainPassword, 10);
     // 2️⃣ Insert data initial dengan password sudah di-hash
     const result = await pool.query(
