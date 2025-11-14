@@ -1,5 +1,5 @@
 import pool from "./db.js";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 
 async function seed() {
   try {
@@ -7,8 +7,7 @@ async function seed() {
 
     // 1️⃣ Hash password
     const plainPassword = "password123";
-    const hashedPassword = await bcrypt.hash(plainPassword, 10); // 10 rounds
-
+    const hashedPassword = await bcrypt.hash(plainPassword, 10);
     // 2️⃣ Insert data initial dengan password sudah di-hash
     const result = await pool.query(
       `INSERT INTO users (id, nama, password, email, created_at, updated_at)
