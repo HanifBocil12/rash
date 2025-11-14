@@ -17,7 +17,7 @@ function App() {
       <Route path="/" element={<Login />} />
 
       {/* Route protected: dibungkus ProtectedRoute + Sidebar */}
-      <Route /*element={<ProtectedRoute />}*/>
+      <Route element={<ProtectedRoute />}>
         <Route element={<Sidebar />}>
           <Route path="/home" element={<HomePage />} />
           <Route path="/gabung_pdf" element={<Gabung_pdf />} />
