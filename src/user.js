@@ -1,24 +1,21 @@
 import pool from "./db.js";
+import bcrypt from "bcrypt";
 
 async function seed() {
   try {
     const now = new Date();
 
-    // 1️⃣ Ubah semua kolom ke VARCHAR/TEXT supaya bisa menampung string panjang
-    await pool.query(`
-      ALTER TABLE users
-      ALTER COLUMN nama TYPE VARCHAR(255),
-      ALTER COLUMN password TYPE VARCHAR(255),
-      ALTER COLUMN email TYPE VARCHAR(255)
-    `);
+    // 1️⃣ Hash password
+    const plainPassword = "password123";
+    const hashedPassword = await bcrypt.hash(plainPassword, 10); // 10 rounds
 
-    // 2️⃣ Insert data initial
+    // 2️⃣ Insert data initial dengan password sudah di-hash
     const result = await pool.query(
       `INSERT INTO users (id, nama, password, email, created_at, updated_at)
        VALUES ($1, $2, $3, $4, $5, $6)
        ON CONFLICT (id) DO NOTHING
        RETURNING id, nama, password, email, created_at, updated_at`,
-      [1, "admin", "password123", "admin@example.com", now, now]
+      [1, "admin", hashedPassword, "admin@example.com", now, now]
     );
 
     if (result.rowCount === 0) {
