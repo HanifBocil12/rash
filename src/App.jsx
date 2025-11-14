@@ -13,15 +13,18 @@ import ProtectedRoute from "./components/ProtectedRoute.jsx";
 function App() {
   return (
     <Routes>
+      {/* Route publik */}
       <Route path="/" element={<Login />} />
+
+      {/* Protected route */}
       <Route element={<ProtectedRoute />}>
-        <Route element={<Sidebar />}>
-          <Route path="/user/:userId/home" element={<HomePage />} />
-          <Route path="/user/:userId/gabung_pdf" element={<Gabung_pdf />} />
-          <Route path="/user/:userId/download_pdf" element={<DownloadPDFPage />} />
-          <Route path="/user/:userId/status_pensanan_ina" element={<StatusPesananIna />} />
-          <Route path="/user/:userId/perlengkapan" element={<Perlengkapan />} />
-          <Route path="/user/:userId/document_batal" element={<Document_batal />} />
+        <Route path="/:id" element={<Sidebar />}>
+          <Route path="home" element={<HomePage />} />
+          <Route path="gabung_pdf" element={<Gabung_pdf />} />
+          <Route path="download_pdf" element={<DownloadPDFPage />} />
+          <Route path="status_pensanan_ina" element={<StatusPesananIna />} />
+          <Route path="perlengkapan" element={<Perlengkapan />} />
+          <Route path="document_batal" element={<Document_batal />} />
         </Route>
       </Route>
     </Routes>

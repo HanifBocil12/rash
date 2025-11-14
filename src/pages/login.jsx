@@ -1,43 +1,63 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Eye, EyeOff } from 'lucide-react';
+import { useNavigate } from "react-router-dom";
 
 const LiquidFlowLogin = () => {
   const canvasRef = useRef(null);
   const [showPassword, setShowPassword] = useState(false);
 
-  // =========================
-  // LOGIN STATE
-  // =========================
+  // ➕ STATE LOGIN
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const navigate = useNavigate();
+
+  // ➕ HANDLE LOGIN
   const handleLogin = async (e) => {
     e.preventDefault();
+    setErrorMsg("");
     setLoading(true);
 
     try {
-      const res = await fetch("http://localhost:8080/api/login", {
+      const res = await fetch("https://api-web.up.railway.app/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       });
-      const data = await res.json();
-      if (!res.ok) return alert(data.message);
 
-      localStorage.setItem("user", JSON.stringify(data));
-      window.location.href = `/user/${data.id}/home`; // redirect setelah login
+      const data = await res.json();
+
+      if (!res.ok) {
+        setErrorMsg(data.message || "Login gagal!");
+        setLoading(false);
+        return;
+      }
+
+      // simpan user
+      const userData = {
+        id: data.id,
+        name: data.name,
+        email: data.email,
+        token: data.token
+      };
+
+      localStorage.setItem("user", JSON.stringify(userData));
+
+      // redirect ke halaman milik user
+      navigate(`/${data.id}/home`, { replace: true });
+
     } catch (err) {
-      console.error(err);
-      alert("Login gagal");
-    } finally {
-      setLoading(false);
+      setErrorMsg("Tidak dapat terhubung ke server!");
     }
+
+    setLoading(false);
   };
 
-  // =========================
-  // CANVAS ANIMATION
-  // =========================
+  // ==========================
+  // ANIMASI CANVAS (TIDAK DIUBAH)
+  // ==========================
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
@@ -46,11 +66,13 @@ const LiquidFlowLogin = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
     };
+    
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
-
+    
     const flows = [];
     const flowCount = 8;
+    
     for (let i = 0; i < flowCount; i++) {
       flows.push({
         x: Math.random() * canvas.width,
@@ -62,21 +84,23 @@ const LiquidFlowLogin = () => {
         opacity: 0.2 + Math.random() * 0.3
       });
     }
-
+    
     let animationFrameId;
     const animate = () => {
       ctx.fillStyle = 'rgba(255, 245, 235, 0.05)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
-
+      
       flows.forEach(flow => {
         flow.y += flow.speed;
         flow.waveOffset += 0.015;
+        
         if (flow.y > canvas.height + flow.height) {
           flow.y = -flow.height;
           flow.x = Math.random() * canvas.width;
         }
-
+        
         ctx.beginPath();
+        
         const leftPoints = 15;
         const leftPath = [];
         for (let i = 0; i <= leftPoints; i++) {
@@ -86,7 +110,7 @@ const LiquidFlowLogin = () => {
           const x = flow.x + wave;
           leftPath.push({ x, y });
         }
-
+        
         const rightPath = [];
         for (let i = leftPoints; i >= 0; i--) {
           const progress = i / leftPoints;
@@ -95,28 +119,32 @@ const LiquidFlowLogin = () => {
           const x = flow.x + flow.width + wave;
           rightPath.push({ x, y });
         }
-
+        
         if (leftPath.length > 0) {
           ctx.moveTo(leftPath[0].x, leftPath[0].y);
           for (let i = 1; i < leftPath.length; i++) ctx.lineTo(leftPath[i].x, leftPath[i].y);
           for (let i = 0; i < rightPath.length; i++) ctx.lineTo(rightPath[i].x, rightPath[i].y);
           ctx.closePath();
         }
-
-        const gradient = ctx.createLinearGradient(flow.x, flow.y, flow.x + flow.width, flow.y + flow.height);
+        
+        const gradient = ctx.createLinearGradient(
+          flow.x, flow.y,
+          flow.x + flow.width, flow.y + flow.height
+        );
         gradient.addColorStop(0, `rgba(255, 165, 0, ${flow.opacity * 0.8})`);
         gradient.addColorStop(0.5, `rgba(255, 100, 0, ${flow.opacity})`);
         gradient.addColorStop(1, `rgba(255, 69, 0, ${flow.opacity * 0.6})`);
+        
         ctx.fillStyle = gradient;
         ctx.fill();
-
+        
         ctx.beginPath();
         const highlightPoints = 8;
         for (let i = 0; i <= highlightPoints; i++) {
           const progress = i / highlightPoints;
           const y = flow.y + progress * flow.height;
           const wave = Math.sin(flow.waveOffset + progress * 3) * (flow.width * 0.1);
-          const x = flow.x + flow.width * 0.3 + wave;
+          const x = flow.x + flow.width*0.3 + wave;
           if (i === 0) ctx.moveTo(x, y);
           else ctx.lineTo(x, y);
         }
@@ -124,26 +152,28 @@ const LiquidFlowLogin = () => {
         ctx.lineWidth = 1.5;
         ctx.stroke();
       });
-
+      
       animationFrameId = requestAnimationFrame(animate);
     };
+    
     animate();
-
+    
     return () => {
       window.removeEventListener('resize', resizeCanvas);
       cancelAnimationFrame(animationFrameId);
     };
   }, []);
 
-  // =========================
-  // RENDER
-  // =========================
+  // ==========================
+  // UI LOGIN (TIDAK DIUBAH, HANYA DITAMBAH VALUE+onChange+onSubmit)
+  // ==========================
   return (
     <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-orange-50 via-orange-100 to-red-50">
       <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
       <div className="absolute inset-0 bg-black bg-opacity-10"></div>
 
       <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-6">
+
         <header className="absolute top-6 left-6">
           <h1 className="text-2xl font-bold text-orange-600">LiquidFlow</h1>
         </header>
@@ -153,6 +183,7 @@ const LiquidFlowLogin = () => {
         </button>
 
         <div className="max-w-md w-full space-y-8">
+          
           <h1 className="text-4xl md:text-5xl font-bold text-gray-800 text-center leading-tight">
             solusi hanif
             <span className="block text-orange-600">Revolution</span>
@@ -161,35 +192,42 @@ const LiquidFlowLogin = () => {
 
           <div className="bg-white bg-opacity-80 backdrop-blur-sm p-8 rounded-2xl shadow-xl">
             <h2 className="text-2xl font-bold text-gray-800 mb-6">Sign In</h2>
-            
-            {/* LOGIN FORM */}
+
+            {/* ➕ ERROR MESSAGE */}
+            {errorMsg && (
+              <p className="text-red-600 text-sm mb-3 text-center">
+                {errorMsg}
+              </p>
+            )}
+
+            {/* ➕ FORM LOGIN */}
             <form className="space-y-4" onSubmit={handleLogin}>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                <input 
-                  type="email" 
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors"
-                  placeholder="your@email.com"
+                <input
+                  type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 transition-colors"
+                  placeholder="your@email.com"
                   required
                 />
               </div>
 
               <div className="relative">
                 <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
-                <input 
-                  type={showPassword ? "text" : "password"} 
-                  className="w-full px-4 py-2 pr-10 pl-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors"
-                  placeholder="••••••••"
+                <input
+                  type={showPassword ? "text" : "password"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                  className="w-full px-4 py-2 pr-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500"
+                  placeholder="••••••••"
                   required
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-[calc(50%+0.75rem)] -translate-y-1/2 flex items-center justify-center text-gray-500 hover:text-gray-700"
+                  className="absolute right-3 top-[calc(50%+0.75rem)] -translate-y-1/2 text-gray-500"
                 >
                   {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
                 </button>
@@ -197,33 +235,29 @@ const LiquidFlowLogin = () => {
 
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
-                  <input 
-                    id="remember-me" 
-                    type="checkbox" 
-                    className="h-4 w-4 text-orange-600 focus:ring-orange-500 border-gray-300 rounded"
-                  />
-                  <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-700">
+                  <input id="remember-me" type="checkbox" className="h-4 w-4 text-orange-600" />
+                  <label htmlFor="remember-me" className="ml-2 text-sm text-gray-700">
                     Remember me
                   </label>
                 </div>
-                <a href="#" className="text-sm text-orange-600 hover:text-orange-700">
+                <a className="text-sm text-orange-600 hover:text-orange-700">
                   Forgot password?
                 </a>
               </div>
 
-              <button 
+              <button
                 type="submit"
-                className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-md"
                 disabled={loading}
+                className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-md"
               >
-                {loading ? "Loading..." : "Sign In"}
+                {loading ? "Signing in..." : "Sign In"}
               </button>
             </form>
 
             <div className="mt-6 text-center">
               <p className="text-sm text-gray-600">
                 Don't have an account?{' '}
-                <a href="#" className="font-medium text-orange-600 hover:text-orange-700">
+                <a className="font-medium text-orange-600 hover:text-orange-700">
                   Sign up now
                 </a>
               </p>
@@ -234,7 +268,7 @@ const LiquidFlowLogin = () => {
             <button className="flex-1 bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-md">
               Start Free Trial
             </button>
-            <button className="flex-1 border-2 border-orange-500 text-orange-600 hover:bg-orange-50 hover:text-orange-700 font-semibold py-3 px-4 rounded-lg transition-all duration-300 transform hover:scale-105">
+            <button className="flex-1 border-2 border-orange-500 text-orange-600 hover:bg-orange-50 py-3 px-4 rounded-lg transition-all duration-300 transform hover:scale-105">
               Watch Demo
             </button>
           </div>
@@ -243,6 +277,7 @@ const LiquidFlowLogin = () => {
         <footer className="absolute bottom-6 text-center text-sm text-gray-600">
           © 2025 Muhammad Hanif. Smkn 4 Tangerang.
         </footer>
+
       </div>
     </div>
   );

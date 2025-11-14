@@ -1,19 +1,19 @@
 // src/components/ProtectedRoute.jsx
 import { Navigate, Outlet, useLocation, useParams } from "react-router-dom";
-import { useAuth } from "../context/AuthContext.jsx";
 
 export default function ProtectedRoute() {
   const location = useLocation();
-  const { user } = useAuth();
-  const { userId } = useParams();
+  const { id } = useParams();
+
+  const user = JSON.parse(localStorage.getItem("user"));
 
   if (!user) {
     return <Navigate to="/" replace state={{ from: location }} />;
   }
 
-  // Pastikan userId sesuai user login
-  if (userId && parseInt(userId) !== user.id) {
-    return <Navigate to={`/user/${user.id}/home`} replace />;
+  // Cegah user A masuk URL user B
+  if (id && id !== String(user.id)) {
+    return <Navigate to={`/${user.id}/home`} replace />;
   }
 
   return <Outlet />;
