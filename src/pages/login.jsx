@@ -254,7 +254,7 @@ const LiquidFlowLogin = () => {
                 disabled={loading}
                 className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-md"
               >
-                {loading ? "Signing in..." : "Sign In"}
+                {loading ? "Loading.." : "Sign In"}
               </button>
             </form>
 
