@@ -46,7 +46,7 @@ const LiquidFlowLogin = () => {
 
       // simpan user
       const userData = {
-        id: data.id,
+        id: encodedId,  // ganti dari data.id ke encodedId
         name: data.name,
         email: data.email,
         token: data.token
@@ -55,7 +55,11 @@ const LiquidFlowLogin = () => {
       localStorage.setItem("user", JSON.stringify(userData));
 
       // redirect ke halaman milik user
-      navigate(`/${data.id}/home`, { replace: true });
+      // Encode ID user ke Base64
+      const encodedId = btoa(data.id); // btoa() = encode Base64
+
+      // redirect ke halaman milik user
+      navigate(`/${encodedId}/home`, { replace: true });
 
     } catch (err) {
       setErrorMsg("Tidak dapat terhubung ke server!");
