@@ -219,7 +219,7 @@ export default function App() {
               </div>
 
               {/* Langkah 3 - Sheet Batal */}
-              <div className="mb-6">
+              {/*<div className="mb-6">
                 <h2 className="text-xl font-semibold text-gray-800 mb-3 flex items-center">
                   <span className="mr-2">📄</span> Langkah 3 — Jalankan Sheet Batal
                 </h2>
@@ -240,7 +240,7 @@ export default function App() {
                     </>
                   )}
                 </button>
-              </div>
+              </div>*/}
 
               {message.text && message.type !== 'error' && (
                 <div className={`mt-4 p-3 rounded-lg ${
