@@ -24,6 +24,7 @@ const LiquidFlowLogin = () => {
       const res = await fetch("https://api-web.up.railway.app/api/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        // password plaintext dikirim, backend yg nge-hash & check
         body: JSON.stringify({ email, password }),
       });
 
