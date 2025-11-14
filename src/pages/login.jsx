@@ -14,6 +14,14 @@ const LiquidFlowLogin = () => {
 
   const navigate = useNavigate();
 
+  // ➕ AUTO REDIRECT JIKA SUDAH LOGIN
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user && user.id) {
+      navigate(`/${user.id}/home`, { replace: true });
+    }
+  }, [navigate]);
+
   // ➕ HANDLE LOGIN
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -24,7 +32,6 @@ const LiquidFlowLogin = () => {
       const res = await fetch("https://api-web.up.railway.app/api/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        // password plaintext dikirim, backend yg nge-hash & check
         body: JSON.stringify({ email, password }),
       });
 
@@ -167,7 +174,7 @@ const LiquidFlowLogin = () => {
   }, []);
 
   // ==========================
-  // UI LOGIN (TIDAK DIUBAH, HANYA DITAMBAH VALUE+onChange+onSubmit)
+  // UI LOGIN (TIDAK DIUBAH)
   // ==========================
   return (
     <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-orange-50 via-orange-100 to-red-50">
@@ -175,7 +182,6 @@ const LiquidFlowLogin = () => {
       <div className="absolute inset-0 bg-black bg-opacity-10"></div>
 
       <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-6">
-
         <header className="absolute top-6 left-6">
           <h1 className="text-2xl font-bold text-orange-600">LiquidFlow</h1>
         </header>
@@ -185,7 +191,6 @@ const LiquidFlowLogin = () => {
         </button>
 
         <div className="max-w-md w-full space-y-8">
-          
           <h1 className="text-4xl md:text-5xl font-bold text-gray-800 text-center leading-tight">
             solusi hanif
             <span className="block text-orange-600">Revolution</span>
@@ -195,14 +200,10 @@ const LiquidFlowLogin = () => {
           <div className="bg-white bg-opacity-80 backdrop-blur-sm p-8 rounded-2xl shadow-xl">
             <h2 className="text-2xl font-bold text-gray-800 mb-6">Sign In</h2>
 
-            {/* ➕ ERROR MESSAGE */}
             {errorMsg && (
-              <p className="text-red-600 text-sm mb-3 text-center">
-                {errorMsg}
-              </p>
+              <p className="text-red-600 text-sm mb-3 text-center">{errorMsg}</p>
             )}
 
-            {/* ➕ FORM LOGIN */}
             <form className="space-y-4" onSubmit={handleLogin}>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
@@ -242,9 +243,7 @@ const LiquidFlowLogin = () => {
                     Remember me
                   </label>
                 </div>
-                <a className="text-sm text-orange-600 hover:text-orange-700">
-                  Forgot password?
-                </a>
+                <a className="text-sm text-orange-600 hover:text-orange-700">Forgot password?</a>
               </div>
 
               <button
@@ -259,9 +258,7 @@ const LiquidFlowLogin = () => {
             <div className="mt-6 text-center">
               <p className="text-sm text-gray-600">
                 Don't have an account?{' '}
-                <a className="font-medium text-orange-600 hover:text-orange-700">
-                  Sign up now
-                </a>
+                <a className="font-medium text-orange-600 hover:text-orange-700">Sign up now</a>
               </p>
             </div>
           </div>
@@ -279,7 +276,6 @@ const LiquidFlowLogin = () => {
         <footer className="absolute bottom-6 text-center text-sm text-gray-600">
           © 2025 Muhammad Hanif. Smkn 4 Tangerang.
         </footer>
-
       </div>
     </div>
   );
