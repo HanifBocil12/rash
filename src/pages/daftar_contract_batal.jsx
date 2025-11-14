@@ -11,9 +11,9 @@ export default function App() {
   const [loadingSheet, setLoadingSheet] = useState(false);
   const [message, setMessage] = useState({ type: '', text: '' });
   const [startRow, setStartRow] = useState(0);
-  const [excelPath, setExcelPath] = useState(''); // State baru untuk excel_path
+  const [excelPath, setExcelPath] = useState(''); // State untuk excel_path
 
-  // Fetch agent status on load and periodically
+  // Fetch agent status on load dan setiap 5 detik
   useEffect(() => {
     fetchAgentStatus();
     const interval = setInterval(fetchAgentStatus, 5000);
@@ -47,7 +47,11 @@ export default function App() {
       const response = await fetch(`${apiUrl.trim()}/trigger`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ task, start_row: startRow, excel_path: excelPath }), // kirim excel_path
+        body: JSON.stringify({
+          task,
+          start_row: startRow,    // Kirim startRow
+          excel_path: excelPath    // Kirim excelPath
+        }),
         timeout: 10000
       });
 
