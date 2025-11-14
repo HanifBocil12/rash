@@ -18,7 +18,7 @@ const LiquidFlowLogin = () => {
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
     if (user && user.id) {
-      navigate(`/${user.id}/home`, { replace: true });
+      navigate(`/${btoa(user.id)}/home`, { replace: true });
     }
   }, [navigate]);
 
@@ -44,19 +44,18 @@ const LiquidFlowLogin = () => {
         return;
       }
 
+      // Encode ID user ke Base64
+      const encodedId = btoa(data.id);
+
       // simpan user
       const userData = {
-        id: encodedId,  // ganti dari data.id ke encodedId
+        id: data.id,    // tetap ID asli
         name: data.name,
         email: data.email,
         token: data.token
       };
 
       localStorage.setItem("user", JSON.stringify(userData));
-
-      // redirect ke halaman milik user
-      // Encode ID user ke Base64
-      const encodedId = btoa(data.id); // btoa() = encode Base64
 
       // redirect ke halaman milik user
       navigate(`/${encodedId}/home`, { replace: true });
