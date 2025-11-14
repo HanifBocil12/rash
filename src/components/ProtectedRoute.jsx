@@ -1,17 +1,20 @@
 // src/components/ProtectedRoute.jsx
-import { Navigate, Outlet, useLocation } from "react-router-dom";
+import { Navigate, Outlet, useLocation, useParams } from "react-router-dom";
+import { useAuth } from "../context/AuthContext.jsx";
 
 export default function ProtectedRoute() {
   const location = useLocation();
+  const { user } = useAuth();
+  const { userId } = useParams();
 
-  // Cek apakah user sudah login
-  const user = localStorage.getItem("user"); // contoh, sesuaikan dengan sistemmu
-
-  // Kalau belum login → redirect ke halaman login
   if (!user) {
     return <Navigate to="/" replace state={{ from: location }} />;
   }
 
-  // Kalau sudah login → render child route (Outlet)
+  // Pastikan userId sesuai user login
+  if (userId && parseInt(userId) !== user.id) {
+    return <Navigate to={`/user/${user.id}/home`} replace />;
+  }
+
   return <Outlet />;
 }
