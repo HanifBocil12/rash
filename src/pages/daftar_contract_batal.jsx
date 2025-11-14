@@ -11,8 +11,9 @@ export default function App() {
   const [loadingSheet, setLoadingSheet] = useState(false);
   const [message, setMessage] = useState({ type: '', text: '' });
   const [startRow, setStartRow] = useState(0);
-  const [excelPath, setExcelPath] = useState(''); // state baru untuk excel_path
+  const [excelPath, setExcelPath] = useState(''); // State baru untuk excel_path
 
+  // Fetch agent status on load and periodically
   useEffect(() => {
     fetchAgentStatus();
     const interval = setInterval(fetchAgentStatus, 5000);
@@ -40,18 +41,13 @@ export default function App() {
   };
 
   const handleTrigger = async (task, setLoading, successMessage) => {
-    if (!excelPath) {
-      setMessage({ type: 'error', text: 'Harap masukkan Excel path terlebih dahulu.' });
-      return;
-    }
-
     setLoading(true);
     setMessage({ type: '', text: '' });
     try {
       const response = await fetch(`${apiUrl.trim()}/trigger`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ task, start_row: startRow, excel_path: excelPath }),
+        body: JSON.stringify({ task, start_row: startRow, excel_path: excelPath }), // kirim excel_path
         timeout: 10000
       });
 
@@ -103,129 +99,159 @@ export default function App() {
   };
 
   return (
-    <div className="relative min-h-screen overflow-hidden">
-      <Liquid />
-      <div className="relative z-10 min-h-screen bg-white/40 py-8 px-4">        
-        <div className="max-w-2xl mx-auto bg-white rounded-xl shadow-md p-6 md:p-8">
-          <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-2">⬇️ PDF, Search & Sheet Batal</h1>
-          <p className="text-gray-600 mb-6">
-            Gunakan tombol di bawah untuk mengirim perintah ke Railway agent agar menjalankan proses otomatis yang diinginkan.
-          </p>
+     <div className="relative min-h-screen overflow-hidden">
+        <Liquid />
+        <div className="relative z-10 min-h-screen bg-white/40 py-8 px-4">        
+            <div className="max-w-2xl mx-auto bg-white rounded-xl shadow-md p-6 md:p-8">
+              <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-2">⬇️ PDF, Search & Sheet Batal</h1>
+              <p className="text-gray-600 mb-6">
+                Gunakan tombol di bawah untuk mengirim perintah ke Railway agent agar menjalankan proses otomatis yang diinginkan.
+              </p>
+              
+              <div className="mb-6">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Masukkan URL Railway API:
+                </label>
+                <input
+                  type="text"
+                  value={apiUrl}
+                  onChange={(e) => setApiUrl(e.target.value)}
+                  disabled
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+                  placeholder="https://api-web.up.railway.app"
+                />
+              </div>
 
-          {/* Input API */}
-          <div className="mb-6">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Masukkan URL Railway API:
-            </label>
-            <input
-              type="text"
-              value={apiUrl}
-              onChange={(e) => setApiUrl(e.target.value)}
-              disabled
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
-              placeholder="https://api-web.up.railway.app"
-            />
-          </div>
+              <div className="mb-6">
+                <h2 className="text-xl font-semibold text-gray-800 mb-3 flex items-center">
+                  <span className="mr-2">🟢</span> Status Agent
+                </h2>
+                
+                {loadingStatus ? (
+                  <div className="text-gray-500">Memuat status...</div>
+                ) : message.type === 'error' ? (
+                  <div className="flex items-center space-x-2 text-red-700 bg-red-50 p-3 rounded-lg">
+                    <AlertTriangle className="w-5 h-5" />
+                    <span>Tidak dapat mengambil status agent ({message.text})</span>
+                  </div>
+                ) : (
+                  getStatusDisplay()
+                )}
+              </div>
 
-          {/* Input Excel Path */}
-          <div className="mb-6">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Masukkan Excel Path:
-            </label>
-            <input
-              type="text"
-              value={excelPath}
-              onChange={(e) => setExcelPath(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
-              placeholder="C:\path\to\file.xlsx"
-            />
-          </div>
+              <div className="mb-6">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Masukkan baris mulai (biarkan 0 untuk otomatis):
+                </label>
+                <input
+                  type="number"
+                  min="0"
+                  value={startRow}
+                  onChange={(e) => setStartRow(parseInt(e.target.value) || 0)}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+                />
+              </div>
 
-          {/* Input start row */}
-          <div className="mb-6">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Masukkan baris mulai (biarkan 0 untuk otomatis):
-            </label>
-            <input
-              type="number"
-              min="0"
-              value={startRow}
-              onChange={(e) => setStartRow(parseInt(e.target.value) || 0)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
-            />
-          </div>
+              {/* Input Excel Path */}
+              <div className="mb-6">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Masukkan Excel Path:
+                </label>
+                <input
+                  type="text"
+                  value={excelPath}
+                  onChange={(e) => setExcelPath(e.target.value)}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+                  placeholder="C:\\path\\to\\file.xlsx"
+                />
+              </div>
 
-          {/* Buttons */}
-          <div className="mb-6">
-            <button
-              onClick={() => handleTrigger('batal', setLoadingPdf, `PDF Batal berhasil dikirim! (mulai dari baris ${startRow || 'otomatis'})`)}
-              disabled={loadingPdf}
-              className="w-full bg-orange-500 hover:bg-orange-600 text-white font-medium py-3 px-4 rounded-lg flex items-center justify-center space-x-2 disabled:opacity-70 disabled:cursor-not-allowed mb-3"
-            >
-              {loadingPdf ? (
-                <>
-                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-                  <span>Mengirim perintah...</span>
-                </>
-              ) : (
-                <>
-                  <Zap className="w-5 h-5" />
-                  <span>Jalankan PDF Batal via Agent</span>
-                </>
+              {/* Langkah 1 - PDF Batal */}
+              <div className="mb-6">
+                <h2 className="text-xl font-semibold text-gray-800 mb-3 flex items-center">
+                  <span className="mr-2">📕</span> Langkah 1 — Jalankan PDF Batal
+                </h2>
+                <button
+                  onClick={() => handleTrigger('batal', setLoadingPdf, `PDF Batal berhasil dikirim! (mulai dari baris ${startRow || 'otomatis'})`)}
+                  disabled={loadingPdf}
+                  className="w-full bg-orange-500 hover:bg-orange-600 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center space-x-2 disabled:opacity-70 disabled:cursor-not-allowed"
+                >
+                  {loadingPdf ? (
+                    <>
+                      <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                      <span>Mengirim perintah...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Zap className="w-5 h-5" />
+                      <span>Jalankan PDF Batal via Agent</span>
+                    </>
+                  )}
+                </button>
+              </div>
+
+              {/* Langkah 2 - Search Batal */}
+              <div className="mb-6">
+                <h2 className="text-xl font-semibold text-gray-800 mb-3 flex items-center">
+                  <span className="mr-2">🔍</span> Langkah 2 — Jalankan Search Batal
+                </h2>
+                <button
+                  onClick={() => handleTrigger('search_batal', setLoadingSearch, `Search Batal berhasil dikirim! (mulai dari baris ${startRow || 'otomatis'})`)}
+                  disabled={loadingSearch}
+                  className="w-full bg-orange-500 hover:bg-orange-600 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center space-x-2 disabled:opacity-70 disabled:cursor-not-allowed"
+                >
+                  {loadingSearch ? (
+                    <>
+                      <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                      <span>Mengirim perintah...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Zap className="w-5 h-5" />
+                      <span>Jalankan Search Batal via Agent</span>
+                    </>
+                  )}
+                </button>
+              </div>
+
+              {/* Langkah 3 - Sheet Batal */}
+              <div className="mb-6">
+                <h2 className="text-xl font-semibold text-gray-800 mb-3 flex items-center">
+                  <span className="mr-2">📄</span> Langkah 3 — Jalankan Sheet Batal
+                </h2>
+                <button
+                  onClick={() => handleTrigger('sheet_batal', setLoadingSheet, `Sheet Batal berhasil dikirim! (mulai dari baris ${startRow || 'otomatis'})`)}
+                  disabled={loadingSheet}
+                  className="w-full bg-orange-500 hover:bg-orange-600 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center space-x-2 disabled:opacity-70 disabled:cursor-not-allowed"
+                >
+                  {loadingSheet ? (
+                    <>
+                      <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                      <span>Mengirim perintah...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Zap className="w-5 h-5" />
+                      <span>Jalankan Sheet Batal via Agent</span>
+                    </>
+                  )}
+                </button>
+              </div>
+
+              {message.text && message.type !== 'error' && (
+                <div className={`mt-4 p-3 rounded-lg ${
+                  message.type === 'success' ? 'bg-green-50 text-green-700' : 
+                  message.type === 'warning' ? 'bg-yellow-50 text-yellow-700' : 'bg-blue-50 text-blue-700'
+                }`}>
+                  {message.text}
+                </div>
               )}
-            </button>
 
-            <button
-              onClick={() => handleTrigger('search_batal', setLoadingSearch, `Search Batal berhasil dikirim! (mulai dari baris ${startRow || 'otomatis'})`)}
-              disabled={loadingSearch}
-              className="w-full bg-orange-500 hover:bg-orange-600 text-white font-medium py-3 px-4 rounded-lg flex items-center justify-center space-x-2 disabled:opacity-70 disabled:cursor-not-allowed mb-3"
-            >
-              {loadingSearch ? (
-                <>
-                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-                  <span>Mengirim perintah...</span>
-                </>
-              ) : (
-                <>
-                  <Zap className="w-5 h-5" />
-                  <span>Jalankan Search Batal via Agent</span>
-                </>
-              )}
-            </button>
-
-            <button
-              onClick={() => handleTrigger('sheet_batal', setLoadingSheet, `Sheet Batal berhasil dikirim! (mulai dari baris ${startRow || 'otomatis'})`)}
-              disabled={loadingSheet}
-              className="w-full bg-orange-500 hover:bg-orange-600 text-white font-medium py-3 px-4 rounded-lg flex items-center justify-center space-x-2 disabled:opacity-70 disabled:cursor-not-allowed"
-            >
-              {loadingSheet ? (
-                <>
-                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-                  <span>Mengirim perintah...</span>
-                </>
-              ) : (
-                <>
-                  <Zap className="w-5 h-5" />
-                  <span>Jalankan Sheet Batal via Agent</span>
-                </>
-              )}
-            </button>
-          </div>
-
-          {message.text && message.type !== 'error' && (
-            <div className={`mt-4 p-3 rounded-lg ${
-              message.type === 'success' ? 'bg-green-50 text-green-700' : 
-              message.type === 'warning' ? 'bg-yellow-50 text-yellow-700' : 'bg-blue-50 text-blue-700'
-            }`}>
-              {message.text}
+              <div className="mt-8 pt-6 border-t text-center text-gray-500 text-sm">
+                Dibuat dengan ❤️ menggunakan <strong>Python</strong> & <strong>Streamlit</strong>
+              </div>
             </div>
-          )}
-
-          <div className="mt-8 pt-6 border-t text-center text-gray-500 text-sm">
-            Dibuat dengan ❤️ menggunakan <strong>Python</strong> & <strong>Streamlit</strong>
-          </div>
         </div>
       </div>
-    </div>
   );
 }
