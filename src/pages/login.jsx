@@ -27,10 +27,11 @@ const LiquidFlowLogin = () => {
         body: JSON.stringify({ email, password }),
       });
 
-      const data = await res.json();
-
-      if (!res.ok) {
-        setErrorMsg(data.message || "Login gagal!");
+      let data;
+      try {
+        data = await res.json();
+      } catch {
+        setErrorMsg(`Server tidak merespon JSON. Status: ${res.status}`);
         setLoading(false);
         return;
       }
