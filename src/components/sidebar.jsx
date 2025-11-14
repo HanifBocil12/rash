@@ -15,9 +15,10 @@ export default function Sidebar() {
   const submenuRef = useRef(null);
   const location = useLocation();
 
-  // Ambil user ID
+  // Ambil user ID dan encode ke Base64
   const user = JSON.parse(localStorage.getItem("user"));
   const userId = user?.id;
+  const encodedId = userId ? btoa(userId) : "";
 
   useEffect(() => {
     if (location.pathname.includes('/gabung_pdf') || location.pathname.includes('/download_pdf')) {
@@ -42,8 +43,8 @@ export default function Sidebar() {
           <h1 className="text-xl font-bold text-gray-800 mb-6">📁 Dashboard</h1>
           
           <nav className="space-y-1">
-            <MenuItem icon={Home} to={`/${userId}/home`} label="Home" />
-            <MenuItem icon={FileText} to={`/${userId}/status_pensanan_ina`} label="Document Contract" />
+            <MenuItem icon={Home} to={`/${encodedId}/home`} label="Home" />
+            <MenuItem icon={FileText} to={`/${encodedId}/status_pensanan_ina`} label="Document Contract" />
             
             <div className="menu-item has-submenu relative" ref={submenuRef}>
               <button
@@ -65,13 +66,13 @@ export default function Sidebar() {
                 <div className="ml-6 mt-1 space-y-1 py-2">
                   <SubMenuItem 
                     icon={Download} 
-                    to={`/${userId}/gabung_pdf`} 
+                    to={`/${encodedId}/gabung_pdf`} 
                     label="Gabung PDF" 
                     isActive={location.pathname.includes('/gabung_pdf')}
                   />
                   <SubMenuItem 
                     icon={Download} 
-                    to={`/${userId}/download_pdf`} 
+                    to={`/${encodedId}/download_pdf`} 
                     label="Download PDF Selesai" 
                     isActive={location.pathname.includes('/download_pdf')}
                   />
@@ -79,8 +80,8 @@ export default function Sidebar() {
               )}
             </div>
             
-            <MenuItem icon={Package} to={`/${userId}/perlengkapan`} label="Download Zip" />
-            <MenuItem icon={FileText} to={`/${userId}/document_batal`} label="PDF Batal" />
+            <MenuItem icon={Package} to={`/${encodedId}/perlengkapan`} label="Download Zip" />
+            <MenuItem icon={FileText} to={`/${encodedId}/document_batal`} label="PDF Batal" />
             <MenuItem icon={LogIn} to="/" label="Logout" />
           </nav>
         </div>
