@@ -17,10 +17,21 @@ const LiquidFlowLogin = () => {
   // ➕ AUTO REDIRECT JIKA SUDAH LOGIN
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
-   if (user && user.ui_id) {
+    if (user && user.ui_id) {
       navigate(`/${user.ui_id}/home`, { replace: true });
     }
   }, [navigate]);
+
+  // =====================================
+  // 🔥 GENERATE UI_ID RANDOM PER DEVICE
+  // =====================================
+  const generateUiId = () => {
+    const array = new Uint8Array(16);
+    crypto.getRandomValues(array);
+    return btoa(String.fromCharCode(...array))
+      .replace(/[^A-Za-z0-9]/g, "")
+      .slice(0, 16);
+  };
 
   // ➕ HANDLE LOGIN
   const handleLogin = async (e) => {
@@ -44,13 +55,13 @@ const LiquidFlowLogin = () => {
         return;
       }
 
-      // Encode ID user ke Base64
-      const encodedId = btoa(data.id);
+      // 🔥 BUAT UI_ID RANDOM PER DEVICE
+      const ui_id = generateUiId();
 
-      // simpan user
+      // simpan user ke localstorage
       const userData = {
         id: data.id,
-        ui_id: data.ui_id,   // ← WAJIB DISIMPAN
+        ui_id: ui_id, // 🔥 sekarang pakai UI_ID lokal device
         name: data.name,
         email: data.email,
         token: data.token
@@ -58,8 +69,8 @@ const LiquidFlowLogin = () => {
 
       localStorage.setItem("user", JSON.stringify(userData));
 
-      // Redirect sesuai ui_id
-      navigate(`/${data.ui_id}/home`, { replace: true });
+      // Redirect sesuai ui_id device
+      navigate(`/${ui_id}/home`, { replace: true });
 
     } catch (err) {
       setErrorMsg("Tidak dapat terhubung ke server!");
