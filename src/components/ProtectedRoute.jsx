@@ -19,14 +19,16 @@ export default function ProtectedRoute() {
     // atob() untuk decode Base64 dari URL
     decodedId = atob(id);
   } catch (e) {
-    // Jika decode gagal, redirect ke home user sendiri
-    return <Navigate to={`/${user.id}/home`} replace />;
+    // Jika decode gagal, redirect ke home user sendiri (FIX)
+    const safeBase64 = btoa(String(user.id));
+    return <Navigate to={`/${safeBase64}/home`} replace />;
   }
 
   // Cegah user A masuk URL user B
-  // decodedId = dari URL, user.id = dari localStorage (angka/string)
   if (decodedId && decodedId !== String(user.id)) {
-    return <Navigate to={`/${user.id}/home`} replace />;
+    // FIX redirect aman pakai Base64
+    const safeBase64 = btoa(String(user.id));
+    return <Navigate to={`/${safeBase64}/home`} replace />;
   }
 
   // Jika semua oke, render child routes
