@@ -1,74 +1,51 @@
 import { useState, useEffect } from 'react';
+import JSZip from 'jszip';
+import { saveAs } from 'file-saver';
 import Liquid from '../components/liquid.jsx';
 
 export default function Perlengkapan() {
   const fileUrl = "/web.rar";
-
   const [userId, setUserId] = useState(null);
 
   useEffect(() => {
     async function fetchUserId() {
+      const user = JSON.parse(localStorage.getItem("user"));
+      const token = user?.token;
+      if (!token) return;
       try {
-        // Ambil token dari object 'user' di localStorage
-        const user = JSON.parse(localStorage.getItem("user"));
-        const token = user?.token;
-        console.log("Token yang dikirim ke API:", token); // debug token
-
-        if (!token) {
-          console.error("Token tidak ditemukan di localStorage!");
-          return;
-        }
-
         const res = await fetch("https://api-web.up.railway.app/userid/get_user_id", {
-          headers: {
-            "Authorization": `Bearer ${token}`,
-          },
+          headers: { "Authorization": `Bearer ${token}` },
         });
-
-        if (!res.ok) {
-          const errData = await res.json().catch(() => ({}));
-          console.error("Gagal ambil user_id:", errData.message || res.statusText);
-          return;
-        }
-
+        if (!res.ok) return;
         const data = await res.json();
-        if (data.status === "success") {
-          setUserId(data.user_id);
-        } else {
-          console.error("Gagal ambil user_id:", data.message);
-        }
+        if (data.status === "success") setUserId(data.user_id);
       } catch (err) {
-        console.error("Error fetch user_id:", err);
+        console.error(err);
       }
     }
-
     fetchUserId();
   }, []);
 
-  // ==== Tombol download JSON user ====
-  const downloadUserJson = () => {
-    const user = JSON.parse(localStorage.getItem("user"));
-    if (!user) {
-      alert("User tidak ditemukan di localStorage!");
-      return;
-    }
+  const downloadZip = async () => {
+    const zip = new JSZip();
 
-    const dataStr = JSON.stringify(user, null, 2);
-    const blob = new Blob([dataStr], { type: "application/json" });
-    const url = URL.createObjectURL(blob);
+    // 1️⃣ Ambil web.rar sebagai ArrayBuffer
+    const rarRes = await fetch(fileUrl);
+    const rarData = await rarRes.arrayBuffer();
+    zip.file("web.rar", rarData);
 
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "user.json"; // nama file JSON
-    a.click();
+    // 2️⃣ Ambil user.json dari localStorage
+    const user = JSON.parse(localStorage.getItem("user")) || {};
+    zip.file("user.json", JSON.stringify(user, null, 2));
 
-    URL.revokeObjectURL(url);
+    // 3️⃣ Generate ZIP dan trigger download
+    const content = await zip.generateAsync({ type: "blob" });
+    saveAs(content, "perlengkapan.zip");
   };
 
   return (
     <div className="relative min-h-screen overflow-hidden">
       <Liquid />
-
       <div className="relative z-10 min-h-screen bg-white/40 py-8 px-4">
         <div className="max-w-2xl mx-auto bg-white rounded-xl shadow-md p-6 md:p-8">
           <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-2">
@@ -77,36 +54,18 @@ export default function Perlengkapan() {
           
           <div className="mb-6">
             <div className="text-gray-600 mb-2">📁 Path file: /app/static/web.rar</div>
-            
             <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg mb-4">
               ✅ File ditemukan
             </div>
 
-            {userId && (
-              <div className="text-blue-600 mb-2">
-                👤 User ID: {userId}
-              </div>
-            )}
+            {userId && <div className="text-blue-600 mb-2">👤 User ID: {userId}</div>}
 
-            <div className="text-blue-600 mb-2">
-              👤 User ID: {userId}
-            </div>
-
-            {/* Tombol download JSON */}
             <button
-              onClick={downloadUserJson}
+              onClick={downloadZip}
               className="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 mb-4"
             >
-              💾 Download User JSON
+              💾 Download ZIP (web.rar + user.json)
             </button>
-            
-            <a
-              href={fileUrl}
-              download="web.rar"
-              className="w-full bg-orange-500 hover:bg-orange-600 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center space-x-2"
-            >
-              <span>💾 Download ZIP</span>
-            </a>
           </div>
 
           <div className="mt-8 pt-6 border-t text-center text-gray-500 text-sm">

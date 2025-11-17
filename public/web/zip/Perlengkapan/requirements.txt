@@ -1,5 +1,0 @@
-pywin32
-selenium
-requests
-PyPDF2
-flask
