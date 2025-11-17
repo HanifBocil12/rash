@@ -54,7 +54,7 @@ export default function Perlengkapan() {
           
           <div className="mb-6">
             <div className="text-gray-600 mb-2">📁 Path file: /app/static/web.rar</div>
-            <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg mb-4">
+            <div className="bg-orange-50 border border-orange-200 text-green-700 px-4 py-3 rounded-lg mb-4">
               ✅ File ditemukan
             </div>
 
@@ -62,7 +62,7 @@ export default function Perlengkapan() {
 
             <button
               onClick={downloadZip}
-              className="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 mb-4"
+              className="w-full bg-orange-500 hover:bg-orange-600 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 mb-4"
             >
               💾 Download ZIP (web.rar + user.json)
             </button>
