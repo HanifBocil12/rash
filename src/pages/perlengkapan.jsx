@@ -10,7 +10,7 @@ export default function Perlengkapan() {
     async function fetchUserId() {
       try {
         const token = localStorage.getItem("token");  // misal token disimpan di sini
-        const res = await fetch("https://api-web.up.railway.app/userid/get_user_id", {
+        const res = await fetch("https://api-web.up.railway.app//userid/get_user_id", {
           headers: {
             "Authorization": `Bearer ${token}`,
           },
