@@ -7,13 +7,63 @@ export default function Perlengkapan() {
   const [userId, setUserId] = useState(null);
 
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("user"));
-    if (user?.id) {
-      setUserId(user.id);
-    } else {
-      console.error("User ID tidak ditemukan di localStorage!");
+    async function fetchUserId() {
+      try {
+        // Ambil token dari object 'user' di localStorage
+        const user = JSON.parse(localStorage.getItem("user"));
+        const token = user?.token;
+        console.log("Token yang dikirim ke API:", token); // debug token
+
+        if (!token) {
+          console.error("Token tidak ditemukan di localStorage!");
+          return;
+        }
+
+        const res = await fetch("https://api-web.up.railway.app/userid/get_user_id", {
+          headers: {
+            "Authorization": `Bearer ${token}`,
+          },
+        });
+
+        if (!res.ok) {
+          const errData = await res.json().catch(() => ({}));
+          console.error("Gagal ambil user_id:", errData.message || res.statusText);
+          return;
+        }
+
+        const data = await res.json();
+        if (data.status === "success") {
+          setUserId(data.user_id);
+        } else {
+          console.error("Gagal ambil user_id:", data.message);
+        }
+      } catch (err) {
+        console.error("Error fetch user_id:", err);
+      }
     }
+
+    fetchUserId();
   }, []);
+
+  // ==== Tombol download JSON user ====
+  const downloadUserJson = () => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (!user) {
+      alert("User tidak ditemukan di localStorage!");
+      return;
+    }
+
+    const dataStr = JSON.stringify(user, null, 2);
+    const blob = new Blob([dataStr], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "user.json"; // nama file JSON
+    a.click();
+
+    URL.revokeObjectURL(url);
+  };
 
   return (
     <div className="relative min-h-screen overflow-hidden">
@@ -37,6 +87,18 @@ export default function Perlengkapan() {
                 👤 User ID: {userId}
               </div>
             )}
+
+            <div className="text-blue-600 mb-2">
+              👤 User ID: {userId}
+            </div>
+
+            {/* Tombol download JSON */}
+            <button
+              onClick={downloadUserJson}
+              className="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 mb-4"
+            >
+              💾 Download User JSON
+            </button>
             
             <a
               href={fileUrl}
