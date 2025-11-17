@@ -15,14 +15,8 @@ export default function Sidebar() {
   const submenuRef = useRef(null);
   const location = useLocation();
 
-  // Ambil user ID dan encode ke Base64
   const user = JSON.parse(localStorage.getItem("user"));
-
-  // FIX: pastikan selalu string agar btoa tidak error
-  const userId = user?.id ? String(user.id) : "1";
-
-  // FIX: encode aman tanpa kemungkinan undefined
-  const encodedId = btoa(userId);
+  const encodedId = user?.sessionHash || ""; 
 
   useEffect(() => {
     if (location.pathname.includes('/gabung_pdf') || location.pathname.includes('/download_pdf')) {
