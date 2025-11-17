@@ -17,8 +17,8 @@ const LiquidFlowLogin = () => {
   // ➕ AUTO REDIRECT JIKA SUDAH LOGIN
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
-    if (user && user.id) {
-      navigate(`/${btoa(user.id)}/home`, { replace: true });
+   if (user && user.ui_id) {
+      navigate(`/${user.ui_id}/home`, { replace: true });
     }
   }, [navigate]);
 
@@ -49,7 +49,8 @@ const LiquidFlowLogin = () => {
 
       // simpan user
       const userData = {
-        id: data.id,    // tetap ID asli
+        id: data.id,
+        ui_id: data.ui_id,   // ← WAJIB DISIMPAN
         name: data.name,
         email: data.email,
         token: data.token
@@ -57,8 +58,8 @@ const LiquidFlowLogin = () => {
 
       localStorage.setItem("user", JSON.stringify(userData));
 
-      // redirect ke halaman milik user
-      navigate(`/${encodedId}/home`, { replace: true });
+      // Redirect sesuai ui_id
+      navigate(`/${data.ui_id}/home`, { replace: true });
 
     } catch (err) {
       setErrorMsg("Tidak dapat terhubung ke server!");
