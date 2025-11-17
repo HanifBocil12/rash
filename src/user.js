@@ -14,7 +14,7 @@ async function seed() {
        VALUES ($1, $2, $3, $4, $5, $6)
        ON CONFLICT (id) DO NOTHING
        RETURNING id, nama, password, email, created_at, updated_at`,
-      [1, "admin", hashedPassword, "admin@example.com", now, now]
+      [2, "admin2", hashedPassword, "admin@example.com", now, now]
     );
 
     if (result.rowCount === 0) {
