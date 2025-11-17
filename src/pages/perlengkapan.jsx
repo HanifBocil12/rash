@@ -9,12 +9,27 @@ export default function Perlengkapan() {
   useEffect(() => {
     async function fetchUserId() {
       try {
+        // Ambil token dari localStorage
         const token = localStorage.getItem("token");  // misal token disimpan di sini
+        console.log("Token yang dikirim ke API:", token); // debug token
+
+        if (!token) {
+          console.error("Token tidak ditemukan di localStorage!");
+          return;
+        }
+
         const res = await fetch("https://api-web.up.railway.app/userid/get_user_id", {
           headers: {
             "Authorization": `Bearer ${token}`,
           },
         });
+
+        if (!res.ok) {
+          const errData = await res.json().catch(() => ({}));
+          console.error("Gagal ambil user_id:", errData.message || res.statusText);
+          return;
+        }
+
         const data = await res.json();
         if (data.status === "success") {
           setUserId(data.user_id);
@@ -53,8 +68,8 @@ export default function Perlengkapan() {
             )}
 
             <div className="text-blue-600 mb-2">
-                👤 User ID: {userId}
-              </div>
+              👤 User ID: {userId}
+            </div>
             
             <a
               href={fileUrl}
