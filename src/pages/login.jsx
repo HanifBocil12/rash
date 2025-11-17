@@ -55,13 +55,20 @@ const LiquidFlowLogin = () => {
         return;
       }
 
+      // 🔥 CEK LOGIN BERHASIL
+      if (!res.ok || !data.id || !data.token) {
+        setErrorMsg(data.error || "Email atau password salah!");
+        setLoading(false);
+        return;
+      }
+
       // 🔥 BUAT UI_ID RANDOM PER DEVICE
       const ui_id = generateUiId();
 
       // simpan user ke localstorage
       const userData = {
         id: data.id,
-        ui_id: ui_id, // 🔥 sekarang pakai UI_ID lokal device
+        ui_id,
         name: data.name,
         email: data.email,
         token: data.token
