@@ -7,42 +7,12 @@ export default function Perlengkapan() {
   const [userId, setUserId] = useState(null);
 
   useEffect(() => {
-    async function fetchUserId() {
-      try {
-        // Ambil token dari object 'user' di localStorage
-        const user = JSON.parse(localStorage.getItem("user"));
-        const token = user?.token;
-        console.log("Token yang dikirim ke API:", token); // debug token
-
-        if (!token) {
-          console.error("Token tidak ditemukan di localStorage!");
-          return;
-        }
-
-        const res = await fetch("https://api-web.up.railway.app/userid/get_user_id", {
-          headers: {
-            "Authorization": `Bearer ${token}`,
-          },
-        });
-
-        if (!res.ok) {
-          const errData = await res.json().catch(() => ({}));
-          console.error("Gagal ambil user_id:", errData.message || res.statusText);
-          return;
-        }
-
-        const data = await res.json();
-        if (data.status === "success") {
-          setUserId(data.user_id);
-        } else {
-          console.error("Gagal ambil user_id:", data.message);
-        }
-      } catch (err) {
-        console.error("Error fetch user_id:", err);
-      }
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user?.id) {
+      setUserId(user.id);
+    } else {
+      console.error("User ID tidak ditemukan di localStorage!");
     }
-
-    fetchUserId();
   }, []);
 
   return (
@@ -67,10 +37,6 @@ export default function Perlengkapan() {
                 👤 User ID: {userId}
               </div>
             )}
-
-            <div className="text-blue-600 mb-2">
-              👤 User ID: {userId}
-            </div>
             
             <a
               href={fileUrl}
