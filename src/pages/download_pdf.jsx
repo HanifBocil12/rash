@@ -10,19 +10,31 @@ export default function DownloadPDFPage() {
   const [loadingTrigger, setLoadingTrigger] = useState(false);
   const [message, setMessage] = useState({ type: '', text: '' });
 
+  // Ambil user dari localStorage
+  const user = JSON.parse(localStorage.getItem("user")) || {};
+  const userId = user.id;
+  const token = user.token;
+
+  const HEADERS = token ? { 'Authorization': `Bearer ${token}` } : {};
+
   useEffect(() => {
+    if (!userId) return;
     fetchAgentStatus();
     const interval = setInterval(fetchAgentStatus, 5000);
     return () => clearInterval(interval);
-  }, [apiUrl]);
+  }, [apiUrl, userId]);
 
   const fetchAgentStatus = async () => {
+    if (!userId) return;
     setLoadingStatus(true);
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 5000);
 
     try {
-      const response = await fetch(`${apiUrl.trim()}/state`, { signal: controller.signal });
+      const response = await fetch(`${apiUrl.trim()}/${userId}/state`, { 
+        signal: controller.signal,
+        headers: HEADERS
+      });
       if (response.ok) {
         const data = await response.json();
         setAgentStatus(data);
@@ -45,6 +57,7 @@ export default function DownloadPDFPage() {
   };
 
   const handleTrigger = async () => {
+    if (!userId) return;
     setLoadingTrigger(true);
     setMessage({ type: '', text: '' });
 
@@ -52,9 +65,9 @@ export default function DownloadPDFPage() {
     const timeout = setTimeout(() => controller.abort(), 10000);
 
     try {
-      const response = await fetch(`${apiUrl.trim()}/trigger`, {
+      const response = await fetch(`${apiUrl.trim()}/${userId}/trigger`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', ...HEADERS },
         body: JSON.stringify({ task: 'perfect' }),
         signal: controller.signal
       });
