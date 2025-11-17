@@ -9,8 +9,9 @@ export default function Perlengkapan() {
   useEffect(() => {
     async function fetchUserId() {
       try {
-        // Ambil token dari localStorage
-        const token = localStorage.getItem("token");  // misal token disimpan di sini
+        // Ambil token dari object 'user' di localStorage
+        const user = JSON.parse(localStorage.getItem("user"));
+        const token = user?.token;
         console.log("Token yang dikirim ke API:", token); // debug token
 
         if (!token) {
