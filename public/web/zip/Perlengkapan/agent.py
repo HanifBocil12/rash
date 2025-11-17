@@ -8,12 +8,9 @@ from datetime import datetime
 API_URL = "https://api-web.up.railway.app"  # URL Railway API Flask kamu
 WORKDIR = r"C:\web\zip\Perlengkapan"        # Direktori script lokal
 
-# USER_ID default tetap bisa dari environment
-USER_ID = os.environ.get("USER_ID", "123")  
-
 os.chdir(WORKDIR)
 print(f"[AGENT] 📁 Working directory: {WORKDIR}")
-print(f"[AGENT] 🔗 Terhubung ke API: {API_URL}, USER_ID={USER_ID}\n")
+print(f"[AGENT] 🔗 Terhubung ke API: {API_URL}\n")
 
 SCRIPT_MAP = {
     "xls": "xls2.py",
@@ -29,7 +26,7 @@ SCRIPT_MAP = {
 def reset_flag():
     """Reset flag ke IDLE di server"""
     try:
-        requests.post(f"{API_URL}/reset", json={"user_id": USER_ID}, timeout=5)
+        requests.post(f"{API_URL}/reset", timeout=5)
         print("[AGENT] 🔄 Flag di-reset ke IDLE")
     except Exception as e:
         print(f"[AGENT] ⚠️ Gagal reset flag: {e}")
@@ -40,7 +37,6 @@ def kirim_hasil(task, code, stdout, stderr):
         requests.post(
             f"{API_URL}/result",
             json={
-                "user_id": USER_ID,
                 "task": task,
                 "exit_code": code,
                 "stdout": stdout[-3000:],  # batasi panjang
@@ -59,21 +55,8 @@ print("[AGENT] 🔎 Memulai monitoring perintah dari API...\n")
 
 while True:
     try:
-        # =============================
-        # UPDATE USER_ID dari server
-        # =============================
-        try:
-            uid_res = requests.get(f"{API_URL}/userid/get_agent_user_id", timeout=5)
-            if uid_res.ok:
-                new_uid = uid_res.json().get("user_id")
-                if new_uid and new_uid != USER_ID:
-                    USER_ID = new_uid
-                    print(f"[AGENT] 🔄 USER_ID diupdate dari server: {USER_ID}")
-        except Exception as e:
-            print(f"[AGENT] ⚠️ Gagal ambil USER_ID dari server: {e}")
-
         # Ambil status dari server
-        res = requests.get(f"{API_URL}/state", params={"user_id": USER_ID}, timeout=5)
+        res = requests.get(f"{API_URL}/state", timeout=5)
         if res.status_code != 200:
             print(f"[AGENT] ⚠️ API status {res.status_code}, coba lagi nanti.")
             time.sleep(5)
@@ -98,9 +81,11 @@ while True:
                 reset_flag()
                 continue
 
+            # Validasi folder input/output jika ada
             input_folder = params.get("input_folder")
             output_folder = params.get("output_folder")
 
+            # Pastikan path diubah menjadi raw string agar backslash aman
             if input_folder:
                 input_folder = rf"{input_folder}"
             if output_folder:
@@ -117,18 +102,20 @@ while True:
                 os.makedirs(output_folder, exist_ok=True)
             print(f"[AGENT] 🚀 Menjalankan task '{task}' ({script_name}) ...")
 
+            # Bangun command
             cmd = [sys.executable, script_path]
             if isinstance(params, dict) and params:
                 for key, val in params.items():
                     cmd.append(f"--{key}")
                     cmd.append(str(val))
-
+            # Tambahkan start_row jika ada di params
             if task == "batal" and "start_row" in params:
                 cmd.append("--start_row")
                 cmd.append(str(params["start_row"]))
 
+            # Ambil Excel path opsional dari API
             try:
-                excel_path_res = requests.get(f"{API_URL}/excel_path", params={"user_id": USER_ID}, timeout=5)
+                excel_path_res = requests.get(f"{API_URL}/excel_path", timeout=5)
                 if excel_path_res.ok:
                     excel_data = excel_path_res.json()
                     path_excel = excel_data.get("excel_path")
@@ -140,6 +127,7 @@ while True:
             except Exception as e:
                 print(f"[AGENT] ⚠️ Gagal ambil Excel path: {e}")
 
+            # Jalankan subprocess
             process = subprocess.Popen(
                 cmd,
                 stdout=subprocess.PIPE,
@@ -158,7 +146,10 @@ while True:
                 print("[AGENT] --- STDERR ---")
                 print(stderr)
 
+            # Kirim hasil eksekusi ke API
             kirim_hasil(task, process.returncode, stdout, stderr)
+
+            # Reset status
             reset_flag()
         else:
             print("[AGENT] ⏳ Tidak ada task aktif, menunggu...")
