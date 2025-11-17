@@ -11,19 +11,29 @@ export default function App() {
   const [loadingSheet, setLoadingSheet] = useState(false);
   const [message, setMessage] = useState({ type: '', text: '' });
   const [startRow, setStartRow] = useState(0);
-  const [excelPath, setExcelPath] = useState(''); // State untuk excel_path
+  const [excelPath, setExcelPath] = useState('');
 
-  // Fetch agent status on load dan setiap 5 detik
+  // Ambil user dari localStorage
+  const user = JSON.parse(localStorage.getItem("user")) || {};
+  const userId = user.id;
+  const token = user.token;
+
+  const HEADERS = token ? { 'Authorization': `Bearer ${token}` } : {};
+
   useEffect(() => {
+    if (!userId) return;
     fetchAgentStatus();
     const interval = setInterval(fetchAgentStatus, 5000);
     return () => clearInterval(interval);
-  }, [apiUrl]);
+  }, [apiUrl, userId]);
 
   const fetchAgentStatus = async () => {
+    if (!userId) return;
     setLoadingStatus(true);
     try {
-      const response = await fetch(`${apiUrl.trim()}/state`, { timeout: 5000 });
+      const response = await fetch(`${apiUrl.trim()}/${userId}/state`, {
+        headers: HEADERS,
+      });
       if (response.ok) {
         const data = await response.json();
         setAgentStatus(data);
@@ -41,18 +51,18 @@ export default function App() {
   };
 
   const handleTrigger = async (task, setLoading, successMessage) => {
+    if (!userId) return;
     setLoading(true);
     setMessage({ type: '', text: '' });
     try {
-      const response = await fetch(`${apiUrl.trim()}/trigger`, {
+      const response = await fetch(`${apiUrl.trim()}/${userId}/trigger`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', ...HEADERS },
         body: JSON.stringify({
           task,
-          start_row: startRow,    // Kirim startRow
-          excel_path: excelPath    // Kirim excelPath
+          start_row: startRow,
+          excel_path: excelPath
         }),
-        timeout: 10000
       });
 
       if (!response.ok) {
@@ -156,7 +166,6 @@ export default function App() {
                 />
               </div>
 
-              {/* Input Excel Path */}
               <div className="mb-6">
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Masukkan Excel Path:
@@ -170,7 +179,6 @@ export default function App() {
                 />
               </div>
 
-              {/* Langkah 1 - PDF Batal */}
               <div className="mb-6">
                 <h2 className="text-xl font-semibold text-gray-800 mb-3 flex items-center">
                   <span className="mr-2">📕</span> Langkah 1 — Jalankan PDF Batal
@@ -194,7 +202,6 @@ export default function App() {
                 </button>
               </div>
 
-              {/* Langkah 2 - Search Batal */}
               <div className="mb-6">
                 <h2 className="text-xl font-semibold text-gray-800 mb-3 flex items-center">
                   <span className="mr-2">🔍</span> Langkah 2 — Jalankan Search Batal
@@ -217,30 +224,6 @@ export default function App() {
                   )}
                 </button>
               </div>
-
-              {/* Langkah 3 - Sheet Batal */}
-              {/*<div className="mb-6">
-                <h2 className="text-xl font-semibold text-gray-800 mb-3 flex items-center">
-                  <span className="mr-2">📄</span> Langkah 3 — Jalankan Sheet Batal
-                </h2>
-                <button
-                  onClick={() => handleTrigger('sheet_batal', setLoadingSheet, `Sheet Batal berhasil dikirim! (mulai dari baris ${startRow || 'otomatis'})`)}
-                  disabled={loadingSheet}
-                  className="w-full bg-orange-500 hover:bg-orange-600 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center space-x-2 disabled:opacity-70 disabled:cursor-not-allowed"
-                >
-                  {loadingSheet ? (
-                    <>
-                      <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-                      <span>Mengirim perintah...</span>
-                    </>
-                  ) : (
-                    <>
-                      <Zap className="w-5 h-5" />
-                      <span>Jalankan Sheet Batal via Agent</span>
-                    </>
-                  )}
-                </button>
-              </div>*/}
 
               {message.text && message.type !== 'error' && (
                 <div className={`mt-4 p-3 rounded-lg ${
