@@ -1,15 +1,38 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Liquid from '../components/liquid.jsx';
 
 export default function Perlengkapan() {
   const fileUrl = "/web.rar";
 
+  const [userId, setUserId] = useState(null);
+
+  useEffect(() => {
+    async function fetchUserId() {
+      try {
+        const token = localStorage.getItem("token");  // misal token disimpan di sini
+        const res = await fetch("https://api-web.up.railway.app/userid/get_user_id", {
+          headers: {
+            "Authorization": `Bearer ${token}`,
+          },
+        });
+        const data = await res.json();
+        if (data.status === "success") {
+          setUserId(data.user_id);
+        } else {
+          console.error("Gagal ambil user_id:", data.message);
+        }
+      } catch (err) {
+        console.error("Error fetch user_id:", err);
+      }
+    }
+
+    fetchUserId();
+  }, []);
+
   return (
     <div className="relative min-h-screen overflow-hidden">
-      {/* 🔥 Background animasi */}
       <Liquid />
 
-      {/* 🔳 Konten utama */}
       <div className="relative z-10 min-h-screen bg-white/40 py-8 px-4">
         <div className="max-w-2xl mx-auto bg-white rounded-xl shadow-md p-6 md:p-8">
           <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-2">
@@ -22,6 +45,12 @@ export default function Perlengkapan() {
             <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg mb-4">
               ✅ File ditemukan
             </div>
+
+            {userId && (
+              <div className="text-blue-600 mb-2">
+                👤 User ID: {userId}
+              </div>
+            )}
             
             <a
               href={fileUrl}
