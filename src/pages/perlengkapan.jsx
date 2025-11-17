@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import JSZip from 'jszip';
-import { saveAs } from 'file-saver';
+import JSZip from "jszip/dist/jszip.min.js";
+import { saveAs } from "file-saver";
 import Liquid from '../components/liquid.jsx';
 
 export default function Perlengkapan() {
