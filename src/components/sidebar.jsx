@@ -16,7 +16,8 @@ export default function Sidebar() {
   const location = useLocation();
 
   const user = JSON.parse(localStorage.getItem("user"));
-  const encodedId = user?.sessionHash || ""; 
+  const encodedId = user?.ui_id || "";  // gunakan ui_id yang benar
+
 
   useEffect(() => {
     if (location.pathname.includes('/gabung_pdf') || location.pathname.includes('/download_pdf')) {

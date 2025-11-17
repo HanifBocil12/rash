@@ -3,30 +3,29 @@ import { Navigate, Outlet, useLocation, useParams } from "react-router-dom";
 
 export default function ProtectedRoute() {
   const location = useLocation();
-  const { id } = useParams(); // id sekarang = hash random
-
+  const { id } = useParams(); // id = ui_id random
   const user = JSON.parse(localStorage.getItem("user"));
+
   if (!user) {
     return <Navigate to="/" replace state={{ from: location }} />;
   }
 
-  // Ambil session hash dari localStorage
-  const storedHash = user.sessionHash;
+  const uiId = user.ui_id; // gunakan ui_id dari backend
 
-  // Fungsi cek hash valid (panjang minimal & karakter aman)
+  // cek hash UI — token_urlsafe => aman
   const isValidHash = (str) => {
     if (!str) return false;
-    return /^[a-fA-F0-9-]{8,}$/.test(str);
+    return /^[A-Za-z0-9_\-]{10,}$/.test(str);
   };
 
-  // Jika hash invalid → pakai hash user yang benar
+  // kalau tidak valid → perbaiki
   if (!isValidHash(id)) {
-    return <Navigate to={`/${storedHash}/home`} replace />;
+    return <Navigate to={`/${uiId}/home`} replace />;
   }
 
-  // Cegah user A masuk URL user B
-  if (id !== storedHash) {
-    return <Navigate to={`/${storedHash}/home`} replace />;
+  // cegah user lain memakai hash berbeda
+  if (id !== uiId) {
+    return <Navigate to={`/${uiId}/home`} replace />;
   }
 
   return <Outlet />;
