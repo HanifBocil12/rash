@@ -7,20 +7,25 @@ export default function Gabung_Pdf() {
   const [message, setMessage] = useState({ type: '', text: '' });
   const [debugOpen, setDebugOpen] = useState(false);
   const [inputFolder, setInputFolder] = useState('');
-  const [outputFolder, setOutputFolder] = useState('C:\web\zip\Perlengkapan\download\output');
+  const [outputFolder, setOutputFolder] = useState('C:\\web\\zip\\Perlengkapan\\download\\output');
 
-  // Ganti ini sesuai alamat Railway API kamu
+  // Ambil user dari localStorage
+  const user = JSON.parse(localStorage.getItem("user")) || {};
+  const userId = user.id;
+  const token = user.token;
+
   const API_BASE = "https://api-web.up.railway.app";
+  const HEADERS = token ? { 'Authorization': `Bearer ${token}` } : {};
 
   const handleRunScript = async () => {
+    if (!userId) return;
     setLoading(true);
     setMessage({ type: '', text: '' });
 
     try {
-      // Panggil Flask endpoint /trigger
-      const response = await fetch(`${API_BASE}/trigger`, {
+      const response = await fetch(`${API_BASE}/${userId}/trigger`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', ...HEADERS },
         body: JSON.stringify({
           task: 'gabung',
           input_folder: inputFolder,
@@ -101,7 +106,7 @@ export default function Gabung_Pdf() {
 
             {debugOpen && (
               <div className="mt-3 p-4 bg-gray-50 rounded-lg text-sm text-gray-600">
-                <div>API Endpoint: {API_BASE}/trigger</div>
+                <div>API Endpoint: {API_BASE}/{userId}/trigger</div>
                 <div>Task: gabung</div>
                 <div>Python Script Path: /app/gabung.py</div>
               </div>
