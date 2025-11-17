@@ -51,6 +51,10 @@ export default function Perlengkapan() {
                 👤 User ID: {userId}
               </div>
             )}
+
+            <div className="text-blue-600 mb-2">
+                👤 User ID: {userId}
+              </div>
             
             <a
               href={fileUrl}
