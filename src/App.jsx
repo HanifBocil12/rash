@@ -13,12 +13,13 @@ import ProtectedRoute from "./components/ProtectedRoute.jsx";
 function App() {
   return (
     <Routes>
-      {/* Route publik */}
+      {/* PUBLIC ROUTE */}
       <Route path="/" element={<Login />} />
 
-      {/* Protected route */}
+      {/* PROTECTED */}
       <Route element={<ProtectedRoute />}>
-        <Route path="/:id" element={<Sidebar />}>
+        {/* ❗❗ FIX: REMOVE SLASH */}
+        <Route path=":id" element={<Sidebar />}>
           <Route path="home" element={<HomePage />} />
           <Route path="gabung_pdf" element={<Gabung_pdf />} />
           <Route path="download_pdf" element={<DownloadPDFPage />} />
