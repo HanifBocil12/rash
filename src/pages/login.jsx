@@ -212,15 +212,15 @@ const LiquidFlowLogin = () => {
           Get Started
         </button>
 
-        <div className="w-full max-w-[400px] space-y-4">
+        <div className="w-[400px] space-y-3">
           <h1 className="text-2xl font-bold text-gray-800 text-center leading-tight">
             solusi hanif
             <span className="block text-orange-600">Revolution</span>
             Ai
           </h1>
 
-          <div className="bg-white bg-opacity-80 backdrop-blur-sm p-5 rounded-2xl shadow-xl">
-            <h2 className="text-lg font-bold text-gray-800 mb-3">Sign In</h2>
+          <div className="bg-white bg-opacity-80 backdrop-blur-sm p-4 rounded-2xl shadow-xl">
+            <h2 className="text-lg font-bold text-gray-800 mb-2">Sign In</h2>
 
             {errorMsg && (
               <p className="text-red-600 text-xs mb-2 text-center">{errorMsg}</p>
@@ -233,7 +233,7 @@ const LiquidFlowLogin = () => {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-3 py-1.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 transition-colors text-sm"
+                  className="w-full px-2 py-1.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 transition-colors text-xs"
                   placeholder="your@email.com"
                   required
                 />
@@ -245,7 +245,7 @@ const LiquidFlowLogin = () => {
                   type={showPassword ? "text" : "password"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full px-3 py-1.5 pr-8 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 text-sm"
+                  className="w-full px-2 py-1.5 pr-8 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 text-xs"
                   placeholder="••••••••"
                   required
                 />
@@ -277,7 +277,7 @@ const LiquidFlowLogin = () => {
               </button>
             </form>
 
-            <div className="mt-3 text-center">
+            <div className="mt-2 text-center">
               <p className="text-xs text-gray-600">
                 Don't have an account?{' '}
                 <a className="font-medium text-orange-600 hover:text-orange-700">Sign up now</a>
@@ -285,7 +285,7 @@ const LiquidFlowLogin = () => {
             </div>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-2 mt-4">
+          <div className="flex flex-col sm:flex-row gap-2 mt-3">
             <button className="flex-1 bg-orange-500 hover:bg-orange-600 text-white font-semibold py-1.5 px-4 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-md text-xs">
               Start Free Trial
             </button>
