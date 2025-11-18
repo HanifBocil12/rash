@@ -22,7 +22,9 @@ const LiquidFlowLogin = () => {
     }
   }, [navigate]);
 
+  // =====================================
   // 🔥 GENERATE UI_ID RANDOM PER DEVICE
+  // =====================================
   const generateUiId = () => {
     const array = new Uint8Array(16);
     crypto.getRandomValues(array);
@@ -53,22 +55,28 @@ const LiquidFlowLogin = () => {
         return;
       }
 
+      // 🔥 CEK LOGIN BERHASIL
       if (!res.ok || !data.id || !data.token) {
         setErrorMsg(data.error || "Email atau password salah!");
         setLoading(false);
         return;
       }
 
+      // 🔥 BUAT UI_ID RANDOM PER DEVICE
       const ui_id = generateUiId();
 
-      localStorage.setItem("user", JSON.stringify({
+      // simpan user ke localstorage
+      const userData = {
         id: data.id,
         ui_id,
         name: data.name,
         email: data.email,
         token: data.token
-      }));
+      };
 
+      localStorage.setItem("user", JSON.stringify(userData));
+
+      // Redirect sesuai ui_id device
       navigate(`/${ui_id}/home`, { replace: true });
 
     } catch (err) {
@@ -166,7 +174,7 @@ const LiquidFlowLogin = () => {
         for (let i = 0; i <= highlightPoints; i++) {
           const progress = i / highlightPoints;
           const y = flow.y + progress * flow.height;
-          const wave = Math.sin(flow.waveOffset + progress * 3) * (flow.width*0.1);
+          const wave = Math.sin(flow.waveOffset + progress * 3) * (flow.width * 0.1);
           const x = flow.x + flow.width*0.3 + wave;
           if (i === 0) ctx.moveTo(x, y);
           else ctx.lineTo(x, y);
@@ -188,30 +196,30 @@ const LiquidFlowLogin = () => {
   }, []);
 
   // ==========================
-  // UI LOGIN (RESPONSIVE FIX)
+  // UI LOGIN (TIDAK DIUBAH)
   // ==========================
   return (
     <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-orange-50 via-orange-100 to-red-50">
       <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
       <div className="absolute inset-0 bg-black bg-opacity-10"></div>
 
-      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-6 w-full max-w-[90%] sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl mx-auto">
+      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-6">
         <header className="absolute top-6 left-6">
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-orange-600">LiquidFlow</h1>
+          <h1 className="text-2xl font-bold text-orange-600">LiquidFlow</h1>
         </header>
 
         <button className="absolute top-6 right-6 bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg">
           Get Started
         </button>
 
-        <div className="w-full space-y-8">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3rem] font-bold text-gray-800 text-center leading-tight">
+        <div className="max-w-md w-full space-y-8">
+          <h1 className="text-4xl md:text-5xl font-bold text-gray-800 text-center leading-tight">
             solusi hanif
             <span className="block text-orange-600">Revolution</span>
             Ai
           </h1>
 
-          <div className="bg-white bg-opacity-80 backdrop-blur-sm p-6 sm:p-8 rounded-2xl shadow-xl w-full max-w-full">
+          <div className="bg-white bg-opacity-80 backdrop-blur-sm p-8 rounded-2xl shadow-xl">
             <h2 className="text-2xl font-bold text-gray-800 mb-6">Sign In</h2>
 
             {errorMsg && (
@@ -277,7 +285,7 @@ const LiquidFlowLogin = () => {
             </div>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-4 mt-8 w-full">
+          <div className="flex flex-col sm:flex-row gap-4 mt-8">
             <button className="flex-1 bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-md">
               Start Free Trial
             </button>
