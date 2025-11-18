@@ -196,7 +196,7 @@ const LiquidFlowLogin = () => {
   }, []);
 
   // ==========================
-  // UI LOGIN (RESPONSIF PENUH UNTUK 1366x768)
+  // UI LOGIN (TAMPILAN IDENTIK DI SEMUA RESOLUSI)
   // ==========================
   return (
     <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-orange-50 via-orange-100 to-red-50">
@@ -212,8 +212,15 @@ const LiquidFlowLogin = () => {
           Get Started
         </button>
 
-        {/* CARD LOGIN RESPONSIF */}
-        <div className="w-full max-w-[380px] sm:max-w-[450px] space-y-4 sm:space-y-6">
+        {/* SCALE CARD BERDASARKAN LEBAR LAYAR */}
+        <div 
+          className="w-full max-w-[450px] sm:max-w-[550px] space-y-4 sm:space-y-6"
+          style={{
+            transform: window.innerWidth < 1400 ? 'scale(0.95)' : 'scale(1)',
+            transformOrigin: 'center',
+            transition: 'transform 0.3s ease'
+          }}
+        >
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 text-center leading-tight">
             <div>solusi hanif</div>
             <div className="text-orange-600">Revolution</div>
