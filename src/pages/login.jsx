@@ -277,8 +277,8 @@ const LiquidFlowLogin = () => {
               </button>
             </form>
 
-            <div className="mt-4 sm:mt-6 text-center">
-              <p className="text-[0.875vw] text-gray-600">
+           <div className="mt-[1.0vw] sm:mt-[1.5vw] text-center">
+              <p className="text-[0.875vw] sm:text-[0.9375vw] text-gray-600">
                 Don't have an account?{' '}
                 <a className="font-medium text-orange-600 hover:text-orange-700">Sign up now</a>
               </p>
