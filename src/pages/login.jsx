@@ -285,11 +285,11 @@ const LiquidFlowLogin = () => {
             </div>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-            <button className="flex-1 bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2.5 sm:py-3 px-4 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-md text-[0.875vw] sm:text-base">
+         <div className="flex flex-col sm:flex-row gap-[0.75vw] sm:gap-[1vw]">
+            <button className="flex-1 bg-orange-500 hover:bg-orange-600 text-white font-semibold py-[1vw] sm:py-[1.2vw] px-[1vw] rounded-lg transition-all duration-300 transform hover:scale-105 shadow-md text-[0.875vw] sm:text-[0.9375vw]">
               Start Free Trial
             </button>
-            <button className="flex-1 border-2 border-orange-500 text-orange-600 hover:bg-orange-50 py-2.5 sm:py-3 px-4 rounded-lg transition-all duration-300 transform hover:scale-105 text-[0.875vw] sm:text-base">
+            <button className="flex-1 border-2 border-orange-500 text-orange-600 hover:bg-orange-50 py-[1vw] sm:py-[1.2vw] px-[1vw] rounded-lg transition-all duration-300 transform hover:scale-105 text-[0.875vw] sm:text-[0.9375vw]">
               Watch Demo
             </button>
           </div>
