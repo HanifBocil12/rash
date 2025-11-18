@@ -260,18 +260,29 @@ const LiquidFlowLogin = () => {
 
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
-                  <input id="remember-me" type="checkbox" className="h-4 w-4 text-orange-600" />
-                  <label htmlFor="remember-me" className="ml-2 text-[0.875vw] text-gray-700">
+                  <input 
+                    id="remember-me" 
+                    type="checkbox" 
+                    className="h-[1vw] w-[1vw] text-orange-600" 
+                  />
+                  <label 
+                    htmlFor="remember-me" 
+                    className="ml-[0.5vw] text-[0.875vw] text-gray-700"
+                  >
                     Remember me
                   </label>
                 </div>
-                <a className="text-[0.875vw] text-orange-600 hover:text-orange-700">Forgot password?</a>
+                <a className="text-[0.875vw] text-orange-600 hover:text-orange-700">
+                  Forgot password?
+                </a>
               </div>
 
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-md"
+                className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold 
+                          py-[1vw] px-[1.5vw] rounded-lg transition-all duration-300 
+                          transform hover:scale-105 shadow-md text-[0.9vw] sm:text-[1vw]"
               >
                 {loading ? "Loading.." : "Sign In"}
               </button>
