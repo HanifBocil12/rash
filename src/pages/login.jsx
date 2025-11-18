@@ -204,11 +204,11 @@ const LiquidFlowLogin = () => {
       <div className="absolute inset-0 bg-black bg-opacity-10"></div>
 
       <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 sm:px-6">
-        <header className="absolute top-[0.44vw] left-[0.44vw] sm:top-6 sm:left-6">
+        <header className="absolute top-[0.25vw] left-[0.25vw] sm:top-6 sm:left-6">
           <h1 className="text-xl sm:text-2xl font-bold text-orange-600">LiquidFlow</h1>
         </header>
 
-        <button className="absolute top-[0.44vw] right-[0.44vw] sm:top-6 sm:right-6 bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg text-sm sm:text-base">
+        <button className="absolute top-[0.25vw] right-[0.25vw] sm:top-6 sm:right-6 bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg text-sm sm:text-base">
           Get Started
         </button>
 
@@ -226,7 +226,7 @@ const LiquidFlowLogin = () => {
               <p className="text-red-600 text-sm mb-3 text-center">{errorMsg}</p>
             )}
 
-            <form className="space-y-4">
+            <form className="space-y-4" onSubmit={handleLogin}>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
                 <input
