@@ -22,6 +22,9 @@ const LiquidFlowLogin = () => {
     }
   }, [navigate]);
 
+  // =====================================
+  // 🔥 GENERATE UI_ID RANDOM PER DEVICE
+  // =====================================
   const generateUiId = () => {
     const array = new Uint8Array(16);
     crypto.getRandomValues(array);
@@ -30,6 +33,7 @@ const LiquidFlowLogin = () => {
       .slice(0, 16);
   };
 
+  // ➕ HANDLE LOGIN
   const handleLogin = async (e) => {
     e.preventDefault();
     setErrorMsg("");
@@ -51,14 +55,17 @@ const LiquidFlowLogin = () => {
         return;
       }
 
+      // 🔥 CEK LOGIN BERHASIL
       if (!res.ok || !data.id || !data.token) {
         setErrorMsg(data.error || "Email atau password salah!");
         setLoading(false);
         return;
       }
 
+      // 🔥 BUAT UI_ID RANDOM PER DEVICE
       const ui_id = generateUiId();
 
+      // simpan user ke localstorage
       const userData = {
         id: data.id,
         ui_id,
@@ -69,6 +76,7 @@ const LiquidFlowLogin = () => {
 
       localStorage.setItem("user", JSON.stringify(userData));
 
+      // Redirect sesuai ui_id device
       navigate(`/${ui_id}/home`, { replace: true });
 
     } catch (err) {
@@ -79,7 +87,7 @@ const LiquidFlowLogin = () => {
   };
 
   // ==========================
-  // ANIMASI CANVAS
+  // ANIMASI CANVAS (TIDAK DIUBAH)
   // ==========================
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -187,12 +195,15 @@ const LiquidFlowLogin = () => {
     };
   }, []);
 
+  // ==========================
+  // UI LOGIN (TIDAK DIUBAH)
+  // ==========================
   return (
     <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-orange-50 via-orange-100 to-red-50">
       <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
       <div className="absolute inset-0 bg-black bg-opacity-10"></div>
 
-      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen container mx-auto w-full max-w-screen px-6">
+      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-6">
         <header className="absolute top-6 left-6">
           <h1 className="text-2xl font-bold text-orange-600">LiquidFlow</h1>
         </header>
@@ -201,8 +212,8 @@ const LiquidFlowLogin = () => {
           Get Started
         </button>
 
-        <div className="w-full max-w-lg sm:max-w-xl md:max-w-2xl lg:max-w-3xl space-y-8">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-800 text-center leading-tight">
+        <div className="max-w-md w-full space-y-8">
+          <h1 className="text-4xl md:text-5xl font-bold text-gray-800 text-center leading-tight">
             solusi hanif
             <span className="block text-orange-600">Revolution</span>
             Ai
