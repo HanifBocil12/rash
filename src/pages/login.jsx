@@ -194,9 +194,9 @@ const LiquidFlowLogin = () => {
       <div className="absolute inset-0 bg-black/10"></div>
 
       {/* 🟢 FIX RESPONSIVE WRAPPER */}
-      <div className="relative z-10 flex flex-col items-center justify-center h-screen max-h-screen overflow-hidden px-4 sm:px-6 md:px-8">
+      <div className="relative z-10 flex flex-col items-center justify-center h-screen max-h-screen overflow-hidden px-4 sm:px-6 md:px-8 w-full max-w-lg md:max-w-xl lg:max-w-2xl mx-auto">
 
-        <header className="absolute top-4 left-4 text-lg sm:text-xl md:text-2xl font-bold text-orange-600">
+        <header className="absolute top-4 right-4 px-4 py-2 text-sm sm:text-base md:text-lg bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-full transition-all duration-300 shadow-lg">
           LiquidFlow
         </header>
 
@@ -211,7 +211,7 @@ const LiquidFlowLogin = () => {
             Ai
           </h1>
 
-          <div className="bg-white/80 backdrop-blur-sm p-6 sm:p-8 rounded-2xl shadow-xl">
+          <div className="bg-white/80 backdrop-blur-sm p-6 sm:p-8 rounded-2xl shadow-xl w-full sm:w-[400px] md:w-[450px] lg:w-[500px]">
             <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-6">Sign In</h2>
 
             {errorMsg && (
@@ -276,10 +276,10 @@ const LiquidFlowLogin = () => {
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4">
-            <button className="flex-1 bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 px-4 rounded-lg transition-all shadow-md text-sm sm:text-base">
+            <button className="flex-1 min-w-[120px] bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 px-4 rounded-lg transition-all shadow-md text-sm sm:text-base">
               Start Free Trial
             </button>
-            <button className="flex-1 border-2 border-orange-500 text-orange-600 hover:bg-orange-50 py-3 px-4 rounded-lg transition-all shadow text-sm sm:text-base">
+            <button className="flex-1 min-w-[120px] border-2 border-orange-500 text-orange-600 hover:bg-orange-50 py-3 px-4 rounded-lg transition-all shadow text-sm sm:text-base">
               Watch Demo
             </button>
           </div>
