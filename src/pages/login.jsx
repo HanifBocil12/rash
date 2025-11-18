@@ -212,91 +212,104 @@ const LiquidFlowLogin = () => {
           Get Started
         </button>
 
-        <div className="w-full max-w-sm sm:max-w-md space-y-6 sm:space-y-8">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-800 text-center leading-tight">
+        <div className="w-full max-w-[23vw] sm:max-w-[26vw] space-y-[1.5vw] sm:space-y-[2vw]">
+          <h1 className="text-[2vw] sm:text-[2.5vw] md:text-[3vw] font-bold text-gray-800 text-center leading-tight">
             <div>solusi hanif</div>
             <div className="text-orange-600">Revolution</div>
-            <div className="text-2xl sm:text-3xl md:text-4xl">Ai</div>
+            <div className="text-[1.5vw] sm:text-[2vw] md:text-[2.5vw]">Ai</div>
           </h1>
 
-          <div className="bg-white bg-opacity-80 backdrop-blur-sm p-6 sm:p-8 rounded-2xl shadow-xl border border-orange-100">
-            <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-4 sm:mb-6">Sign In</h2>
+          <div className="bg-white bg-opacity-80 backdrop-blur-sm p-[1.5vw] sm:p-[2vw] rounded-2xl shadow-xl border border-orange-100">
+            <h2 className="text-[1.25vw] sm:text-[1.5vw] font-bold text-gray-800 mb-[1vw] sm:mb-[1.5vw]">Sign In</h2>
 
             {errorMsg && (
-              <p className="text-red-600 text-sm mb-3 text-center">{errorMsg}</p>
+              <p className="text-red-600 text-[0.875vw] mb-[0.75vw] text-center">{errorMsg}</p>
             )}
 
-            <form className="space-y-4" onSubmit={handleLogin}>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 transition-colors"
-                  placeholder="your@email.com"
-                  required
-                />
-              </div>
-
-              <div className="relative">
-                <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
-                <input
-                  type={showPassword ? "text" : "password"}
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="w-full px-4 py-2.5 pr-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500"
-                  placeholder="••••••••"
-                  required
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-[calc(50%+0.75rem)] -translate-y-1/2 text-gray-500"
-                >
-                  {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
-                </button>
-              </div>
-
-              <div className="flex items-center justify-between">
-                <div className="flex items-center">
-                  <input id="remember-me" type="checkbox" className="h-4 w-4 text-orange-600" />
-                  <label htmlFor="remember-me" className="ml-2 text-sm text-gray-700">
-                    Remember me
+            <form className="space-y-[1.5vw]" onSubmit={handleLogin}>
+                <div>
+                  <label className="block text-[0.875vw] font-medium text-gray-700 mb-[0.25vw]">
+                    Email
                   </label>
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="w-full px-[0.25vw] py-[0.5vw] border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 transition-colors"
+                    placeholder="your@email.com"
+                    required
+                  />
                 </div>
-                <a className="text-sm text-orange-600 hover:text-orange-700">Forgot password?</a>
-              </div>
 
-              <button
-                type="submit"
-                disabled={loading}
-                className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-md"
-              >
-                {loading ? "Loading.." : "Sign In"}
-              </button>
+                <div className="relative">
+                  <label className="block text-[0.875vw] font-medium text-gray-700 mb-[0.25vw]">
+                    Password
+                  </label>
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="w-full px-[0.25vw] py-[0.5vw] pr-[0.625vw] border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500"
+                    placeholder="••••••••"
+                    required
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-[0.1875vw] top-[calc(50%+0.46875vw)] -translate-y-1/2 text-gray-500"
+                  >
+                    {showPassword ? <EyeOff className="h-[0.3125vw] w-[0.3125vw]" /> : <Eye className="h-[0.3125vw] w-[0.3125vw]" />}
+                  </button>
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center">
+                    <input 
+                      id="remember-me" 
+                      type="checkbox" 
+                      className="h-[0.25vw] w-[0.25vw] text-orange-600" 
+                    />
+                    <label 
+                      htmlFor="remember-me" 
+                      className="ml-[0.125vw] text-[0.875vw] text-gray-700"
+                    >
+                      Remember me
+                    </label>
+                  </div>
+                  <a className="text-[0.875vw] text-orange-600 hover:text-orange-700">
+                    Forgot password?
+                  </a>
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-[0.1875vw] px-[0.25vw] rounded-lg transition-all duration-300 transform hover:scale-105 shadow-md text-[0.875vw]"
+                >
+                  {loading ? "Loading.." : "Sign In"}
+                </button>
             </form>
 
-            <div className="mt-4 sm:mt-6 text-center">
-              <p className="text-sm text-gray-600">
-                Don't have an account?{' '}
-                <a className="font-medium text-orange-600 hover:text-orange-700">Sign up now</a>
-              </p>
-            </div>
+            <div className="mt-[0.25vw] sm:mt-[0.375vw] text-center">
+                <p className="text-[0.875vw] sm:text-[1vw] text-gray-600">
+                  Don't have an account?{' '}
+                  <a className="font-medium text-orange-600 hover:text-orange-700">Sign up now</a>
+                </p>
+              </div>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-            <button className="flex-1 bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2.5 sm:py-3 px-4 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-md text-sm sm:text-base">
+          <div className="flex flex-col sm:flex-row gap-[0.1875vw] sm:gap-[0.25vw]">
+            <button className="flex-1 bg-orange-500 hover:bg-orange-600 text-white font-semibold py-[0.156vw] sm:py-[0.1875vw] px-[0.25vw] sm:px-[0.3125vw] rounded-lg transition-all duration-300 transform hover:scale-105 shadow-md text-[0.875vw] sm:text-[1vw]">
               Start Free Trial
             </button>
-            <button className="flex-1 border-2 border-orange-500 text-orange-600 hover:bg-orange-50 py-2.5 sm:py-3 px-4 rounded-lg transition-all duration-300 transform hover:scale-105 text-sm sm:text-base">
+            <button className="flex-1 border-2 border-orange-500 text-orange-600 hover:bg-orange-50 py-[0.156vw] sm:py-[0.1875vw] px-[0.25vw] sm:px-[0.3125vw] rounded-lg transition-all duration-300 transform hover:scale-105 text-[0.875vw] sm:text-[1vw]">
               Watch Demo
             </button>
           </div>
         </div>
 
-        <div className="mt-6 sm:mt-8">
-          <footer className="text-center text-xs sm:text-sm text-gray-600">
+        <div className="mt-[1.5vw] sm:mt-[2vw]">
+          <footer className="text-center text-[0.75vw] sm:text-[0.875vw] text-gray-600">
             © 2025 Muhammad Hanif. Smkn 4 Tangerang.
           </footer>
         </div>
