@@ -199,9 +199,16 @@ const LiquidFlowLogin = () => {
   // UI LOGIN (RESPONSIF CARD & POSISI)
   // ==========================
   return (
-    <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-orange-50 via-orange-100 to-red-50">
-      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
-      <div className="absolute inset-0 bg-black bg-opacity-10"></div>
+    <div className="relative overflow-hidden" style={{ width: '100vw', height: '100vh' }}>
+      <canvas 
+        ref={canvasRef} 
+        className="absolute inset-0" 
+        style={{ width: '100vw', height: '100vh' }} 
+      />
+      <div 
+        className="absolute inset-0" 
+        style={{ backgroundColor: 'rgba(0,0,0,0.1)' }} 
+      ></div>
 
       <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-[1vw] sm:px-[1.5vw]">
         <header className="absolute top-[0.25vw] left-[0.25vw] sm:top-[0.375vw] sm:left-[0.375vw]">
