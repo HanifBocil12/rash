@@ -22,9 +22,7 @@ const LiquidFlowLogin = () => {
     }
   }, [navigate]);
 
-  // =====================================
   // 🔥 GENERATE UI_ID RANDOM PER DEVICE
-  // =====================================
   const generateUiId = () => {
     const array = new Uint8Array(16);
     crypto.getRandomValues(array);
@@ -55,17 +53,14 @@ const LiquidFlowLogin = () => {
         return;
       }
 
-      // 🔥 CEK LOGIN BERHASIL
       if (!res.ok || !data.id || !data.token) {
         setErrorMsg(data.error || "Email atau password salah!");
         setLoading(false);
         return;
       }
 
-      // 🔥 BUAT UI_ID RANDOM PER DEVICE
       const ui_id = generateUiId();
 
-      // simpan user ke localstorage
       const userData = {
         id: data.id,
         ui_id,
@@ -75,8 +70,6 @@ const LiquidFlowLogin = () => {
       };
 
       localStorage.setItem("user", JSON.stringify(userData));
-
-      // Redirect sesuai ui_id device
       navigate(`/${ui_id}/home`, { replace: true });
 
     } catch (err) {
@@ -131,7 +124,6 @@ const LiquidFlowLogin = () => {
         }
         
         ctx.beginPath();
-        
         const leftPoints = 15;
         const leftPath = [];
         for (let i = 0; i <= leftPoints; i++) {
@@ -199,135 +191,104 @@ const LiquidFlowLogin = () => {
   // UI LOGIN (RESPONSIF CARD & POSISI)
   // ==========================
   return (
-    <div className="relative min-h-screen overflow-hidden" style={{ background: "linear-gradient(135deg, #fff5eb, #fff0e0, #ffe5d0)" }}>
+    <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-orange-50 via-orange-100 to-red-50">
       <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
-      <div className="absolute inset-0" style={{ backgroundColor: "rgba(0,0,0,0.1)" }}></div>
+      <div className="absolute inset-0 bg-black bg-opacity-10"></div>
 
-      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen" style={{ paddingLeft: "2.5vw", paddingRight: "2.5vw" }}>
-        <header style={{ position: "absolute", top: "0.44vh", left: "0.25vw" }}>
-          <h1 style={{ fontSize: "1.25vw", fontWeight: "bold", color: "#f97316" }}>LiquidFlow</h1>
+      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-[0.25vw] sm:px-[0.375vw]">
+        <header className="absolute top-[0.25vw] left-[0.25vw] sm:top-[0.375vw] sm:left-[0.375vw]">
+          <h1 className="text-[1.25vw] sm:text-[1.5vw] font-bold text-orange-600">LiquidFlow</h1>
         </header>
 
-        <button style={{
-          position: "absolute",
-          top: "0.44vh",
-          right: "0.25vw",
-          backgroundColor: "#f97316",
-          color: "white",
-          padding: "0.44vh 0.625vw",
-          borderRadius: "1.25vw",
-          fontWeight: 600,
-          fontSize: "0.625vw",
-          transition: "all 0.3s",
-          transform: "scale(1)",
-        }}>
+        <button className="absolute top-[0.25vw] right-[0.25vw] sm:top-[0.375vw] sm:right-[0.375vw] bg-orange-500 hover:bg-orange-600 text-white px-[0.25vw] py-[0.125vw] rounded-full font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg text-[0.875vw] sm:text-[1vw]">
           Get Started
         </button>
 
-        <div style={{ width: "100%", maxWidth: "37.5vw", display: "flex", flexDirection: "column", gap: "1.25vw" }}>
-          <h1 style={{ fontSize: "2vw", fontWeight: "bold", color: "#1f2937", textAlign: "center", lineHeight: 1.2 }}>
+        <div className="w-full max-w-[25vw] sm:max-w-[30vw] space-y-[0.375vw] sm:space-y-[0.5vw]">
+          <h1 className="text-[1.875vw] sm:text-[2.5vw] md:text-[3vw] font-bold text-gray-800 text-center leading-tight">
             <div>solusi hanif</div>
-            <div style={{ color: "#f97316" }}>Revolution</div>
-            <div style={{ fontSize: "1.5vw" }}>Ai</div>
+            <div className="text-orange-600">Revolution</div>
+            <div className="text-[1.25vw] sm:text-[1.875vw] md:text-[2.25vw]">Ai</div>
           </h1>
 
-          <div style={{
-            backgroundColor: "rgba(255,255,255,0.8)",
-            backdropFilter: "blur(0.3125vw)",
-            padding: "1.25vw",
-            borderRadius: "1.25vw",
-            boxShadow: "0 0.125vw 0.3125vw rgba(0,0,0,0.1)",
-            border: "0.0625vw solid #fed7aa"
-          }}>
-            <h2 style={{ fontSize: "1.25vw", fontWeight: "bold", color: "#1f2937", marginBottom: "0.625vw" }}>Sign In</h2>
+          <div className="bg-white bg-opacity-80 backdrop-blur-sm p-[0.375vw] sm:p-[0.5vw] rounded-[1.25vw] shadow-xl border border-orange-100">
+            <h2 className="text-[1.25vw] sm:text-[1.5vw] font-bold text-gray-800 mb-[0.25vw] sm:mb-[0.375vw]">Sign In</h2>
 
             {errorMsg && (
-              <p style={{ color: "red", fontSize: "0.75vw", marginBottom: "0.3125vw", textAlign: "center" }}>{errorMsg}</p>
+              <p className="text-red-600 text-[0.875vw] mb-[0.1875vw] text-center">{errorMsg}</p>
             )}
 
-            <form style={{ display: "flex", flexDirection: "column", gap: "0.625vw" }} onSubmit={handleLogin}>
+            <form className="space-y-[0.25vw]" onSubmit={handleLogin}>
               <div>
-                <label style={{ display: "block", fontSize: "0.625vw", fontWeight: 500, color: "#374151", marginBottom: "0.125vw" }}>Email</label>
+                <label className="block text-[0.875vw] font-medium text-gray-700 mb-[0.125vw]">Email</label>
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  style={{ width: "100%", padding: "0.625vw", borderRadius: "0.625vw", border: "0.0625vw solid #d1d5db", outline: "none" }}
+                  className="w-full px-[0.25vw] py-[0.1875vw] border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 transition-colors"
                   placeholder="your@email.com"
                   required
                 />
               </div>
 
-              <div style={{ position: "relative" }}>
-                <label style={{ display: "block", fontSize: "0.625vw", fontWeight: 500, color: "#374151", marginBottom: "0.125vw" }}>Password</label>
+              <div className="relative">
+                <label className="block text-[0.875vw] font-medium text-gray-700 mb-[0.125vw]">Password</label>
                 <input
                   type={showPassword ? "text" : "password"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  style={{ width: "100%", padding: "0.625vw 2.5vw 0.625vw 0.625vw", borderRadius: "0.625vw", border: "0.0625vw solid #d1d5db", outline: "none" }}
+                  className="w-full px-[0.25vw] py-[0.1875vw] pr-[0.625vw] border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500"
                   placeholder="••••••••"
                   required
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  style={{ position: "absolute", right: "0.1875vw", top: "50%", transform: "translateY(-50%)", color: "#6b7280" }}
+                  className="absolute right-[0.1875vw] top-[50%] -translate-y-1/2 text-gray-500"
                 >
-                  {showPassword ? <EyeOff style={{ width: "1.25vw", height: "1.25vw" }} /> : <Eye style={{ width: "1.25vw", height: "1.25vw" }} />}
+                  {showPassword ? <EyeOff className="h-[0.3125vw] w-[0.3125vw]" /> : <Eye className="h-[0.3125vw] w-[0.3125vw]" />}
                 </button>
+              </div>
+
+              <div className="flex items-center justify-between">
+                <div className="flex items-center">
+                  <input id="remember-me" type="checkbox" className="h-[0.25vw] w-[0.25vw] text-orange-600" />
+                  <label htmlFor="remember-me" className="ml-[0.125vw] text-[0.875vw] text-gray-700">
+                    Remember me
+                  </label>
+                </div>
+                <a className="text-[0.875vw] text-orange-600 hover:text-orange-700">Forgot password?</a>
               </div>
 
               <button
                 type="submit"
                 disabled={loading}
-                style={{
-                  width: "100%",
-                  backgroundColor: "#f97316",
-                  color: "white",
-                  fontWeight: 600,
-                  padding: "0.625vw",
-                  borderRadius: "0.625vw",
-                  fontSize: "0.75vw",
-                  transition: "all 0.3s",
-                  transform: "scale(1)",
-                }}
+                className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-[0.1875vw] px-[0.25vw] rounded-lg transition-all duration-300 transform hover:scale-105 shadow-md"
               >
                 {loading ? "Loading.." : "Sign In"}
               </button>
             </form>
 
-            <div style={{ marginTop: "0.25vw", textAlign: "center" }}>
-              <p style={{ fontSize: "0.625vw", color: "#4b5563" }}>
+            <div className="mt-[0.25vw] sm:mt-[0.375vw] text-center">
+              <p className="text-[0.875vw] text-gray-600">
                 Don't have an account?{' '}
-                <a style={{ fontWeight: 500, color: "#f97316" }}>Sign up now</a>
+                <a className="font-medium text-orange-600 hover:text-orange-700">Sign up now</a>
               </p>
             </div>
           </div>
 
-          <div style={{ display: "flex", flexDirection: "row", gap: "0.1875vw", marginTop: "0.3125vw" }}>
-            <button style={{
-              flex: 1,
-              backgroundColor: "#f97316",
-              color: "white",
-              fontWeight: 600,
-              padding: "0.5vw",
-              borderRadius: "0.625vw",
-              fontSize: "0.75vw",
-            }}>Start Free Trial</button>
-            <button style={{
-              flex: 1,
-              border: "0.125vw solid #f97316",
-              color: "#f97316",
-              padding: "0.5vw",
-              borderRadius: "0.625vw",
-              fontSize: "0.75vw",
-              backgroundColor: "#fff",
-            }}>Watch Demo</button>
+          <div className="flex flex-col sm:flex-row gap-[0.1875vw] sm:gap-[0.25vw]">
+            <button className="flex-1 bg-orange-500 hover:bg-orange-600 text-white font-semibold py-[0.1875vw] sm:py-[0.1875vw] px-[0.25vw] rounded-lg transition-all duration-300 transform hover:scale-105 shadow-md text-[0.875vw] sm:text-[1vw]">
+              Start Free Trial
+            </button>
+            <button className="flex-1 border-2 border-orange-500 text-orange-600 hover:bg-orange-50 py-[0.1875vw] sm:py-[0.1875vw] px-[0.25vw] rounded-lg transition-all duration-300 transform hover:scale-105 text-[0.875vw] sm:text-[1vw]">
+              Watch Demo
+            </button>
           </div>
         </div>
 
-        <div style={{ marginTop: "0.375vw" }}>
-          <footer style={{ textAlign: "center", fontSize: "0.5vw", color: "#6b7280" }}>
+        <div className="mt-[0.375vw] sm:mt-[0.5vw]">
+          <footer className="text-center text-[0.625vw] sm:text-[0.75vw] text-gray-600">
             © 2025 Muhammad Hanif. Smkn 4 Tangerang.
           </footer>
         </div>
