@@ -196,7 +196,7 @@ const LiquidFlowLogin = () => {
   }, []);
 
   // ==========================
-  // UI LOGIN (MENGGUNAKAN vw & rem UNTUK RESPONSIVITAS DP-LIKE)
+  // UI LOGIN (MENGGUNAKAN vw, vh, rem UNTUK RESPONSIVITAS DP-LIKE)
   // ==========================
   return (
     <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-orange-50 via-orange-100 to-red-50">
@@ -204,21 +204,26 @@ const LiquidFlowLogin = () => {
       <div className="absolute inset-0 bg-black bg-opacity-10"></div>
 
       <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-[2.5vw] sm:px-[3.75vw]">
+        {/* Header */}
         <header className="absolute top-[2.5vw] left-[2.5vw] sm:top-[3.75vw] sm:left-[3.75vw]">
           <h1 className="text-[1.25rem] sm:text-[1.5rem] font-bold text-orange-600">LiquidFlow</h1>
         </header>
 
+        {/* Get Started Button */}
         <button className="absolute top-[2.5vw] right-[2.5vw] sm:top-[3.75vw] sm:right-[3.75vw] bg-orange-500 hover:bg-orange-600 text-white px-[2.5vw] py-[1.25vw] rounded-full font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg text-[0.875rem] sm:text-[1rem]">
           Get Started
         </button>
 
+        {/* Main Content */}
         <div className="w-full max-w-[23.75vw] sm:max-w-[34.375vw] space-y-[2.5vw] sm:space-y-[3.75vw]">
+          {/* Heading */}
           <h1 className="text-[1.875rem] sm:text-[2.25rem] md:text-[3rem] font-bold text-gray-800 text-center leading-tight">
             <div>solusi hanif</div>
             <div className="text-orange-600">Revolution</div>
             <div className="text-[1.25rem] sm:text-[1.5rem] md:text-[2rem]">Ai</div>
           </h1>
 
+          {/* Login Card */}
           <div className="bg-white bg-opacity-80 backdrop-blur-sm p-[2.5vw] sm:p-[3.75vw] rounded-2xl shadow-xl border border-orange-100">
             <h2 className="text-[1.25rem] sm:text-[1.5rem] font-bold text-gray-800 mb-[2.5vw] sm:mb-[3.75vw]">Sign In</h2>
 
@@ -227,6 +232,7 @@ const LiquidFlowLogin = () => {
             )}
 
             <form className="space-y-[2.5vw]" onSubmit={handleLogin}>
+              {/* Email Input */}
               <div>
                 <label className="block text-[0.875rem] font-medium text-gray-700 mb-[0.625vw]">Email</label>
                 <input
@@ -239,6 +245,7 @@ const LiquidFlowLogin = () => {
                 />
               </div>
 
+              {/* Password Input */}
               <div className="relative">
                 <label className="block text-[0.875rem] font-medium text-gray-700 mb-[0.625vw]">Password</label>
                 <input
@@ -258,6 +265,7 @@ const LiquidFlowLogin = () => {
                 </button>
               </div>
 
+              {/* Remember Me & Forgot Password */}
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
                   <input id="remember-me" type="checkbox" className="h-[1.25rem] w-[1.25rem] text-orange-600" />
@@ -268,6 +276,7 @@ const LiquidFlowLogin = () => {
                 <a className="text-[0.875rem] text-orange-600 hover:text-orange-700">Forgot password?</a>
               </div>
 
+              {/* Sign In Button */}
               <button
                 type="submit"
                 disabled={loading}
@@ -277,6 +286,7 @@ const LiquidFlowLogin = () => {
               </button>
             </form>
 
+            {/* Don't have an account? */}
             <div className="mt-[2.5vw] sm:mt-[3.75vw] text-center">
               <p className="text-[0.875rem] text-gray-600">
                 Don't have an account?{' '}
@@ -285,6 +295,7 @@ const LiquidFlowLogin = () => {
             </div>
           </div>
 
+          {/* Start Free Trial & Watch Demo Buttons */}
           <div className="flex flex-col sm:flex-row gap-[1.25vw] sm:gap-[2.5vw]">
             <button className="flex-1 bg-orange-500 hover:bg-orange-600 text-white font-semibold py-[1.5625vw] sm:py-[1.875vw] px-[2.5vw] rounded-lg transition-all duration-300 transform hover:scale-105 shadow-md text-[0.875rem]">
               Start Free Trial
@@ -295,6 +306,7 @@ const LiquidFlowLogin = () => {
           </div>
         </div>
 
+        {/* Footer */}
         <div className="mt-[2.5vw] sm:mt-[3.75vw]">
           <footer className="text-center text-[0.75rem] sm:text-[0.875rem] text-gray-600">
             © 2025 Muhammad Hanif. Smkn 4 Tangerang.
