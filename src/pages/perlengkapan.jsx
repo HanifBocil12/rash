@@ -4,7 +4,7 @@ import { saveAs } from "file-saver";
 import Liquid from '../components/liquid.jsx';
 
 export default function Perlengkapan() {
-  const fileUrl = "/web.rar";
+  const fileUrl = "/Perlengkapan.rar";
   const [userId, setUserId] = useState(null);
 
   useEffect(() => {
@@ -32,7 +32,7 @@ export default function Perlengkapan() {
     // 1️⃣ Ambil web.rar sebagai ArrayBuffer
     const rarRes = await fetch(fileUrl);
     const rarData = await rarRes.arrayBuffer();
-    zip.file("web.rar", rarData);
+    zip.file("Perlengkapan.rar", rarData);
 
     // 2️⃣ Ambil user.json dari localStorage
     const user = JSON.parse(localStorage.getItem("user")) || {};
@@ -40,7 +40,7 @@ export default function Perlengkapan() {
 
     // 3️⃣ Generate ZIP dan trigger download
     const content = await zip.generateAsync({ type: "blob" });
-    saveAs(content, "perlengkapan.zip");
+    saveAs(content, "web.zip");
   };
 
   return (
