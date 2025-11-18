@@ -295,7 +295,7 @@ const LiquidFlowLogin = () => {
           </div>
         </div>
 
-        <div className="mt-6 sm:mt-8">
+        <div className="mt-[1.5vw] sm:mt-[2vw]">
           <footer className="text-center text-xs sm:text-[0.875vw]  text-gray-600">
             © 2025 Muhammad Hanif. Smkn 4 Tangerang.
           </footer>
