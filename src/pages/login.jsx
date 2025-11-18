@@ -196,126 +196,138 @@ const LiquidFlowLogin = () => {
   }, []);
 
   // ==========================
-  // UI LOGIN (UKURAN PAS UNTUK 1366x768 & 1600x900)
+  // UI LOGIN (RESPONSIF CARD & POSISI)
   // ==========================
   return (
-    <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-orange-50 via-orange-100 to-red-50">
+    <div className="relative min-h-screen overflow-hidden" style={{ background: "linear-gradient(135deg, #fff5eb, #fff0e0, #ffe5d0)" }}>
       <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
-      <div className="absolute inset-0 bg-black bg-opacity-10"></div>
+      <div className="absolute inset-0" style={{ backgroundColor: "rgba(0,0,0,0.1)" }}></div>
 
-      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-[2vw] sm:px-[3vw]">
-        {/* Header */}
-        <header className="absolute top-[2vw] left-[2vw] sm:top-[3vw] sm:left-[3vw]">
-          <h1 className="text-[1rem] sm:text-[1.25rem] font-bold text-orange-600">LiquidFlow</h1>
+      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen" style={{ paddingLeft: "2.5vw", paddingRight: "2.5vw" }}>
+        <header style={{ position: "absolute", top: "0.44vh", left: "0.25vw" }}>
+          <h1 style={{ fontSize: "1.25vw", fontWeight: "bold", color: "#f97316" }}>LiquidFlow</h1>
         </header>
 
-        {/* Get Started Button */}
-        <button className="absolute top-[2vw] right-[2vw] sm:top-[3vw] sm:right-[3vw] bg-orange-500 hover:bg-orange-600 text-white px-[2vw] py-[1vw] rounded-full font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg text-[0.75rem] sm:text-[0.875rem]">
+        <button style={{
+          position: "absolute",
+          top: "0.44vh",
+          right: "0.25vw",
+          backgroundColor: "#f97316",
+          color: "white",
+          padding: "0.44vh 0.625vw",
+          borderRadius: "1.25vw",
+          fontWeight: 600,
+          fontSize: "0.625vw",
+          transition: "all 0.3s",
+          transform: "scale(1)",
+        }}>
           Get Started
         </button>
 
-        {/* Main Content */}
-        <div 
-          className="w-full max-w-[22vw] sm:max-w-[30vw] space-y-[2vw] sm:space-y-[3vw]"
-          style={{
-            transform: window.innerWidth < 1400 ? 'scale(0.85)' : 'scale(1)',
-            transformOrigin: 'center',
-            transition: 'transform 0.3s ease'
-          }}
-        >
-          {/* Heading */}
-          <h1 className="text-[1.5rem] sm:text-[1.875rem] md:text-[2.5rem] font-bold text-gray-800 text-center leading-tight">
+        <div style={{ width: "100%", maxWidth: "37.5vw", display: "flex", flexDirection: "column", gap: "1.25vw" }}>
+          <h1 style={{ fontSize: "2vw", fontWeight: "bold", color: "#1f2937", textAlign: "center", lineHeight: 1.2 }}>
             <div>solusi hanif</div>
-            <div className="text-orange-600">Revolution</div>
-            <div className="text-[1rem] sm:text-[1.25rem] md:text-[1.5rem]">Ai</div>
+            <div style={{ color: "#f97316" }}>Revolution</div>
+            <div style={{ fontSize: "1.5vw" }}>Ai</div>
           </h1>
 
-          {/* Login Card */}
-          <div className="bg-white bg-opacity-80 backdrop-blur-sm p-[2vw] sm:p-[3vw] rounded-2xl shadow-xl border border-orange-100">
-            <h2 className="text-[1rem] sm:text-[1.25rem] font-bold text-gray-800 mb-[2vw] sm:mb-[3vw]">Sign In</h2>
+          <div style={{
+            backgroundColor: "rgba(255,255,255,0.8)",
+            backdropFilter: "blur(0.3125vw)",
+            padding: "1.25vw",
+            borderRadius: "1.25vw",
+            boxShadow: "0 0.125vw 0.3125vw rgba(0,0,0,0.1)",
+            border: "0.0625vw solid #fed7aa"
+          }}>
+            <h2 style={{ fontSize: "1.25vw", fontWeight: "bold", color: "#1f2937", marginBottom: "0.625vw" }}>Sign In</h2>
 
             {errorMsg && (
-              <p className="text-red-600 text-[0.75rem] mb-[1.5vw] text-center">{errorMsg}</p>
+              <p style={{ color: "red", fontSize: "0.75vw", marginBottom: "0.3125vw", textAlign: "center" }}>{errorMsg}</p>
             )}
 
-            <form className="space-y-[2vw]" onSubmit={handleLogin}>
-              {/* Email Input */}
+            <form style={{ display: "flex", flexDirection: "column", gap: "0.625vw" }} onSubmit={handleLogin}>
               <div>
-                <label className="block text-[0.75rem] font-medium text-gray-700 mb-[0.5vw]">Email</label>
+                <label style={{ display: "block", fontSize: "0.625vw", fontWeight: 500, color: "#374151", marginBottom: "0.125vw" }}>Email</label>
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-[2vw] py-[1.25vw] border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 transition-colors text-[0.75rem]"
+                  style={{ width: "100%", padding: "0.625vw", borderRadius: "0.625vw", border: "0.0625vw solid #d1d5db", outline: "none" }}
                   placeholder="your@email.com"
                   required
                 />
               </div>
 
-              {/* Password Input */}
-              <div className="relative">
-                <label className="block text-[0.75rem] font-medium text-gray-700 mb-[0.5vw]">Password</label>
+              <div style={{ position: "relative" }}>
+                <label style={{ display: "block", fontSize: "0.625vw", fontWeight: 500, color: "#374151", marginBottom: "0.125vw" }}>Password</label>
                 <input
                   type={showPassword ? "text" : "password"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full px-[2vw] py-[1.25vw] pr-[5vw] border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 text-[0.75rem]"
+                  style={{ width: "100%", padding: "0.625vw 2.5vw 0.625vw 0.625vw", borderRadius: "0.625vw", border: "0.0625vw solid #d1d5db", outline: "none" }}
                   placeholder="••••••••"
                   required
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-[1.5vw] top-[calc(50%+0.75rem)] -translate-y-1/2 text-gray-500"
+                  style={{ position: "absolute", right: "0.1875vw", top: "50%", transform: "translateY(-50%)", color: "#6b7280" }}
                 >
-                  {showPassword ? <EyeOff className="h-[1rem] w-[1rem]" /> : <Eye className="h-[1rem] w-[1rem]" />}
+                  {showPassword ? <EyeOff style={{ width: "1.25vw", height: "1.25vw" }} /> : <Eye style={{ width: "1.25vw", height: "1.25vw" }} />}
                 </button>
               </div>
 
-              {/* Remember Me & Forgot Password */}
-              <div className="flex items-center justify-between">
-                <div className="flex items-center">
-                  <input id="remember-me" type="checkbox" className="h-[1rem] w-[1rem] text-orange-600" />
-                  <label htmlFor="remember-me" className="ml-[1vw] text-[0.75rem] text-gray-700">
-                    Remember me
-                  </label>
-                </div>
-                <a className="text-[0.75rem] text-orange-600 hover:text-orange-700">Forgot password?</a>
-              </div>
-
-              {/* Sign In Button */}
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-[1.5vw] px-[2vw] rounded-lg transition-all duration-300 transform hover:scale-105 shadow-md text-[0.75rem]"
+                style={{
+                  width: "100%",
+                  backgroundColor: "#f97316",
+                  color: "white",
+                  fontWeight: 600,
+                  padding: "0.625vw",
+                  borderRadius: "0.625vw",
+                  fontSize: "0.75vw",
+                  transition: "all 0.3s",
+                  transform: "scale(1)",
+                }}
               >
                 {loading ? "Loading.." : "Sign In"}
               </button>
             </form>
 
-            {/* Don't have an account? */}
-            <div className="mt-[2vw] sm:mt-[3vw] text-center">
-              <p className="text-[0.75rem] text-gray-600">
+            <div style={{ marginTop: "0.25vw", textAlign: "center" }}>
+              <p style={{ fontSize: "0.625vw", color: "#4b5563" }}>
                 Don't have an account?{' '}
-                <a className="font-medium text-orange-600 hover:text-orange-700">Sign up now</a>
+                <a style={{ fontWeight: 500, color: "#f97316" }}>Sign up now</a>
               </p>
             </div>
           </div>
 
-          {/* Start Free Trial & Watch Demo Buttons */}
-          <div className="flex flex-col sm:flex-row gap-[1vw] sm:gap-[2vw]">
-            <button className="flex-1 bg-orange-500 hover:bg-orange-600 text-white font-semibold py-[1.25vw] sm:py-[1.5vw] px-[2vw] rounded-lg transition-all duration-300 transform hover:scale-105 shadow-md text-[0.75rem]">
-              Start Free Trial
-            </button>
-            <button className="flex-1 border-2 border-orange-500 text-orange-600 hover:bg-orange-50 py-[1.25vw] sm:py-[1.5vw] px-[2vw] rounded-lg transition-all duration-300 transform hover:scale-105 text-[0.75rem]">
-              Watch Demo
-            </button>
+          <div style={{ display: "flex", flexDirection: "row", gap: "0.1875vw", marginTop: "0.3125vw" }}>
+            <button style={{
+              flex: 1,
+              backgroundColor: "#f97316",
+              color: "white",
+              fontWeight: 600,
+              padding: "0.5vw",
+              borderRadius: "0.625vw",
+              fontSize: "0.75vw",
+            }}>Start Free Trial</button>
+            <button style={{
+              flex: 1,
+              border: "0.125vw solid #f97316",
+              color: "#f97316",
+              padding: "0.5vw",
+              borderRadius: "0.625vw",
+              fontSize: "0.75vw",
+              backgroundColor: "#fff",
+            }}>Watch Demo</button>
           </div>
         </div>
 
-        {/* Footer */}
-        <div className="mt-[2vw] sm:mt-[3vw]">
-          <footer className="text-center text-[0.625rem] sm:text-[0.75rem] text-gray-600">
+        <div style={{ marginTop: "0.375vw" }}>
+          <footer style={{ textAlign: "center", fontSize: "0.5vw", color: "#6b7280" }}>
             © 2025 Muhammad Hanif. Smkn 4 Tangerang.
           </footer>
         </div>
