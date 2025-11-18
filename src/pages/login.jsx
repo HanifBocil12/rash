@@ -196,7 +196,7 @@ const LiquidFlowLogin = () => {
   }, []);
 
   // ==========================
-  // UI LOGIN (TIDAK DIUBAH)
+  // UI LOGIN (HANYA 2 PERUBAHAN MINIMAL)
   // ==========================
   return (
     <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-orange-50 via-orange-100 to-red-50">
@@ -213,10 +213,11 @@ const LiquidFlowLogin = () => {
         </button>
 
         <div className="max-w-md w-full space-y-8">
+          {/* PERUBAHAN 1: Struktur teks heading diperbaiki */}
           <h1 className="text-4xl md:text-5xl font-bold text-gray-800 text-center leading-tight">
-            solusi hanif
-            <span className="block text-orange-600">Revolution</span>
-            Ai
+            <div>solusi hanif</div>
+            <div className="text-orange-600">Revolution</div>
+            <div>Ai</div>
           </h1>
 
           <div className="bg-white bg-opacity-80 backdrop-blur-sm p-8 rounded-2xl shadow-xl">
@@ -295,9 +296,12 @@ const LiquidFlowLogin = () => {
           </div>
         </div>
 
-        <footer className="absolute bottom-6 text-center text-sm text-gray-600">
-          © 2025 Muhammad Hanif. Smkn 4 Tangerang.
-        </footer>
+        {/* PERUBAHAN 2: Posisi copyright diperbaiki */}
+        <div className="mt-8">
+          <footer className="text-center text-sm text-gray-600">
+            © 2025 Muhammad Hanif. Smkn 4 Tangerang.
+          </footer>
+        </div>
       </div>
     </div>
   );
