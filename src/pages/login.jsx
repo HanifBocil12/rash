@@ -198,134 +198,111 @@ const LiquidFlowLogin = () => {
   // ==========================
   // UI LOGIN (RESPONSIF CARD & POSISI)
   // ==========================
-  return (
-    <div className="relative overflow-hidden" style={{ width: '100vw', height: '100vh' }}>
-      <canvas 
-        ref={canvasRef} 
-        className="absolute inset-0" 
-        style={{ width: '100vw', height: '100vh' }} 
-      />
-      <div 
-        className="absolute inset-0" 
-        style={{ backgroundColor: 'rgba(0,0,0,0.1)' }} 
-      ></div>
+    return (
+      <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-orange-50 via-orange-100 to-red-50">
+        <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
+        <div className="absolute inset-0 bg-black bg-opacity-10"></div>
 
-      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-[1vw] sm:px-[1.5vw]">
-        <header className="absolute top-[0.25vw] left-[0.25vw] sm:top-[0.375vw] sm:left-[0.375vw]">
-          <h1 className="text-[1vw] sm:text-[1.25vw] font-bold text-orange-600">LiquidFlow</h1>
-        </header>
+        <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 sm:px-6">
+          <header className="absolute top-[0.44vw] left-[0.44vw] sm:top-6 sm:left-6">
+            <h1 className="text-[1.33vw] sm:text-2xl font-bold text-orange-600">LiquidFlow</h1>
+          </header>
 
-        <button className="absolute top-[0.25vw] right-[0.25vw] sm:top-[0.375vw] sm:right-[0.375vw] 
-                          bg-orange-500 hover:bg-orange-600 text-white px-[0.75vw] py-[0.5vw] 
-                          rounded-full font-semibold transition-all duration-300 transform hover:scale-105 
-                          shadow-lg text-[0.875vw] sm:text-[1vw]">
-          Get Started
-        </button>
+          <button className="absolute top-[0.44vw] right-[0.44vw] sm:top-6 sm:right-6 bg-orange-500 hover:bg-orange-600 text-white px-[2.22vw] py-[1.11vw] rounded-full font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg text-[0.89vw] sm:text-base">
+            Get Started
+          </button>
 
-        <div className="w-full max-w-[23vw] sm:max-w-[26vw] space-y-[1.5vw] sm:space-y-[2vw]">
-          <h1 className="text-[2vw] sm:text-[2.5vw] md:text-[3vw] font-bold text-gray-800 text-center leading-tight">
-            <div>solusi hanif</div>
-            <div className="text-orange-600">Revolution</div>
-            <div className="text-[1.5vw] sm:text-[2vw] md:text-[2.5vw]">Ai</div>
-          </h1>
+          <div className="w-full max-w-sm sm:max-w-md space-y-[3.33vw] sm:space-y-8">
+            <h1 className="text-[2.67vw] sm:text-4xl md:text-5xl font-bold text-gray-800 text-center leading-tight">
+              <div>solusi hanif</div>
+              <div className="text-orange-600">Revolution</div>
+              <div className="text-[1.78vw] sm:text-3xl md:text-4xl">Ai</div>
+            </h1>
 
-          <div className="bg-white bg-opacity-80 backdrop-blur-sm p-[1.5vw] sm:p-[2vw] rounded-2xl shadow-xl border border-orange-100">
-            <h2 className="text-[1.25vw] sm:text-[1.5vw] font-bold text-gray-800 mb-[1vw] sm:mb-[1.5vw]">Sign In</h2>
+            <div className="bg-white bg-opacity-80 backdrop-blur-sm p-[4.44vw] sm:p-8 rounded-2xl shadow-xl border border-orange-100">
+              <h2 className="text-[1.33vw] sm:text-2xl font-bold text-gray-800 mb-[2.22vw] sm:mb-6">Sign In</h2>
 
-            {errorMsg && (
-              <p className="text-red-600 text-[0.875vw] mb-[0.75vw] text-center">{errorMsg}</p>
-            )}
+              {errorMsg && (
+                <p className="text-red-600 text-[0.89vw] mb-[1.67vw] text-center">{errorMsg}</p>
+              )}
 
-            <form className="space-y-[1.5vw]" onSubmit={handleLogin}>
+              <form className="space-y-[2.22vw]">
                 <div>
-                  <label className="block text-[0.875vw] font-medium text-gray-700 mb-[0.25vw]">
-                    Email
-                  </label>
+                  <label className="block text-sm font-medium text-gray-700 mb-[0.56vw]">Email</label>
                   <input
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full px-[0.25vw] py-[0.5vw] border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 transition-colors"
+                    className="w-full px-[2.22vw] py-[1.39vw] border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 transition-colors"
                     placeholder="your@email.com"
                     required
                   />
                 </div>
 
                 <div className="relative">
-                  <label className="block text-[0.875vw] font-medium text-gray-700 mb-[0.25vw]">
-                    Password
-                  </label>
+                  <label className="block text-sm font-medium text-gray-700 mb-[0.56vw]">Password</label>
                   <input
                     type={showPassword ? "text" : "password"}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="w-full px-[0.25vw] py-[0.5vw] pr-[0.625vw] border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500"
+                    className="w-full px-[2.22vw] py-[1.39vw] pr-[5.56vw] border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500"
                     placeholder="••••••••"
                     required
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-[0.1875vw] top-[calc(50%+0.46875vw)] -translate-y-1/2 text-gray-500"
+                    className="absolute right-[1.67vw] top-[calc(50%+0.75rem)] -translate-y-1/2 text-gray-500"
                   >
-                    {showPassword ? <EyeOff className="h-[0.3125vw] w-[0.3125vw]" /> : <Eye className="h-[0.3125vw] w-[0.3125vw]" />}
+                    {showPassword ? <EyeOff className="h-[1.11vw] w-[1.11vw]" /> : <Eye className="h-[1.11vw] w-[1.11vw]" />}
                   </button>
                 </div>
 
                 <div className="flex items-center justify-between">
                   <div className="flex items-center">
-                    <input 
-                      id="remember-me" 
-                      type="checkbox" 
-                      className="h-[0.25vw] w-[0.25vw] text-orange-600" 
-                    />
-                    <label 
-                      htmlFor="remember-me" 
-                      className="ml-[0.125vw] text-[0.875vw] text-gray-700"
-                    >
+                    <input id="remember-me" type="checkbox" className="h-[1.11vw] w-[1.11vw] text-orange-600" />
+                    <label htmlFor="remember-me" className="ml-[1.11vw] text-sm text-gray-700">
                       Remember me
                     </label>
                   </div>
-                  <a className="text-[0.875vw] text-orange-600 hover:text-orange-700">
-                    Forgot password?
-                  </a>
+                  <a className="text-sm text-orange-600 hover:text-orange-700">Forgot password?</a>
                 </div>
 
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-[0.1875vw] px-[0.25vw] rounded-lg transition-all duration-300 transform hover:scale-105 shadow-md text-[0.875vw]"
+                  className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-[1.67vw] px-[2.22vw] rounded-lg transition-all duration-300 transform hover:scale-105 shadow-md"
                 >
                   {loading ? "Loading.." : "Sign In"}
                 </button>
-            </form>
+              </form>
 
-            <div className="mt-[0.25vw] sm:mt-[0.375vw] text-center">
-                <p className="text-[0.875vw] sm:text-[1vw] text-gray-600">
+              <div className="mt-[2.22vw] sm:mt-6 text-center">
+                <p className="text-sm text-gray-600">
                   Don't have an account?{' '}
                   <a className="font-medium text-orange-600 hover:text-orange-700">Sign up now</a>
                 </p>
               </div>
+            </div>
+
+            <div className="flex flex-col sm:flex-row gap-[1.67vw] sm:gap-4">
+              <button className="flex-1 bg-orange-500 hover:bg-orange-600 text-white font-semibold py-[1.39vw] sm:py-3 px-[2.22vw] sm:px-4 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-md text-[0.89vw] sm:text-base">
+                Start Free Trial
+              </button>
+              <button className="flex-1 border-2 border-orange-500 text-orange-600 hover:bg-orange-50 py-[1.39vw] sm:py-3 px-[2.22vw] sm:px-4 rounded-lg transition-all duration-300 transform hover:scale-105 text-[0.89vw] sm:text-base">
+                Watch Demo
+              </button>
+            </div>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-[0.1875vw] sm:gap-[0.25vw]">
-            <button className="flex-1 bg-orange-500 hover:bg-orange-600 text-white font-semibold py-[0.156vw] sm:py-[0.1875vw] px-[0.25vw] sm:px-[0.3125vw] rounded-lg transition-all duration-300 transform hover:scale-105 shadow-md text-[0.875vw] sm:text-[1vw]">
-              Start Free Trial
-            </button>
-            <button className="flex-1 border-2 border-orange-500 text-orange-600 hover:bg-orange-50 py-[0.156vw] sm:py-[0.1875vw] px-[0.25vw] sm:px-[0.3125vw] rounded-lg transition-all duration-300 transform hover:scale-105 text-[0.875vw] sm:text-[1vw]">
-              Watch Demo
-            </button>
+          <div className="mt-[3.33vw] sm:mt-8">
+            <footer className="text-center text-[0.67vw] sm:text-sm text-gray-600">
+              © 2025 Muhammad Hanif. Smkn 4 Tangerang.
+            </footer>
           </div>
-        </div>
-
-        <div className="mt-[1.5vw] sm:mt-[2vw]">
-          <footer className="text-center text-[0.75vw] sm:text-[0.875vw] text-gray-600">
-            © 2025 Muhammad Hanif. Smkn 4 Tangerang.
-          </footer>
         </div>
       </div>
-    </div>
-  );
+    );
 };
 
 export default LiquidFlowLogin;
