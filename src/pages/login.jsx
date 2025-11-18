@@ -194,7 +194,7 @@ const LiquidFlowLogin = () => {
       <div className="absolute inset-0 bg-black/10"></div>
 
       {/* 🟢 FIX RESPONSIVE WRAPPER */}
-      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 sm:px-6 md:px-8">
+      <div className="relative z-10 flex flex-col items-center justify-center h-screen max-h-screen overflow-hidden px-4 sm:px-6 md:px-8">
 
         <header className="absolute top-4 left-4 text-lg sm:text-xl md:text-2xl font-bold text-orange-600">
           LiquidFlow
@@ -204,7 +204,7 @@ const LiquidFlowLogin = () => {
           Get Started
         </button>
 
-        <div className="w-full max-w-sm sm:max-w-md space-y-6 sm:space-y-8">
+        <div className="w-full max-w-xs sm:max-w-sm md:max-w-md space-y-4 sm:space-y-6 md:space-y-8">
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-800 text-center leading-tight">
             solusi hanif
             <span className="block text-orange-600">Revolution</span>
@@ -285,7 +285,7 @@ const LiquidFlowLogin = () => {
           </div>
         </div>
 
-        <footer className="absolute bottom-4 sm:bottom-6 text-[10px] sm:text-sm text-gray-600 text-center">
+        <footer className="mt-6 text-[10px] sm:text-sm text-gray-600 text-center opacity-80">
           © 2025 Muhammad Hanif. Smkn 4 Tangerang.
         </footer>
       </div>
