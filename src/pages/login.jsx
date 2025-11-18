@@ -212,11 +212,11 @@ const LiquidFlowLogin = () => {
           Get Started
         </button>
 
-        <div className="w-full max-w-sm sm:max-w-md space-y-6 sm:space-y-8">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-800 text-center leading-tight">
+        <div className="w-full max-w-[28vw] sm:max-w-[32vw] space-y-[1.5vw] sm:space-y-[2vw]">
+          <h1 className="text-[3vw] sm:text-[4vw] md:text-[5vw] font-bold text-gray-800 text-center leading-tight">
             <div>solusi hanif</div>
             <div className="text-orange-600">Revolution</div>
-            <div className="text-2xl sm:text-3xl md:text-4xl">Ai</div>
+            <div className="text-[2vw] sm:text-[3vw] md:text-[4vw]">Ai</div>
           </h1>
 
           <div className="bg-white bg-opacity-80 backdrop-blur-sm p-[1.5vw] sm:p-[2vw] rounded-2xl shadow-xl border border-orange-100">
