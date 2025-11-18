@@ -203,12 +203,12 @@ const LiquidFlowLogin = () => {
       <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
       <div className="absolute inset-0 bg-black bg-opacity-10"></div>
 
-      <div className="relative z-10 flex flex-col items-center justify-center py-8 px-4 sm:px-6">
-        <header className="absolute top-3 left-3 sm:top-6 sm:left-6">
+      <div className="relative z-10 flex flex-col items-center justify-center py-[3vw] px-4 sm:px-6">
+        <header className="absolute top-[0.25vw] left-[0.25vw] sm:top-6 sm:left-6">
           <h1 className="text-xl sm:text-2xl font-bold text-orange-600">LiquidFlow</h1>
         </header>
 
-        <button className="absolute top-3 right-3 sm:top-6 sm:right-6 bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg text-sm sm:text-base">
+        <button className="absolute top-[0.25vw] right-[0.25vw] sm:top-6 sm:right-6 bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg text-sm sm:text-base">
           Get Started
         </button>
 
