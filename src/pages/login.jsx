@@ -219,11 +219,11 @@ const LiquidFlowLogin = () => {
             <div className="text-2xl sm:text-3xl md:text-4xl">Ai</div>
           </h1>
 
-          <div className="bg-white bg-opacity-80 backdrop-blur-sm p-6 sm:p-8 rounded-2xl shadow-xl border border-orange-100">
-            <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-4 sm:mb-6">Sign In</h2>
+        <div className="bg-white bg-opacity-80 backdrop-blur-sm p-[1.5vw] sm:p-[2vw] rounded-2xl shadow-xl border border-orange-100">
+            <h2 className="text-[1.25vw] sm:text-[1.5vw] font-bold text-gray-800 mb-[1vw] sm:mb-[1.5vw]">Sign In</h2>
 
             {errorMsg && (
-              <p className="text-red-600 text-[0.875vw] mb-3 text-center">{errorMsg}</p>
+              <p className="text-red-600 text-[0.875vw] mb-[0.75vw] text-center">{errorMsg}</p>
             )}
 
             <form className="space-y-[1.5vw]" onSubmit={handleLogin}>
