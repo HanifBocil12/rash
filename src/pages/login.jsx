@@ -196,50 +196,57 @@ const LiquidFlowLogin = () => {
   }, []);
 
   // ==========================
-  // UI LOGIN (MENGGUNAKAN vw, vh, rem UNTUK RESPONSIVITAS DP-LIKE)
+  // UI LOGIN (UKURAN PAS UNTUK 1366x768 & 1600x900)
   // ==========================
   return (
     <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-orange-50 via-orange-100 to-red-50">
       <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
       <div className="absolute inset-0 bg-black bg-opacity-10"></div>
 
-      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-[2.5vw] sm:px-[3.75vw]">
+      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-[2vw] sm:px-[3vw]">
         {/* Header */}
-        <header className="absolute top-[2.5vw] left-[2.5vw] sm:top-[3.75vw] sm:left-[3.75vw]">
-          <h1 className="text-[1.25rem] sm:text-[1.5rem] font-bold text-orange-600">LiquidFlow</h1>
+        <header className="absolute top-[2vw] left-[2vw] sm:top-[3vw] sm:left-[3vw]">
+          <h1 className="text-[1rem] sm:text-[1.25rem] font-bold text-orange-600">LiquidFlow</h1>
         </header>
 
         {/* Get Started Button */}
-        <button className="absolute top-[2.5vw] right-[2.5vw] sm:top-[3.75vw] sm:right-[3.75vw] bg-orange-500 hover:bg-orange-600 text-white px-[2.5vw] py-[1.25vw] rounded-full font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg text-[0.875rem] sm:text-[1rem]">
+        <button className="absolute top-[2vw] right-[2vw] sm:top-[3vw] sm:right-[3vw] bg-orange-500 hover:bg-orange-600 text-white px-[2vw] py-[1vw] rounded-full font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg text-[0.75rem] sm:text-[0.875rem]">
           Get Started
         </button>
 
         {/* Main Content */}
-        <div className="w-full max-w-[23.75vw] sm:max-w-[34.375vw] space-y-[2.5vw] sm:space-y-[3.75vw]">
+        <div 
+          className="w-full max-w-[22vw] sm:max-w-[30vw] space-y-[2vw] sm:space-y-[3vw]"
+          style={{
+            transform: window.innerWidth < 1400 ? 'scale(0.85)' : 'scale(1)',
+            transformOrigin: 'center',
+            transition: 'transform 0.3s ease'
+          }}
+        >
           {/* Heading */}
-          <h1 className="text-[1.875rem] sm:text-[2.25rem] md:text-[3rem] font-bold text-gray-800 text-center leading-tight">
+          <h1 className="text-[1.5rem] sm:text-[1.875rem] md:text-[2.5rem] font-bold text-gray-800 text-center leading-tight">
             <div>solusi hanif</div>
             <div className="text-orange-600">Revolution</div>
-            <div className="text-[1.25rem] sm:text-[1.5rem] md:text-[2rem]">Ai</div>
+            <div className="text-[1rem] sm:text-[1.25rem] md:text-[1.5rem]">Ai</div>
           </h1>
 
           {/* Login Card */}
-          <div className="bg-white bg-opacity-80 backdrop-blur-sm p-[2.5vw] sm:p-[3.75vw] rounded-2xl shadow-xl border border-orange-100">
-            <h2 className="text-[1.25rem] sm:text-[1.5rem] font-bold text-gray-800 mb-[2.5vw] sm:mb-[3.75vw]">Sign In</h2>
+          <div className="bg-white bg-opacity-80 backdrop-blur-sm p-[2vw] sm:p-[3vw] rounded-2xl shadow-xl border border-orange-100">
+            <h2 className="text-[1rem] sm:text-[1.25rem] font-bold text-gray-800 mb-[2vw] sm:mb-[3vw]">Sign In</h2>
 
             {errorMsg && (
-              <p className="text-red-600 text-[0.875rem] mb-[1.875vw] text-center">{errorMsg}</p>
+              <p className="text-red-600 text-[0.75rem] mb-[1.5vw] text-center">{errorMsg}</p>
             )}
 
-            <form className="space-y-[2.5vw]" onSubmit={handleLogin}>
+            <form className="space-y-[2vw]" onSubmit={handleLogin}>
               {/* Email Input */}
               <div>
-                <label className="block text-[0.875rem] font-medium text-gray-700 mb-[0.625vw]">Email</label>
+                <label className="block text-[0.75rem] font-medium text-gray-700 mb-[0.5vw]">Email</label>
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-[2.5vw] py-[1.5625vw] border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 transition-colors text-[0.875rem]"
+                  className="w-full px-[2vw] py-[1.25vw] border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 transition-colors text-[0.75rem]"
                   placeholder="your@email.com"
                   required
                 />
@@ -247,48 +254,48 @@ const LiquidFlowLogin = () => {
 
               {/* Password Input */}
               <div className="relative">
-                <label className="block text-[0.875rem] font-medium text-gray-700 mb-[0.625vw]">Password</label>
+                <label className="block text-[0.75rem] font-medium text-gray-700 mb-[0.5vw]">Password</label>
                 <input
                   type={showPassword ? "text" : "password"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full px-[2.5vw] py-[1.5625vw] pr-[6.25vw] border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 text-[0.875rem]"
+                  className="w-full px-[2vw] py-[1.25vw] pr-[5vw] border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 text-[0.75rem]"
                   placeholder="••••••••"
                   required
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-[1.875vw] top-[calc(50%+0.75rem)] -translate-y-1/2 text-gray-500"
+                  className="absolute right-[1.5vw] top-[calc(50%+0.75rem)] -translate-y-1/2 text-gray-500"
                 >
-                  {showPassword ? <EyeOff className="h-[1.25rem] w-[1.25rem]" /> : <Eye className="h-[1.25rem] w-[1.25rem]" />}
+                  {showPassword ? <EyeOff className="h-[1rem] w-[1rem]" /> : <Eye className="h-[1rem] w-[1rem]" />}
                 </button>
               </div>
 
               {/* Remember Me & Forgot Password */}
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
-                  <input id="remember-me" type="checkbox" className="h-[1.25rem] w-[1.25rem] text-orange-600" />
-                  <label htmlFor="remember-me" className="ml-[1.25vw] text-[0.875rem] text-gray-700">
+                  <input id="remember-me" type="checkbox" className="h-[1rem] w-[1rem] text-orange-600" />
+                  <label htmlFor="remember-me" className="ml-[1vw] text-[0.75rem] text-gray-700">
                     Remember me
                   </label>
                 </div>
-                <a className="text-[0.875rem] text-orange-600 hover:text-orange-700">Forgot password?</a>
+                <a className="text-[0.75rem] text-orange-600 hover:text-orange-700">Forgot password?</a>
               </div>
 
               {/* Sign In Button */}
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-[1.875vw] px-[2.5vw] rounded-lg transition-all duration-300 transform hover:scale-105 shadow-md text-[0.875rem]"
+                className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-[1.5vw] px-[2vw] rounded-lg transition-all duration-300 transform hover:scale-105 shadow-md text-[0.75rem]"
               >
                 {loading ? "Loading.." : "Sign In"}
               </button>
             </form>
 
             {/* Don't have an account? */}
-            <div className="mt-[2.5vw] sm:mt-[3.75vw] text-center">
-              <p className="text-[0.875rem] text-gray-600">
+            <div className="mt-[2vw] sm:mt-[3vw] text-center">
+              <p className="text-[0.75rem] text-gray-600">
                 Don't have an account?{' '}
                 <a className="font-medium text-orange-600 hover:text-orange-700">Sign up now</a>
               </p>
@@ -296,19 +303,19 @@ const LiquidFlowLogin = () => {
           </div>
 
           {/* Start Free Trial & Watch Demo Buttons */}
-          <div className="flex flex-col sm:flex-row gap-[1.25vw] sm:gap-[2.5vw]">
-            <button className="flex-1 bg-orange-500 hover:bg-orange-600 text-white font-semibold py-[1.5625vw] sm:py-[1.875vw] px-[2.5vw] rounded-lg transition-all duration-300 transform hover:scale-105 shadow-md text-[0.875rem]">
+          <div className="flex flex-col sm:flex-row gap-[1vw] sm:gap-[2vw]">
+            <button className="flex-1 bg-orange-500 hover:bg-orange-600 text-white font-semibold py-[1.25vw] sm:py-[1.5vw] px-[2vw] rounded-lg transition-all duration-300 transform hover:scale-105 shadow-md text-[0.75rem]">
               Start Free Trial
             </button>
-            <button className="flex-1 border-2 border-orange-500 text-orange-600 hover:bg-orange-50 py-[1.5625vw] sm:py-[1.875vw] px-[2.5vw] rounded-lg transition-all duration-300 transform hover:scale-105 text-[0.875rem]">
+            <button className="flex-1 border-2 border-orange-500 text-orange-600 hover:bg-orange-50 py-[1.25vw] sm:py-[1.5vw] px-[2vw] rounded-lg transition-all duration-300 transform hover:scale-105 text-[0.75rem]">
               Watch Demo
             </button>
           </div>
         </div>
 
         {/* Footer */}
-        <div className="mt-[2.5vw] sm:mt-[3.75vw]">
-          <footer className="text-center text-[0.75rem] sm:text-[0.875rem] text-gray-600">
+        <div className="mt-[2vw] sm:mt-[3vw]">
+          <footer className="text-center text-[0.625rem] sm:text-[0.75rem] text-gray-600">
             © 2025 Muhammad Hanif. Smkn 4 Tangerang.
           </footer>
         </div>
