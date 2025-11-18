@@ -220,10 +220,14 @@ const LiquidFlowLogin = () => {
           </h1>
 
           <div className="bg-white bg-opacity-80 backdrop-blur-sm p-[1.5vw] sm:p-[2vw] rounded-2xl shadow-xl border border-orange-100">
-            <h2 className="text-[1.25vw] sm:text-[1.5vw] font-bold text-gray-800 mb-[1vw] sm:mb-[1.5vw]">Sign In</h2>
+            <h2 className="text-[1.25vw] sm:text-[1.5vw] font-bold text-gray-800 mb-[1vw] sm:mb-[1.5vw]">
+              Sign In
+            </h2>
 
             {errorMsg && (
-              <p className="text-red-600 text-[0.875vw] mb-[0.75vw] text-center">{errorMsg}</p>
+              <p className="text-red-600 text-[0.875vw] sm:text-[0.95vw] mb-[0.75vw] sm:mb-[1vw] text-center">
+                {errorMsg}
+              </p>
             )}
 
 
@@ -236,7 +240,7 @@ const LiquidFlowLogin = () => {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-[0.75vw] py-[1vw] border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 transition-colors"
+                  className="w-full px-[0.75vw] py-[1vw] border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 transition-colors text-[0.875vw]"
                   placeholder="your@email.com"
                   required
                 />
