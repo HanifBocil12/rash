@@ -305,7 +305,7 @@ const LiquidFlowLogin = () => {
 
                 {/* FOOTER DIPINDAH KE DALAM SINI */}
              
-                  <footer className="text-center text-xs sm:text-sm text-gray-600">
+                  <footer className="text-center text-xs sm:text-sm mt-2 text-gray-600">
                     © 2025 Muhammad Hanif. Smkn 4 Tangerang.
                   </footer>
                
