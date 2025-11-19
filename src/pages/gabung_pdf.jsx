@@ -9,11 +9,9 @@ export default function Gabung_Pdf() {
   const [inputFolder, setInputFolder] = useState('');
   const [outputFolder, setOutputFolder] = useState('C:\\web\\zip\\Perlengkapan\\download\\output');
 
-  // Ambil user dari localStorage
   const user = JSON.parse(localStorage.getItem("user")) || {};
   const userId = user.id;
   const token = user.token;
-
   const API_BASE = "https://api-web.up.railway.app";
   const HEADERS = token ? { 'Authorization': `Bearer ${token}` } : {};
 
@@ -57,18 +55,19 @@ export default function Gabung_Pdf() {
   return (
     <div className="relative min-h-screen overflow-hidden">
       <Liquid />
-      <div className="relative z-10 min-h-screen bg-white/40 py-8 px-4">
-        <div className="max-w-2xl mx-auto bg-white rounded-xl shadow-md p-6 md:p-8">
+
+      <div className="relative z-10 min-h-screen bg-white/40 py-6 px-3 flex items-center sm:block">
+        <div className="w-full max-w-2xl mx-auto mt-10 bg-white/90 rounded-xl shadow-md p-6 md:p-8 backdrop-blur-md">
+
           <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-2">📎 Gabung PDF</h1>
-          <div className="bg-blue-50 border border-blue-200 text-blue-700 px-4 py-3 rounded-lg mb-6">
+
+          <div className="bg-blue-50 border border-blue-200 text-blue-700 px-3 py-2 md:px-4 md:py-3 rounded-lg mb-6 text-sm md:text-base">
             Gunakan tombol di bawah untuk menjalankan script <code className="bg-blue-100 px-1 rounded">gabung.py</code> melalui <strong>Railway API</strong>.
           </div>
 
           <div className="mb-6 space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Folder Input PDF:
-              </label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Folder Input PDF:</label>
               <input
                 type="text"
                 value={inputFolder}
@@ -79,9 +78,7 @@ export default function Gabung_Pdf() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Folder Output PDF:
-              </label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Folder Output PDF:</label>
               <input
                 type="text"
                 value={outputFolder}
@@ -134,13 +131,11 @@ export default function Gabung_Pdf() {
           </div>
 
           {message.text && (
-            <div
-              className={`mt-4 p-3 rounded-lg ${
-                message.type === 'success'
-                  ? 'bg-green-50 text-green-700 border border-green-200'
-                  : 'bg-red-50 text-red-700 border border-red-200'
-              }`}
-            >
+            <div className={`mt-4 p-3 rounded-lg ${
+              message.type === 'success'
+                ? 'bg-green-50 text-green-700 border border-green-200'
+                : 'bg-red-50 text-red-700 border border-red-200'
+            }`}>
               {message.type === 'success' ? (
                 <span className="flex items-center">
                   <CheckCircle className="w-4 h-4 mr-2" />
@@ -155,9 +150,10 @@ export default function Gabung_Pdf() {
             </div>
           )}
 
-          <div className="mt-8 pt-6 border-t text-center text-gray-500 text-sm">
-            Dibuat dengan ❤️ menggunakan <strong>Python</strong> & <strong>Flask</strong>
+          <div className="mt-6 md:mt-8 pt-4 md:pt-6 border-t text-center text-gray-500 text-xs md:text-sm">
+            Dibuat dengan ❤️ menggunakan <strong>Python</strong> & <strong>Railway API</strong>
           </div>
+
         </div>
       </div>
     </div>
