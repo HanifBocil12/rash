@@ -206,7 +206,7 @@ export default function App() {
     );
   };
 
-  // ============================= UI (SUDAH SAMA PERSIS DAFTAR_BATAL!)
+  // ============================= UI
   return (
     <div className="relative min-h-screen overflow-hidden">
 
@@ -218,8 +218,8 @@ export default function App() {
 
       <div className="
         relative z-10 min-h-screen bg-white/40 
-        py-6 px-3 md:py-8 md:px-4
-        flex items-center sm:block
+        py-6
+        flex items-center justify-center
       ">
         
         <div className="w-full max-w-2xl mx-auto bg-white/90 rounded-xl mt-10 shadow-md p-4 md:p-8 backdrop-blur-md">
