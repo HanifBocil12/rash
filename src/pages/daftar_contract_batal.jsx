@@ -115,18 +115,25 @@ export default function App() {
     <div className="relative min-h-screen overflow-hidden">
       <Liquid />
 
-      {/* Wrapper LUAR — tidak dipakai margin kiri */}
-      <div className="relative z-10 min-h-screen bg-white/40 py-6 px-3 md:py-8 md:px-4">
+      {/* === Wrapper sama seperti home.jsx === */}
+      <div className="
+        relative z-10 min-h-screen bg-white/40 
+        py-6 px-3 md:py-8 md:px-4
+        flex items-center sm:block
+      ">
+        
+        {/* Card sama persis style home.jsx */}
+        <div className="w-full max-w-2xl mx-auto bg-white/90 rounded-xl shadow-md p-4 md:p-8 backdrop-blur-md md:ml-64 md:pt-16">
 
-        {/* WRAPPER CARD — INI yang diberi md:ml-64 & md:pt-16 */}
-        <div className="max-w-2xl mx-auto bg-white rounded-xl shadow-md p-4 md:p-8 md:ml-64 md:pt-16">
+          <h1 className="text-xl md:text-3xl font-bold text-gray-800 mb-2">
+            ⬇️ PDF, Search & Sheet Batal
+          </h1>
 
-          <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-2">⬇️ PDF, Search & Sheet Batal</h1>
-          <p className="text-gray-600 mb-6">
+          <p className="text-gray-600 mb-4 md:mb-6 text-sm md:text-base">
             Gunakan tombol di bawah untuk mengirim perintah ke Railway agent agar menjalankan proses otomatis yang diinginkan.
           </p>
 
-          <div className="mb-6">
+          <div className="mb-5 md:mb-6">
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Masukkan URL Railway API:
             </label>
@@ -140,24 +147,24 @@ export default function App() {
             />
           </div>
 
-          <div className="mb-6">
-            <h2 className="text-xl font-semibold text-gray-800 mb-3 flex items-center">
+          <div className="mb-5 md:mb-6">
+            <h2 className="text-lg md:text-xl font-semibold text-gray-800 mb-2 md:mb-3 flex items-center">
               <span className="mr-2">🟢</span> Status Agent
             </h2>
-            
+
             {loadingStatus ? (
-              <div className="text-gray-500">Memuat status...</div>
+              <div className="text-gray-500 text-sm md:text-base">Memuat status...</div>
             ) : message.type === 'error' ? (
               <div className="flex items-center space-x-2 text-red-700 bg-red-50 p-3 rounded-lg">
                 <AlertTriangle className="w-5 h-5" />
-                <span>Tidak dapat mengambil status agent ({message.text})</span>
+                <span className="text-sm md:text-base">Tidak dapat mengambil status agent ({message.text})</span>
               </div>
             ) : (
               getStatusDisplay()
             )}
           </div>
 
-          <div className="mb-6">
+          <div className="mb-5 md:mb-6">
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Masukkan baris mulai (biarkan 0 untuk otomatis):
             </label>
@@ -170,7 +177,7 @@ export default function App() {
             />
           </div>
 
-          <div className="mb-6">
+          <div className="mb-5 md:mb-6">
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Masukkan Excel Path:
             </label>
@@ -183,8 +190,9 @@ export default function App() {
             />
           </div>
 
-          <div className="mb-6">
-            <h2 className="text-xl font-semibold text-gray-800 mb-3 flex items-center">
+          {/* BUTTON 1 */}
+          <div className="mb-5 md:mb-6">
+            <h2 className="text-lg md:text-xl font-semibold text-gray-800 mb-2 md:mb-3 flex items-center">
               <span className="mr-2">📕</span> Langkah 1 — Jalankan PDF Batal
             </h2>
             <button
@@ -195,19 +203,20 @@ export default function App() {
               {loadingPdf ? (
                 <>
                   <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-                  <span>Mengirim perintah...</span>
+                  <span className="text-sm md:text-base">Mengirim perintah...</span>
                 </>
               ) : (
                 <>
                   <Zap className="w-5 h-5" />
-                  <span>Jalankan PDF Batal via Agent</span>
+                  <span className="text-sm md:text-base">Jalankan PDF Batal via Agent</span>
                 </>
               )}
             </button>
           </div>
 
-          <div className="mb-6">
-            <h2 className="text-xl font-semibold text-gray-800 mb-3 flex items-center">
+          {/* BUTTON 2 */}
+          <div className="mb-5 md:mb-6">
+            <h2 className="text-lg md:text-xl font-semibold text-gray-800 mb-2 md:mb-3 flex items-center">
               <span className="mr-2">🔍</span> Langkah 2 — Jalankan Search Batal
             </h2>
             <button
@@ -218,29 +227,32 @@ export default function App() {
               {loadingSearch ? (
                 <>
                   <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-                  <span>Mengirim perintah...</span>
+                  <span className="text-sm md:text-base">Mengirim perintah...</span>
                 </>
               ) : (
                 <>
                   <Zap className="w-5 h-5" />
-                  <span>Jalankan Search Batal via Agent</span>
+                  <span className="text-sm md:text-base">Jalankan Search Batal via Agent</span>
                 </>
               )}
             </button>
           </div>
 
           {message.text && message.type !== 'error' && (
-            <div className={`mt-4 p-3 rounded-lg ${
-              message.type === 'success' ? 'bg-green-50 text-green-700' : 
-              message.type === 'warning' ? 'bg-yellow-50 text-yellow-700' : 'bg-blue-50 text-blue-700'
-            }`}>
+            <div className={`
+              mt-4 p-3 rounded-lg 
+              text-sm md:text-base
+              ${message.type === 'success' ? 'bg-green-50 text-green-700' : 
+                message.type === 'warning' ? 'bg-yellow-50 text-yellow-700' : 'bg-blue-50 text-blue-700'}
+            `}>
               {message.text}
             </div>
           )}
 
-          <div className="mt-8 pt-6 border-t text-center text-gray-500 text-sm">
+          <div className="mt-6 md:mt-8 pt-4 md:pt-6 border-t text-center text-gray-500 text-xs md:text-sm">
             Dibuat dengan ❤️ menggunakan <strong>Python</strong> & <strong>Streamlit</strong>
           </div>
+
         </div>
       </div>
     </div>
