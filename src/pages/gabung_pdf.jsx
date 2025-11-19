@@ -57,7 +57,7 @@ export default function Gabung_Pdf() {
       <Liquid />
 
       <div className="relative z-10 min-h-screen bg-white/40 py-6 px-3 flex items-center sm:block">
-        <div className="w-full max-w-2xl mx-auto mt-10 bg-white/90 rounded-xl shadow-md p-6 md:p-8 backdrop-blur-md">
+        <div className="w-full max-w-2xl mx-auto bg-white/90 rounded-xl shadow-md p-6 md:p-8 backdrop-blur-md">
 
           <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-2">📎 Gabung PDF</h1>
 
