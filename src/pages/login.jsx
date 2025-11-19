@@ -226,31 +226,32 @@ const LiquidFlowLogin = () => {
                   />
                 </div>
 
-                <div className="relative">
+               <div>
                   <label className="block text-sm sm:text-base font-medium text-gray-700 mb-1">
                     Password
                   </label>
-                  <input
-                    type={showPassword ? "text" : "password"}
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className="w-full px-3 sm:px-4 py-3 pr-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 text-sm sm:text-base"
-                    placeholder="••••••••"
-                    required
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute top-1/2 right-2 transform -translate-y-1/2 flex items-center justify-center text-gray-500 p-1"
-                  >
-                    <div className="flex items-center justify-center h-6 w-6">
+                  <div className="relative">
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      className="w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 text-sm sm:text-base"
+                      placeholder="••••••••"
+                      required
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute inset-y-0 right-0 flex items-center px-3"
+                      aria-label={showPassword ? "Hide password" : "Show password"}
+                    >
                       {showPassword ? (
-                        <EyeOff className="h-5 w-5 sm:h-5 sm:w-5" />
+                        <EyeOff className="w-5 h-5 text-gray-400" />
                       ) : (
-                        <Eye className="h-5 w-5 sm:h-5 sm:w-5" />
+                        <Eye className="w-5 h-5 text-gray-400" />
                       )}
-                    </div>
-                  </button>
+                    </button>
+                  </div>
                 </div>
 
                 <div className="flex items-center justify-between text-sm sm:text-base">
