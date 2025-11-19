@@ -39,17 +39,6 @@ export default function Sidebar() {
 
   return (
     <div className="flex min-h-screen bg-gray-100">
-      {/* Hamburger button mobile */}
-      <button 
-        className={`
-          sm:hidden fixed top-4 z-50 p-2 bg-white rounded-md shadow-md transition-all
-          ${mobileOpen ? 'left-64 ml-[-2.5rem]' : 'left-4'}
-        `}
-        onClick={() => setMobileOpen(!mobileOpen)}
-      >
-        {mobileOpen ? <XIcon className="w-6 h-6" /> : <MenuIcon className="w-6 h-6" />}
-      </button>
-
       {/* Sidebar */}
       <div className={`
         fixed top-0 left-0 h-full w-64 bg-white shadow-md border-r border-gray-200 z-50
@@ -57,6 +46,14 @@ export default function Sidebar() {
         ${mobileOpen ? 'translate-x-0' : '-translate-x-full'}
         sm:translate-x-0 sm:block
       `}>
+        {/* Toggle button di dalam sidebar */}
+        <button 
+          className="sm:hidden absolute top-4 right-4 p-2 bg-white rounded-md shadow-md z-50"
+          onClick={() => setMobileOpen(false)}
+        >
+          <XIcon className="w-6 h-6" />
+        </button>
+
         <div className="p-4">
           <h1 className="text-xl font-bold text-gray-800 mb-6">📁 Dashboard</h1>
           
@@ -102,6 +99,16 @@ export default function Sidebar() {
           </nav>
         </div>
       </div>
+
+      {/* Hamburger button mobile */}
+      {!mobileOpen && (
+        <button 
+          className="sm:hidden fixed top-4 left-4 z-50 p-2 bg-white rounded-md shadow-md"
+          onClick={() => setMobileOpen(true)}
+        >
+          <MenuIcon className="w-6 h-6" />
+        </button>
+      )}
 
       {/* Main content */}
       <div className="flex-1 p-0 pl-0 sm:pl-64">
