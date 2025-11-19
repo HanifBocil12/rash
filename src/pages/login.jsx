@@ -227,21 +227,27 @@ const LiquidFlowLogin = () => {
                 </div>
 
                 <div className="relative">
-                  <label className="block text-sm sm:text-base font-medium text-gray-700 mb-1">Password</label>
+                  <label className="block text-sm sm:text-base font-medium text-gray-700 mb-1">
+                    Password
+                  </label>
                   <input
                     type={showPassword ? "text" : "password"}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="w-full px-3 py-2 sm:px-4 sm:py-3 pr-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 text-sm sm:text-base"
+                    className="w-full px-3 sm:px-4 py-3 pr-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 text-sm sm:text-base"
                     placeholder="••••••••"
                     required
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500"
+                    className="absolute inset-y-0 right-2 flex items-center text-gray-500"
                   >
-                    {showPassword ? <EyeOff className="h-4 w-4 sm:h-5 sm:w-5" /> : <Eye className="h-4 w-4 sm:h-5 sm:w-5" />}
+                    {showPassword ? (
+                      <EyeOff className="h-5 w-5 sm:h-5 sm:w-5" />
+                    ) : (
+                      <Eye className="h-5 w-5 sm:h-5 sm:w-5" />
+                    )}
                   </button>
                 </div>
 
