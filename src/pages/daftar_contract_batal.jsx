@@ -117,9 +117,7 @@ export default function App() {
 
       {/* === Wrapper sama seperti home.jsx === */}
       <div className="
-        relative z-10 min-h-screen bg-white/40 
-        py-6 px-3 md:py-8 md:px-4
-        flex items-center justify-center sm:block
+       w-full max-w-2xl mx-auto bg-white/90 rounded-xl shadow-md p-4 md:p-8 backdrop-blur-md
       ">
         
         {/* Card sama persis style home.jsx */}
