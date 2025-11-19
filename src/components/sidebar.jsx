@@ -41,7 +41,10 @@ export default function Sidebar() {
     <div className="flex min-h-screen bg-gray-100">
       {/* Hamburger button mobile */}
       <button 
-        className="sm:hidden fixed top-4 left-4 z-50 p-2 bg-white rounded-md shadow-md"
+        className={`
+          sm:hidden fixed top-4 z-50 p-2 bg-white rounded-md shadow-md transition-all
+          ${mobileOpen ? 'left-64 ml-[-2.5rem]' : 'left-4'}
+        `}
         onClick={() => setMobileOpen(!mobileOpen)}
       >
         {mobileOpen ? <XIcon className="w-6 h-6" /> : <MenuIcon className="w-6 h-6" />}
