@@ -293,17 +293,19 @@ export default function App() {
                 handleTrigger('xls', setLoadingXls, 'Perintah XLS Checker berhasil dikirim!')
               }
               disabled={loadingXls}
-              className="w-full bg-orange-500 hover:bg-orange-600 text-white font-medium py-3 px-4 rounded-lg flex items-center justify-center space-x-2 disabled:opacity-70"
+              className="w-full bg-orange-500 hover:bg-orange-600 text-white font-medium py-3 px-4 
+                        rounded-lg transition-colors duration-200 flex items-center justify-center 
+                        space-x-2 disabled:opacity-70 disabled:cursor-not-allowed"
             >
               {loadingXls ? (
                 <>
                   <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-                  <span>Mengirim...</span>
+                  <span className="text-sm md:text-base">Mengirim...</span>
                 </>
               ) : (
                 <>
                   <Zap className="w-5 h-5" />
-                  <span>Jalankan XLS Checker</span>
+                  <span className="text-sm md:text-base">Jalankan XLS Checker</span>
                 </>
               )}
             </button>
@@ -322,17 +324,19 @@ export default function App() {
                 handleTrigger('sheet', setLoadingSheet, 'Perintah Sheet Uploader berhasil dikirim!')
               }
               disabled={loadingSheet}
-              className="w-full bg-orange-500 hover:bg-orange-600 text-white font-medium py-3 px-4 rounded-lg flex items-center justify-center space-x-2 disabled:opacity-70"
+              className="w-full bg-orange-500 hover:bg-orange-600 text-white font-medium py-3 px-4 
+                        rounded-lg transition-colors duration-200 flex items-center justify-center 
+                        space-x-2 disabled:opacity-70 disabled:cursor-not-allowed"
             >
               {loadingSheet ? (
                 <>
                   <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-                  <span>Mengirim...</span>
+                  <span className="text-sm md:text-base">Mengirim...</span>
                 </>
               ) : (
                 <>
                   <Zap className="w-5 h-5" />
-                  <span>Jalankan Sheet Uploader</span>
+                  <span className="text-sm md:text-base">Jalankan Sheet Uploader</span>
                 </>
               )}
             </button>
