@@ -203,7 +203,13 @@ const LiquidFlowLogin = () => {
       <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
       <div className="absolute inset-0 bg-black bg-opacity-10"></div>
 
-      <div className="relative z-10 flex flex-col items-center justify-center py-[3vw] px-4 sm:px-6">
+      <div className=" relative z-10
+        flex flex-col items-center justify-center
+        min-h-screen
+        sm:min-h-[85vh]
+        md:min-h-0
+        py-[3vw] px-4 sm:px-6"
+      >
         <header className="absolute top-[0.25vw] left-[0.25vw] sm:top-6 sm:left-6">
           <h1 className="text-xl sm:text-2xl font-bold text-orange-600">LiquidFlow</h1>
         </header>
@@ -212,7 +218,7 @@ const LiquidFlowLogin = () => {
           Get Started
         </button>
 
-        <div className="  relative z-10 flex flex-col items-center justify-center py-[3vw] px-4 sm:px-6"
+        <div className="w-full max-w-sm sm:max-w-md space-y-6 sm:space-y-8"
         >
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-800 text-center leading-tight">
             <div>solusi hanif</div>
