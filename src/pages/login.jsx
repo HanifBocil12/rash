@@ -241,13 +241,15 @@ const LiquidFlowLogin = () => {
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute inset-y-0 right-2 flex items-center justify-center text-gray-500 h-full py-0"
+                    className="absolute top-1/2 right-2 transform -translate-y-1/2 flex items-center justify-center text-gray-500 p-1"
                   >
-                    {showPassword ? (
-                      <EyeOff className="h-6 w-6 sm:h-6 sm:w-6" />
-                    ) : (
-                      <Eye className="h-6 w-6 sm:h-6 sm:w-6" />
-                    )}
+                    <div className="flex items-center justify-center h-6 w-6">
+                      {showPassword ? (
+                        <EyeOff className="h-5 w-5 sm:h-5 sm:w-5" />
+                      ) : (
+                        <Eye className="h-5 w-5 sm:h-5 sm:w-5" />
+                      )}
+                    </div>
                   </button>
                 </div>
 
