@@ -26,8 +26,8 @@ export default function LiquidBackground() {
     const isMobile = window.innerWidth < 640; // HP
 
     for (let i = 0; i < particleCount; i++) {
-      const minRadius = isMobile ? 4 : 10;
-      const maxRadius = isMobile ? 12 : 30;
+      const minRadius = isMobile ? 2 : 10;  // 🔥 jauh lebih kecil di HP
+      const maxRadius = isMobile ? 6 : 30;  // 🔥 jauh lebih kecil di HP
 
       particles.push({
         x: Math.random() * canvas.width,
@@ -42,7 +42,7 @@ export default function LiquidBackground() {
     function animate() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Hubungkan partikel yang berdekatan
+      // Hubungkan partikel
       for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
           const dx = particles[j].x - particles[i].x;
