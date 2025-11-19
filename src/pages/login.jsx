@@ -22,9 +22,7 @@ const LiquidFlowLogin = () => {
     }
   }, [navigate]);
 
-  // =====================================
   // 🔥 GENERATE UI_ID RANDOM PER DEVICE
-  // =====================================
   const generateUiId = () => {
     const array = new Uint8Array(16);
     crypto.getRandomValues(array);
@@ -55,17 +53,14 @@ const LiquidFlowLogin = () => {
         return;
       }
 
-      // 🔥 CEK LOGIN BERHASIL
       if (!res.ok || !data.id || !data.token) {
         setErrorMsg(data.error || "Email atau password salah!");
         setLoading(false);
         return;
       }
 
-      // 🔥 BUAT UI_ID RANDOM PER DEVICE
       const ui_id = generateUiId();
 
-      // simpan user ke localstorage
       const userData = {
         id: data.id,
         ui_id,
@@ -75,8 +70,6 @@ const LiquidFlowLogin = () => {
       };
 
       localStorage.setItem("user", JSON.stringify(userData));
-
-      // Redirect sesuai ui_id device
       navigate(`/${ui_id}/home`, { replace: true });
 
     } catch (err) {
@@ -87,7 +80,7 @@ const LiquidFlowLogin = () => {
   };
 
   // ==========================
-  // ANIMASI CANVAS (TIDAK DIUBAH)
+  // ANIMASI CANVAS
   // ==========================
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -196,7 +189,7 @@ const LiquidFlowLogin = () => {
   }, []);
 
   // ==========================
-  // UI LOGIN (RESPONSIF CARD & POSISI)
+  // UI LOGIN
   // ==========================
   return (
     <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-orange-50 via-orange-100 to-red-50">
@@ -212,15 +205,14 @@ const LiquidFlowLogin = () => {
         {/* TOP BAR */}
         <div className="w-full flex items-center justify-between py-4 sm:py-6">
           <h1 className="text-lg sm:text-2xl font-bold text-orange-600">LiquidFlow</h1>
-
           <button className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-3 sm:py-2 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg text-base sm:text-sm">
             Get Started
           </button>
         </div>
 
-        {/* === MASUKKAN FOOTER KE DALAM FLEX-1 === */}
         <div className="flex-1 w-full flex flex-col items-center justify-center">
-          <div className="w-full max-w-sm sm:max-w-md space-y-6 sm:space-y-8">
+          {/* UBAH MAX-W UNTUK MOBILE */}
+          <div className="w-full max-w-full sm:max-w-md space-y-6 sm:space-y-8">
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-800 text-center leading-tight">
               <div>solusi hanif</div>
               <div className="text-orange-600">Revolution</div>
@@ -241,7 +233,7 @@ const LiquidFlowLogin = () => {
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full px-4 py-4 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 transition-colors text-base sm:text-sm"
+                    className="w-full px-4 py-5 sm:py-3 text-lg sm:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 transition-colors"
                     placeholder="your@email.com"
                     required
                   />
@@ -253,7 +245,7 @@ const LiquidFlowLogin = () => {
                     type={showPassword ? "text" : "password"}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="w-full px-4 py-4 sm:py-3 pr-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 text-base sm:text-sm"
+                    className="w-full px-4 py-5 sm:py-3 text-lg sm:text-base pr-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500"
                     placeholder="••••••••"
                     required
                   />
@@ -277,7 +269,7 @@ const LiquidFlowLogin = () => {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-4 sm:py-3 px-4 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-md text-base sm:text-sm"
+                  className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-5 sm:py-3 px-4 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-md text-lg sm:text-base"
                 >
                   {loading ? "Loading.." : "Sign In"}
                 </button>
@@ -292,10 +284,10 @@ const LiquidFlowLogin = () => {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full">
-              <button className="flex-1 bg-orange-500 hover:bg-orange-600 text-white font-semibold py-4 sm:py-3 px-4 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-md text-base sm:text-sm">
+              <button className="flex-1 bg-orange-500 hover:bg-orange-600 text-white font-semibold py-5 sm:py-3 px-4 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-md text-lg sm:text-base">
                 Start Free Trial
               </button>
-              <button className="flex-1 border-2 border-orange-500 text-orange-600 hover:bg-orange-50 py-4 sm:py-3 px-4 rounded-lg transition-all duration-300 transform hover:scale-105 text-base sm:text-sm">
+              <button className="flex-1 border-2 border-orange-500 text-orange-600 hover:bg-orange-50 py-5 sm:py-3 px-4 rounded-lg transition-all duration-300 transform hover:scale-105 text-lg sm:text-base">
                 Watch Demo
               </button>
             </div>
