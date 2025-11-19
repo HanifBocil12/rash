@@ -1,3 +1,4 @@
+// daftar_batal
 import { useState, useEffect } from 'react';
 import { AlertCircle, CheckCircle, Clock, Zap, AlertTriangle } from 'lucide-react';
 import Liquid from '../components/liquid.jsx';
