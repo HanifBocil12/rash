@@ -220,7 +220,6 @@ const LiquidFlowLogin = () => {
 
               {/* === MASUKKAN FOOTER KE DALAM FLEX-1 === */}
               <div className="flex-1 w-full flex flex-col items-center justify-center">
-
                 <div className="w-full max-w-sm sm:max-w-md space-y-6 sm:space-y-8">
                   <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-800 text-center leading-tight">
                     <div>solusi hanif</div>
@@ -305,14 +304,13 @@ const LiquidFlowLogin = () => {
                 </div>
 
                 {/* FOOTER DIPINDAH KE DALAM SINI */}
-                <div className="mt-6 sm:mt-8">
+             
                   <footer className="text-center text-xs sm:text-sm text-gray-600">
                     © 2025 Muhammad Hanif. Smkn 4 Tangerang.
                   </footer>
-                </div>
+               
 
               </div>
-
       </div>
     </div>
   );
