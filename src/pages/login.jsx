@@ -220,15 +220,15 @@ const LiquidFlowLogin = () => {
 
         {/* === MASUKKAN FOOTER KE DALAM FLEX-1 === */}
         <div className="flex-1 w-full flex flex-col items-center justify-center">
-          <div className="w-full max-w-sm sm:max-w-md space-y-4 sm:space-y-8">
-            <h1 className="text-xl sm:text-4xl md:text-5xl font-bold text-gray-800 text-center leading-tight">
+          <div className="w-full max-w-sm sm:max-w-md space-y-6 sm:space-y-8">
+            <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold text-gray-800 text-center leading-tight">
               <div>solusi hanif</div>
               <div className="text-orange-600">Revolution</div>
-              <div className="text-lg sm:text-3xl md:text-4xl">Ai</div>
+              <div className="text-xl sm:text-3xl md:text-4xl">Ai</div>
             </h1>
 
-            <div className="bg-white bg-opacity-80 backdrop-blur-sm p-4 sm:p-8 rounded-2xl shadow-xl border border-orange-100 w-full">
-              <h2 className="text-base sm:text-2xl font-bold text-gray-800 mb-3 sm:mb-6">Sign In</h2>
+            <div className="bg-white bg-opacity-80 backdrop-blur-sm p-6 sm:p-8 rounded-2xl shadow-xl border border-orange-100 w-full">
+              <h2 className="text-lg sm:text-2xl font-bold text-gray-800 mb-4 sm:mb-6">Sign In</h2>
 
               {errorMsg && (
                 <p className="text-sm mb-2 sm:mb-3 text-center text-red-600">{errorMsg}</p>
@@ -241,7 +241,7 @@ const LiquidFlowLogin = () => {
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 transition-colors"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 transition-colors"
                     placeholder="your@email.com"
                     required
                   />
@@ -253,7 +253,7 @@ const LiquidFlowLogin = () => {
                     type={showPassword ? "text" : "password"}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="w-full px-4 py-2 pr-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500"
+                    className="w-full px-4 py-3 pr-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500"
                     placeholder="••••••••"
                     required
                   />
@@ -283,7 +283,7 @@ const LiquidFlowLogin = () => {
                 </button>
               </form>
 
-              <div className="mt-3 sm:mt-6 text-center text-sm">
+              <div className="mt-4 sm:mt-6 text-center text-sm">
                 <p className="text-gray-600">
                   Don't have an account?{' '}
                   <a className="font-medium text-orange-600 hover:text-orange-700">Sign up now</a>
@@ -291,11 +291,11 @@ const LiquidFlowLogin = () => {
               </div>
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 w-full">
-              <button className="flex-1 bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2.5 sm:py-3 px-4 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-md text-sm sm:text-base">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full">
+              <button className="flex-1 bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 sm:py-3 px-4 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-md text-sm sm:text-base">
                 Start Free Trial
               </button>
-              <button className="flex-1 border-2 border-orange-500 text-orange-600 hover:bg-orange-50 py-2.5 sm:py-3 px-4 rounded-lg transition-all duration-300 transform hover:scale-105 text-sm sm:text-base">
+              <button className="flex-1 border-2 border-orange-500 text-orange-600 hover:bg-orange-50 py-3 sm:py-3 px-4 rounded-lg transition-all duration-300 transform hover:scale-105 text-sm sm:text-base">
                 Watch Demo
               </button>
             </div>
