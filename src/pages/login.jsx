@@ -212,7 +212,7 @@ const LiquidFlowLogin = () => {
           Get Started
         </button>
 
-        <div className="w-full max-w-sm sm:max-w-md space-y-6 sm:space-y-8">
+        <div className="relative z-10 flex flex-col items-center justify-center min-h-screen py-[3vw] px-4 sm:px-6">
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-800 text-center leading-tight">
             <div>solusi hanif</div>
             <div className="text-orange-600">Revolution</div>
