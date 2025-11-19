@@ -220,41 +220,40 @@ const LiquidFlowLogin = () => {
 
               {/* === MASUKKAN FOOTER KE DALAM FLEX-1 === */}
               <div className="flex-1 w-full flex flex-col items-center justify-center">
-                <div className="w-[90vw] sm:w-full max-w-sm md:max-w-md lg:max-w-md p-6 sm:p-6 md:p-8 bg-white bg-opacity-80 backdrop-blur-sm rounded-2xl shadow-xl border border-orange-100 space-y-6">
-                  
-                  <h1 className="text-[7vw] sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-800 text-center leading-tight">
+                <div className="w-full max-w-sm sm:max-w-md space-y-6 sm:space-y-8">
+                  <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-800 text-center leading-tight">
                     <div>solusi hanif</div>
                     <div className="text-orange-600">Revolution</div>
-                    <div className="text-[5vw] sm:text-2xl md:text-3xl lg:text-4xl">Ai</div>
+                    <div className="text-2xl sm:text-3xl md:text-4xl">Ai</div>
                   </h1>
 
-                  <div className="space-y-4">
-                    <h2 className="text-[5vw] sm:text-xl md:text-2xl font-bold text-gray-800 mb-4 sm:mb-6">Sign In</h2>
+                  <div className="bg-white bg-opacity-80 backdrop-blur-sm p-6 sm:p-8 rounded-2xl shadow-xl border border-orange-100">
+                    <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-4 sm:mb-6">Sign In</h2>
 
                     {errorMsg && (
-                      <p className="text-red-600 text-sm sm:text-base mb-3 text-center">{errorMsg}</p>
+                      <p className="text-red-600 text-sm mb-3 text-center">{errorMsg}</p>
                     )}
 
                     <form className="space-y-4" onSubmit={handleLogin}>
                       <div>
-                        <label className="block text-sm sm:text-base font-medium text-gray-700 mb-1">Email</label>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
                         <input
                           type="email"
                           value={email}
                           onChange={(e) => setEmail(e.target.value)}
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 transition-colors"
+                          className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 transition-colors"
                           placeholder="your@email.com"
                           required
                         />
                       </div>
 
                       <div className="relative">
-                        <label className="block text-sm sm:text-base font-medium text-gray-700 mb-1">Password</label>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
                         <input
                           type={showPassword ? "text" : "password"}
                           value={password}
                           onChange={(e) => setPassword(e.target.value)}
-                          className="w-full px-4 py-3 pr-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500"
+                          className="w-full px-4 py-2.5 pr-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500"
                           placeholder="••••••••"
                           required
                         />
@@ -267,25 +266,27 @@ const LiquidFlowLogin = () => {
                         </button>
                       </div>
 
-                      <div className="flex items-center justify-between text-sm sm:text-base">
+                      <div className="flex items-center justify-between">
                         <div className="flex items-center">
                           <input id="remember-me" type="checkbox" className="h-4 w-4 text-orange-600" />
-                          <label htmlFor="remember-me" className="ml-2">Remember me</label>
+                          <label htmlFor="remember-me" className="ml-2 text-sm text-gray-700">
+                            Remember me
+                          </label>
                         </div>
-                        <a className="text-orange-600 hover:text-orange-700">Forgot password?</a>
+                        <a className="text-sm text-orange-600 hover:text-orange-700">Forgot password?</a>
                       </div>
 
                       <button
                         type="submit"
                         disabled={loading}
-                        className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 sm:py-4 px-4 sm:px-6 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-md text-base sm:text-lg"
+                        className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-md"
                       >
                         {loading ? "Loading.." : "Sign In"}
                       </button>
                     </form>
 
-                    <div className="mt-4 sm:mt-6 text-center text-sm sm:text-base">
-                      <p className="text-gray-600">
+                    <div className="mt-4 sm:mt-6 text-center">
+                      <p className="text-sm text-gray-600">
                         Don't have an account?{' '}
                         <a className="font-medium text-orange-600 hover:text-orange-700">Sign up now</a>
                       </p>
@@ -293,14 +294,13 @@ const LiquidFlowLogin = () => {
                   </div>
 
                   <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-                    <button className="flex-1 bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 sm:py-4 px-4 sm:px-6 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-md text-base sm:text-lg">
+                    <button className="flex-1 bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2.5 sm:py-3 px-4 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-md text-sm sm:text-base">
                       Start Free Trial
                     </button>
-                    <button className="flex-1 border-2 border-orange-500 text-orange-600 hover:bg-orange-50 py-3 sm:py-4 px-4 sm:px-6 rounded-lg transition-all duration-300 transform hover:scale-105 text-base sm:text-lg">
+                    <button className="flex-1 border-2 border-orange-500 text-orange-600 hover:bg-orange-50 py-2.5 sm:py-3 px-4 rounded-lg transition-all duration-300 transform hover:scale-105 text-sm sm:text-base">
                       Watch Demo
                     </button>
                   </div>
-
                 </div>
 
                 {/* FOOTER DIPINDAH KE DALAM SINI */}
