@@ -14,7 +14,6 @@ const LiquidFlowLogin = () => {
 
   const navigate = useNavigate();
 
-  // ➕ AUTO REDIRECT JIKA SUDAH LOGIN
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
     if (user && user.ui_id) {
@@ -22,9 +21,6 @@ const LiquidFlowLogin = () => {
     }
   }, [navigate]);
 
-  // =====================================
-  // 🔥 GENERATE UI_ID RANDOM PER DEVICE
-  // =====================================
   const generateUiId = () => {
     const array = new Uint8Array(16);
     crypto.getRandomValues(array);
@@ -33,7 +29,6 @@ const LiquidFlowLogin = () => {
       .slice(0, 16);
   };
 
-  // ➕ HANDLE LOGIN
   const handleLogin = async (e) => {
     e.preventDefault();
     setErrorMsg("");
@@ -47,13 +42,8 @@ const LiquidFlowLogin = () => {
       });
 
       let data;
-      try {
-        data = await res.json();
-      } catch {
-        setErrorMsg(`Server tidak merespon JSON. Status: ${res.status}`);
-        setLoading(false);
-        return;
-      }
+      try { data = await res.json(); } 
+      catch { setErrorMsg(`Server tidak merespon JSON. Status: ${res.status}`); setLoading(false); return; }
 
       if (!res.ok || !data.id || !data.token) {
         setErrorMsg(data.error || "Email atau password salah!");
@@ -73,7 +63,6 @@ const LiquidFlowLogin = () => {
 
       localStorage.setItem("user", JSON.stringify(userData));
       navigate(`/${ui_id}/home`, { replace: true });
-
     } catch (err) {
       setErrorMsg("Tidak dapat terhubung ke server!");
     }
@@ -82,51 +71,53 @@ const LiquidFlowLogin = () => {
   };
 
   // ==========================
-  // ANIMASI CANVAS (TIDAK DIUBAH)
+  // ANIMASI CANVAS RESPONSIVE
   // ==========================
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
-    
+
     const resizeCanvas = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
     };
-    
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
-    
+
+    // tentukan skala untuk mobile (HP) vs desktop
+    const isMobile = window.innerWidth < 640; // breakpoint sm
+    const scale = isMobile ? 0.5 : 1; // mobile lebih kecil
+
     const flows = [];
     const flowCount = 8;
-    
+
     for (let i = 0; i < flowCount; i++) {
       flows.push({
         x: Math.random() * canvas.width,
         y: -Math.random() * canvas.height,
-        width: 15 + Math.random() * 30,
-        height: 80 + Math.random() * 150,
-        speed: 0.3 + Math.random() * 0.8,
+        width: (15 + Math.random() * 30) * scale,
+        height: (80 + Math.random() * 150) * scale,
+        speed: (0.3 + Math.random() * 0.8) * scale,
         waveOffset: Math.random() * Math.PI * 2,
         opacity: 0.2 + Math.random() * 0.3
       });
     }
-    
+
     let animationFrameId;
     const animate = () => {
       ctx.fillStyle = 'rgba(255, 245, 235, 0.05)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
-      
+
       flows.forEach(flow => {
         flow.y += flow.speed;
         flow.waveOffset += 0.015;
-        
+
         if (flow.y > canvas.height + flow.height) {
           flow.y = -flow.height;
           flow.x = Math.random() * canvas.width;
         }
-        
+
         ctx.beginPath();
-        
         const leftPoints = 15;
         const leftPath = [];
         for (let i = 0; i <= leftPoints; i++) {
@@ -136,7 +127,7 @@ const LiquidFlowLogin = () => {
           const x = flow.x + wave;
           leftPath.push({ x, y });
         }
-        
+
         const rightPath = [];
         for (let i = leftPoints; i >= 0; i--) {
           const progress = i / leftPoints;
@@ -145,14 +136,14 @@ const LiquidFlowLogin = () => {
           const x = flow.x + flow.width + wave;
           rightPath.push({ x, y });
         }
-        
+
         if (leftPath.length > 0) {
           ctx.moveTo(leftPath[0].x, leftPath[0].y);
           for (let i = 1; i < leftPath.length; i++) ctx.lineTo(leftPath[i].x, leftPath[i].y);
           for (let i = 0; i < rightPath.length; i++) ctx.lineTo(rightPath[i].x, rightPath[i].y);
           ctx.closePath();
         }
-        
+
         const gradient = ctx.createLinearGradient(
           flow.x, flow.y,
           flow.x + flow.width, flow.y + flow.height
@@ -160,10 +151,10 @@ const LiquidFlowLogin = () => {
         gradient.addColorStop(0, `rgba(255, 165, 0, ${flow.opacity * 0.8})`);
         gradient.addColorStop(0.5, `rgba(255, 100, 0, ${flow.opacity})`);
         gradient.addColorStop(1, `rgba(255, 69, 0, ${flow.opacity * 0.6})`);
-        
+
         ctx.fillStyle = gradient;
         ctx.fill();
-        
+
         ctx.beginPath();
         const highlightPoints = 8;
         for (let i = 0; i <= highlightPoints; i++) {
@@ -178,12 +169,12 @@ const LiquidFlowLogin = () => {
         ctx.lineWidth = 1.5;
         ctx.stroke();
       });
-      
+
       animationFrameId = requestAnimationFrame(animate);
     };
-    
+
     animate();
-    
+
     return () => {
       window.removeEventListener('resize', resizeCanvas);
       cancelAnimationFrame(animationFrameId);
@@ -200,7 +191,7 @@ const LiquidFlowLogin = () => {
 
       <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-3 sm:px-6">
         {/* TOP BAR */}
-        <div className="w-full flex items-center justify-between py-3 sm:py-6">
+        <div className="w-full flex items-center justify-between py-2 sm:py-4">
           <h1 className="text-lg sm:text-2xl font-bold text-orange-600">LiquidFlow</h1>
           <button className="bg-orange-500 hover:bg-orange-600 text-white px-3 py-2 sm:py-2 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg text-base sm:text-sm">
             Get Started
