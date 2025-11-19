@@ -8,7 +8,8 @@ import {
   Package, 
   LogIn,
   ChevronRight,
-  Menu
+  Menu as MenuIcon,
+  X as XIcon
 } from 'lucide-react';
 
 export default function Sidebar() {
@@ -18,7 +19,7 @@ export default function Sidebar() {
   const location = useLocation();
 
   const user = JSON.parse(localStorage.getItem("user"));
-  const encodedId = user?.ui_id || "";
+  const encodedId = user?.ui_id || "";  // gunakan ui_id yang benar
 
   useEffect(() => {
     if (location.pathname.includes('/gabung_pdf') || location.pathname.includes('/download_pdf')) {
@@ -38,28 +39,20 @@ export default function Sidebar() {
 
   return (
     <div className="flex min-h-screen bg-gray-100">
-      {/* Hamburger Button for Mobile */}
-      <button
-        className="fixed top-4 left-4 z-50 p-2 bg-white rounded-md shadow-md sm:hidden"
+      {/* Hamburger button mobile */}
+      <button 
+        className="sm:hidden fixed top-4 left-4 z-50 p-2 bg-white rounded-md shadow-md"
         onClick={() => setMobileOpen(!mobileOpen)}
       >
-        <Menu className="w-6 h-6" />
+        {mobileOpen ? <XIcon className="w-6 h-6" /> : <MenuIcon className="w-6 h-6" />}
       </button>
-
-      {/* Overlay */}
-      {mobileOpen && (
-        <div 
-          className="fixed inset-0 bg-black bg-opacity-30 z-40 sm:hidden" 
-          onClick={() => setMobileOpen(false)}
-        />
-      )}
 
       {/* Sidebar */}
       <div className={`
-        fixed top-0 left-0 h-full w-64 bg-white shadow-md border-r border-gray-200 z-50
+        fixed top-0 left-0 h-full w-64 bg-white shadow-md border-r border-gray-200 z-40
         transform transition-transform duration-300
-        ${mobileOpen ? 'translate-x-0' : '-translate-x-full'} 
-        sm:translate-x-0 sm:relative sm:block
+        ${mobileOpen ? 'translate-x-0' : '-translate-x-full'}
+        sm:translate-x-0 sm:relative sm:block sm:z-50
       `}>
         <div className="p-4">
           <h1 className="text-xl font-bold text-gray-800 mb-6">📁 Dashboard</h1>
@@ -78,9 +71,7 @@ export default function Sidebar() {
                   <span>Daftar Project</span>
                 </div>
                 <ChevronRight 
-                  className={`w-4 h-4 text-gray-500 transition-transform duration-200 ${
-                    submenuOpen ? 'rotate-90' : ''
-                  }`} 
+                  className={`w-4 h-4 text-gray-500 transition-transform duration-200 ${submenuOpen ? 'rotate-90' : ''}`} 
                 />
               </button>
               
@@ -109,8 +100,8 @@ export default function Sidebar() {
         </div>
       </div>
 
-      {/* Main Content */}
-      <div className="flex-1 ml-0 sm:ml-64 p-0 pl-6">
+      {/* Main content */}
+      <div className="flex-1 p-0 pl-0 sm:pl-64">
         <Outlet />
       </div>
     </div>
