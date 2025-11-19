@@ -220,75 +220,73 @@ const LiquidFlowLogin = () => {
 
               {/* === MASUKKAN FOOTER KE DALAM FLEX-1 === */}
               <div className="flex-1 w-full flex flex-col items-center justify-center">
-                <div className="w-full max-w-sm sm:max-w-md md:max-w-md lg:max-w-md p-4 sm:p-6 md:p-8 space-y-6 sm:space-y-8">
-
-                  <h1 className="font-bold text-gray-800 text-center leading-tight
-                                text-3xl sm:text-4xl md:text-5xl
-                                max-sm:text-[8vw]">
+                <div className="w-full max-w-sm sm:max-w-md space-y-6 sm:space-y-8">
+                  <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-800 text-center leading-tight">
                     <div>solusi hanif</div>
                     <div className="text-orange-600">Revolution</div>
-                    <div className="text-2xl sm:text-3xl md:text-4xl max-sm:text-[6vw]">Ai</div>
+                    <div className="text-2xl sm:text-3xl md:text-4xl">Ai</div>
                   </h1>
 
-                  <div className="bg-white bg-opacity-80 backdrop-blur-sm p-6 sm:p-8 rounded-2xl shadow-xl border border-orange-100
-                                  max-sm:p-[5vw]">
-                    <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-4 sm:mb-6 max-sm:text-[5vw]">Sign In</h2>
+                  <div className="bg-white bg-opacity-80 backdrop-blur-sm p-6 sm:p-8 rounded-2xl shadow-xl border border-orange-100">
+                    <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-4 sm:mb-6">Sign In</h2>
 
                     {errorMsg && (
-                      <p className="text-red-600 text-sm mb-3 text-center max-sm:text-[4vw]">{errorMsg}</p>
+                      <p className="text-red-600 text-sm mb-3 text-center">{errorMsg}</p>
                     )}
 
                     <form className="space-y-4" onSubmit={handleLogin}>
                       <div>
-                        <label className="block text-sm sm:text-base font-medium text-gray-700 mb-1 max-sm:text-[3.5vw]">Email</label>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
                         <input
                           type="email"
                           value={email}
                           onChange={(e) => setEmail(e.target.value)}
-                          className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 transition-colors max-sm:py-[2.5vw]"
+                          className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 transition-colors"
                           placeholder="your@email.com"
                           required
                         />
                       </div>
 
                       <div className="relative">
-                        <label className="block text-sm sm:text-base font-medium text-gray-700 mb-1 max-sm:text-[3.5vw]">Password</label>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
                         <input
                           type={showPassword ? "text" : "password"}
                           value={password}
                           onChange={(e) => setPassword(e.target.value)}
-                          className="w-full px-4 py-2.5 pr-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 max-sm:py-[2.5vw]"
+                          className="w-full px-4 py-2.5 pr-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500"
                           placeholder="••••••••"
                           required
                         />
                         <button
                           type="button"
                           onClick={() => setShowPassword(!showPassword)}
-                          className="absolute right-3 top-[calc(50%+0.75rem)] -translate-y-1/2 text-gray-500 max-sm:top-[calc(50%+0.5vw)]"
+                          className="absolute right-3 top-[calc(50%+0.75rem)] -translate-y-1/2 text-gray-500"
                         >
-                          {showPassword ? <EyeOff className="h-5 w-5 max-sm:h-[4vw] max-sm:w-[4vw]" /> : <Eye className="h-5 w-5 max-sm:h-[4vw] max-sm:w-[4vw]" />}
+                          {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
                         </button>
                       </div>
 
-                      <div className="flex items-center justify-between text-sm sm:text-base max-sm:text-[3.5vw]">
+                      <div className="flex items-center justify-between">
                         <div className="flex items-center">
-                          <input id="remember-me" type="checkbox" className="h-4 w-4 text-orange-600 max-sm:h-[3vw] max-sm:w-[3vw]" />
-                          <label htmlFor="remember-me" className="ml-2">Remember me</label>
+                          <input id="remember-me" type="checkbox" className="h-4 w-4 text-orange-600" />
+                          <label htmlFor="remember-me" className="ml-2 text-sm text-gray-700">
+                            Remember me
+                          </label>
                         </div>
-                        <a className="text-orange-600 hover:text-orange-700">Forgot password?</a>
+                        <a className="text-sm text-orange-600 hover:text-orange-700">Forgot password?</a>
                       </div>
 
                       <button
                         type="submit"
                         disabled={loading}
-                        className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 sm:py-4 px-4 sm:px-6 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-md text-sm sm:text-base max-sm:py-[3vw] max-sm:text-[4vw]"
+                        className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-md"
                       >
                         {loading ? "Loading.." : "Sign In"}
                       </button>
                     </form>
 
-                    <div className="mt-4 sm:mt-6 text-center text-sm sm:text-base max-sm:text-[3.5vw]">
-                      <p className="text-gray-600">
+                    <div className="mt-4 sm:mt-6 text-center">
+                      <p className="text-sm text-gray-600">
                         Don't have an account?{' '}
                         <a className="font-medium text-orange-600 hover:text-orange-700">Sign up now</a>
                       </p>
@@ -296,10 +294,10 @@ const LiquidFlowLogin = () => {
                   </div>
 
                   <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-                    <button className="flex-1 bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2.5 sm:py-3 px-4 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-md text-sm sm:text-base max-sm:py-[3vw] max-sm:text-[4vw]">
+                    <button className="flex-1 bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2.5 sm:py-3 px-4 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-md text-sm sm:text-base">
                       Start Free Trial
                     </button>
-                    <button className="flex-1 border-2 border-orange-500 text-orange-600 hover:bg-orange-50 py-2.5 sm:py-3 px-4 rounded-lg transition-all duration-300 transform hover:scale-105 text-sm sm:text-base max-sm:py-[3vw] max-sm:text-[4vw]">
+                    <button className="flex-1 border-2 border-orange-500 text-orange-600 hover:bg-orange-50 py-2.5 sm:py-3 px-4 rounded-lg transition-all duration-300 transform hover:scale-105 text-sm sm:text-base">
                       Watch Demo
                     </button>
                   </div>
