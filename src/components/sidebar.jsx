@@ -37,14 +37,12 @@ export default function Sidebar() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  // Fungsi untuk menutup sidebar mobile saat link diklik
   const handleLinkClick = () => {
     if (window.innerWidth < 640) { // sm breakpoint
       setMobileOpen(false);
     }
   };
 
-  // Fungsi logout: hapus localStorage dan redirect ke login
   const handleLogout = () => {
     localStorage.removeItem("user");
     setMobileOpen(false);
@@ -55,10 +53,11 @@ export default function Sidebar() {
     <div className="flex min-h-screen bg-gray-100">
       {/* Sidebar */}
       <div className={`
-        fixed top-0 left-0 h-full w-64 bg-white shadow-md border-r border-gray-200 z-50
+        fixed top-0 left-0 h-full bg-white shadow-md border-r border-gray-200 z-50
         transform transition-transform duration-300
         ${mobileOpen ? 'translate-x-0' : '-translate-x-full'}
         sm:translate-x-0 sm:block
+        w-56 sm:w-64
       `}>
         {/* Toggle button di dalam sidebar */}
         <button 
@@ -112,7 +111,6 @@ export default function Sidebar() {
             <MenuItem icon={Package} to={`/${encodedId}/perlengkapan`} label="Download Zip" onClick={handleLinkClick} />
             <MenuItem icon={FileText} to={`/${encodedId}/document_batal`} label="PDF Batal" onClick={handleLinkClick} />
             
-            {/* Logout */}
             <button
               onClick={handleLogout}
               className="flex items-center space-x-2 px-3 py-2.5 font-medium text-gray-700 transition-colors rounded-lg hover:bg-gray-50 w-full"
@@ -135,7 +133,7 @@ export default function Sidebar() {
       )}
 
       {/* Main content */}
-      <div className="flex-1 p-0 pl-0 sm:pl-64">
+      <div className="flex-1 p-0 pl-56 sm:pl-64">
         <Outlet />
       </div>
     </div>
