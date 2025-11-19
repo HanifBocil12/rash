@@ -8,14 +8,17 @@ export default function HomePage() {
     <div className="relative min-h-screen overflow-hidden">
       <Liquid />
 
-      {/* 🔸 Konten foreground */}
-      <div className="relative z-10 min-h-screen bg-white/40 py-6 px-3 md:py-8 md:px-4">
+      {/* 🔸 Konten foreground - HP ditengah, desktop tetap */}
+      <div className="
+        relative z-10 min-h-screen bg-white/40 
+        py-6 px-3 md:py-8 md:px-4
+        flex items-center sm:block
+      ">
         <div className="w-full max-w-4xl mx-auto">
 
           <div className="bg-white/90 rounded-xl shadow-md 
             p-4 md:p-8 backdrop-blur-md">
 
-            {/* 🔥 Heading: kecil di HP, normal di desktop */}
             <h1 className="text-xl md:text-3xl font-bold text-gray-800 mb-2">
               📊 Excel Checker Dashboard
             </h1>
@@ -29,13 +32,11 @@ export default function HomePage() {
               Gunakan menu di sebelah kiri untuk berpindah ke halaman:
             </p>
 
-            {/* 🔥 List lebih rapat di HP */}
             <ul className="list-disc pl-4 md:pl-5 space-y-1.5 md:space-y-2 text-gray-700 mb-5 md:mb-6 text-sm md:text-base">
               <li><strong>📄 Document Contract</strong> – menampilkan daftar dan pengecekan dokumen kontrak.</li>
               <li><strong>📋 Daftar Project Inaproc</strong> – menjalankan otomatisasi dan analisis project dari Inaproc.</li>
             </ul>
 
-            {/* 🔥 Box info lebih kecil di HP */}
             <div className="bg-orange-50 border border-orange-200 text-orange-700 
               px-3 py-2 md:px-4 md:py-3 rounded-lg mb-6 md:mb-8 text-sm md:text-base">
               Gunakan menu navigasi di sidebar untuk memulai proses pemeriksaan data.
