@@ -116,7 +116,7 @@ export default function App() {
         <Liquid />
         
         {/* HP disesuaikan seperti Home */}
-        <div className="relative z-10 min-h-screen bg-white/40 py-6 px-3 md:py-8 md:px-4">        
+        <div className="relative z-10 min-h-screen bg-white/40 py-6 px-3 md:py-8 md:px-4 md:ml-64 md:pt-16">        
             
             {/* Card disesuaikan seperti Home */}
             <div className="max-w-2xl mx-auto bg-white rounded-xl shadow-md p-4 md:p-8">
