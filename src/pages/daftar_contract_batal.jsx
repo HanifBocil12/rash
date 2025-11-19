@@ -119,7 +119,7 @@ export default function App() {
       <div className="
         relative z-10 min-h-screen bg-white/40 
         py-6 px-3 md:py-8 md:px-4
-        flex items-center sm:block
+        flex items-center justify-center sm:block
       ">
         
         {/* Card sama persis style home.jsx */}
