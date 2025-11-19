@@ -123,7 +123,7 @@ export default function App() {
       ">
         
         {/* Card sama persis style home.jsx */}
-        <div className="w-full max-w-2xl mx-auto bg-white/90 rounded-xl shadow-md p-4 md:p-8 backdrop-blur-md">
+        <div className="w-full max-w-2xl mx-auto bg-white/90 rounded-xl mt-10 shadow-md p-4 md:p-8 backdrop-blur-md">
 
           <h1 className="text-xl md:text-3xl font-bold text-gray-800 mb-2">
             ⬇️ PDF, Search & Sheet Batal
