@@ -19,7 +19,7 @@ export default function Sidebar() {
   const location = useLocation();
 
   const user = JSON.parse(localStorage.getItem("user"));
-  const encodedId = user?.ui_id || "";  // gunakan ui_id yang benar
+  const encodedId = user?.ui_id || "";
 
   useEffect(() => {
     if (location.pathname.includes('/gabung_pdf') || location.pathname.includes('/download_pdf')) {
@@ -49,10 +49,10 @@ export default function Sidebar() {
 
       {/* Sidebar */}
       <div className={`
-        fixed top-0 left-0 h-full w-64 bg-white shadow-md border-r border-gray-200 z-40
+        fixed top-0 left-0 h-full w-64 bg-white shadow-md border-r border-gray-200 z-50
         transform transition-transform duration-300
         ${mobileOpen ? 'translate-x-0' : '-translate-x-full'}
-        sm:translate-x-0 sm:relative sm:block sm:z-50
+        sm:translate-x-0 sm:block
       `}>
         <div className="p-4">
           <h1 className="text-xl font-bold text-gray-800 mb-6">📁 Dashboard</h1>
