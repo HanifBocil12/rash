@@ -44,6 +44,13 @@ export default function Sidebar() {
     }
   };
 
+  // Fungsi logout: hapus localStorage dan redirect ke login
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    setMobileOpen(false);
+    window.location.href = "/";
+  };
+
   return (
     <div className="flex min-h-screen bg-gray-100">
       {/* Sidebar */}
@@ -104,7 +111,15 @@ export default function Sidebar() {
             
             <MenuItem icon={Package} to={`/${encodedId}/perlengkapan`} label="Download Zip" onClick={handleLinkClick} />
             <MenuItem icon={FileText} to={`/${encodedId}/document_batal`} label="PDF Batal" onClick={handleLinkClick} />
-            <MenuItem icon={LogIn} to="/" label="Logout" onClick={handleLinkClick} />
+            
+            {/* Logout */}
+            <button
+              onClick={handleLogout}
+              className="flex items-center space-x-2 px-3 py-2.5 font-medium text-gray-700 transition-colors rounded-lg hover:bg-gray-50 w-full"
+            >
+              <LogIn className="w-4 h-4" />
+              <span>Logout</span>
+            </button>
           </nav>
         </div>
       </div>
