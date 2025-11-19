@@ -206,11 +206,11 @@ const LiquidFlowLogin = () => {
       <div className="relative z-10 flex flex-col items-center justify-center py-[3vw] px-4 sm:px-6">
         <header className="absolute top-[0.25vw] left-[0.25vw] sm:top-6 sm:left-6">
           <h1 className="text-xl sm:text-2xl font-bold text-orange-600">LiquidFlow</h1>
-        </header>
 
-        <button className="absolute top-[0.25vw] right-[0.25vw] sm:top-6 sm:right-6 bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg text-sm sm:text-base">
-          Get Started
-        </button>
+          <button className="absolute top-[0.25vw] right-[0.25vw] sm:top-6 sm:right-6 bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg text-sm sm:text-base">
+            Get Started
+          </button>
+        </header>
 
         <div className="w-full max-w-sm sm:max-w-md space-y-6 sm:space-y-8">
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-800 text-center leading-tight">
