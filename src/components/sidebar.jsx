@@ -37,6 +37,13 @@ export default function Sidebar() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  // Fungsi untuk menutup sidebar mobile saat link diklik
+  const handleLinkClick = () => {
+    if (window.innerWidth < 640) { // sm breakpoint
+      setMobileOpen(false);
+    }
+  };
+
   return (
     <div className="flex min-h-screen bg-gray-100">
       {/* Sidebar */}
@@ -58,8 +65,8 @@ export default function Sidebar() {
           <h1 className="text-xl font-bold text-gray-800 mb-6">📁 Dashboard</h1>
           
           <nav className="space-y-1">
-            <MenuItem icon={Home} to={`/${encodedId}/home`} label="Home" />
-            <MenuItem icon={FileText} to={`/${encodedId}/status_pensanan_ina`} label="Document Contract" />
+            <MenuItem icon={Home} to={`/${encodedId}/home`} label="Home" onClick={handleLinkClick} />
+            <MenuItem icon={FileText} to={`/${encodedId}/status_pensanan_ina`} label="Document Contract" onClick={handleLinkClick} />
             
             <div className="menu-item has-submenu relative" ref={submenuRef}>
               <button
@@ -82,20 +89,22 @@ export default function Sidebar() {
                     to={`/${encodedId}/gabung_pdf`} 
                     label="Gabung PDF" 
                     isActive={location.pathname.includes('/gabung_pdf')}
+                    onClick={handleLinkClick}
                   />
                   <SubMenuItem 
                     icon={Download} 
                     to={`/${encodedId}/download_pdf`} 
                     label="Download PDF Selesai" 
                     isActive={location.pathname.includes('/download_pdf')}
+                    onClick={handleLinkClick}
                   />
                 </div>
               )}
             </div>
             
-            <MenuItem icon={Package} to={`/${encodedId}/perlengkapan`} label="Download Zip" />
-            <MenuItem icon={FileText} to={`/${encodedId}/document_batal`} label="PDF Batal" />
-            <MenuItem icon={LogIn} to="/" label="Logout" />
+            <MenuItem icon={Package} to={`/${encodedId}/perlengkapan`} label="Download Zip" onClick={handleLinkClick} />
+            <MenuItem icon={FileText} to={`/${encodedId}/document_batal`} label="PDF Batal" onClick={handleLinkClick} />
+            <MenuItem icon={LogIn} to="/" label="Logout" onClick={handleLinkClick} />
           </nav>
         </div>
       </div>
@@ -118,10 +127,11 @@ export default function Sidebar() {
   );
 }
 
-function MenuItem({ icon: Icon, to, label }) {
+function MenuItem({ icon: Icon, to, label, onClick }) {
   return (
     <Link
       to={to}
+      onClick={onClick}
       className="flex items-center space-x-2 px-3 py-2.5 font-medium text-gray-700 transition-colors rounded-lg hover:bg-gray-50"
     >
       <Icon className="w-4 h-4" />
@@ -130,10 +140,11 @@ function MenuItem({ icon: Icon, to, label }) {
   );
 }
 
-function SubMenuItem({ icon: Icon, to, label, isActive }) {
+function SubMenuItem({ icon: Icon, to, label, isActive, onClick }) {
   return (
     <Link
       to={to}
+      onClick={onClick}
       className={`flex items-center space-x-2 px-3 py-2 text-sm transition-colors rounded-lg ${
         isActive 
           ? 'bg-orange-100 text-orange-700 font-medium border-r-2 border-orange-500' 
