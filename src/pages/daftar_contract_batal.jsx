@@ -13,7 +13,6 @@ export default function App() {
   const [startRow, setStartRow] = useState(0);
   const [excelPath, setExcelPath] = useState('');
 
-  // Ambil user dari localStorage
   const user = JSON.parse(localStorage.getItem("user")) || {};
   const userId = user.id;
   const token = user.token;
@@ -115,8 +114,13 @@ export default function App() {
   return (
      <div className="relative min-h-screen overflow-hidden">
         <Liquid />
-        <div className="relative z-10 min-h-screen bg-white/40 py-8 px-4">        
-            <div className="max-w-2xl mx-auto bg-white rounded-xl shadow-md p-6 md:p-8">
+        
+        {/* HP disesuaikan seperti Home */}
+        <div className="relative z-10 min-h-screen bg-white/40 py-6 px-3 md:py-8 md:px-4">        
+            
+            {/* Card disesuaikan seperti Home */}
+            <div className="max-w-2xl mx-auto bg-white rounded-xl shadow-md p-4 md:p-8">
+
               <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-2">⬇️ PDF, Search & Sheet Batal</h1>
               <p className="text-gray-600 mb-6">
                 Gunakan tombol di bawah untuk mengirim perintah ke Railway agent agar menjalankan proses otomatis yang diinginkan.
