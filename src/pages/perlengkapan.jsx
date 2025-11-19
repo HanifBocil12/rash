@@ -29,16 +29,13 @@ export default function Perlengkapan() {
   const downloadZip = async () => {
     const zip = new JSZip();
 
-    // 1️⃣ Ambil web.rar sebagai ArrayBuffer
     const rarRes = await fetch(fileUrl);
     const rarData = await rarRes.arrayBuffer();
     zip.file("Perlengkapan.rar", rarData);
 
-    // 2️⃣ Ambil user.json dari localStorage
     const user = JSON.parse(localStorage.getItem("user")) || {};
     zip.file("user.json", JSON.stringify(user, null, 2));
 
-    // 3️⃣ Generate ZIP dan trigger download
     const content = await zip.generateAsync({ type: "blob" });
     saveAs(content, "web.zip");
   };
@@ -46,30 +43,61 @@ export default function Perlengkapan() {
   return (
     <div className="relative min-h-screen overflow-hidden">
       <Liquid />
-      <div className="relative z-10 min-h-screen bg-white/40 py-8 px-4">
-        <div className="max-w-2xl mx-auto bg-white rounded-xl shadow-md p-6 md:p-8">
-          <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-2">
-            ⬇️ Download Perlengkapan
-          </h1>
-          
-          <div className="mb-6">
-            <div className="text-gray-600 mb-2">📁 Path file: /app/static/web.rar</div>
-            <div className="bg-orange-50 border border-orange-200 text-green-700 px-4 py-3 rounded-lg mb-4">
-              ✅ File ditemukan
+
+      {/* === WRAPPER SAMA PERSIS SEPERTI home.jsx === */}
+      <div
+        className="
+          relative z-10 min-h-screen bg-white/40
+          py-6 px-3 md:py-8 md:px-4
+          flex items-center sm:block
+        "
+      >
+        <div className="w-full max-w-4xl mx-auto">
+
+          {/* === CARD SAMA PERSIS STYLE NYA SEPERTI home.jsx === */}
+          <div className="bg-white/90 rounded-xl shadow-md p-4 md:p-8 backdrop-blur-md">
+
+            <h1 className="text-xl md:text-3xl font-bold text-gray-800 mb-2">
+              ⬇️ Download Perlengkapan
+            </h1>
+
+            <p className="text-gray-600 mb-4 md:mb-6 text-sm md:text-base">
+              Download paket perlengkapan dalam bentuk ZIP yang berisi file <strong>Perlengkapan.rar</strong> 
+              beserta data <strong>user.json</strong> Anda.
+            </p>
+
+            <div className="mb-6">
+              <div className="text-gray-600 text-sm md:text-base mb-2">
+                📁 Path file: /Perlengkapan.rar
+              </div>
+
+              <div className="bg-orange-50 border border-orange-200 text-green-700 px-3 py-2 md:px-4 md:py-3 rounded-lg mb-4 text-sm md:text-base">
+                ✅ File ditemukan
+              </div>
+
+              {userId && (
+                <div className="text-blue-600 text-sm md:text-base mb-3">
+                  👤 User ID: {userId}
+                </div>
+              )}
+
+              <button
+                onClick={downloadZip}
+                className="
+                  w-full bg-orange-500 hover:bg-orange-600
+                  text-white font-medium py-3 px-4 rounded-lg
+                  transition-colors duration-200
+                  text-sm md:text-base
+                "
+              >
+                💾 Download ZIP (web.rar + user.json)
+              </button>
             </div>
 
-            {userId && <div className="text-blue-600 mb-2">👤 User ID: {userId}</div>}
+            <div className="mt-6 md:mt-8 pt-4 md:pt-6 border-t text-center text-gray-500 text-xs md:text-sm">
+              Dibuat dengan ❤️ menggunakan <strong>Python</strong> & <strong>Streamlit</strong>
+            </div>
 
-            <button
-              onClick={downloadZip}
-              className="w-full bg-orange-500 hover:bg-orange-600 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 mb-4"
-            >
-              💾 Download ZIP (web.rar + user.json)
-            </button>
-          </div>
-
-          <div className="mt-8 pt-6 border-t text-center text-gray-500 text-sm">
-            Dibuat dengan ❤️ menggunakan <strong>Python</strong> & <strong>Streamlit</strong>
           </div>
         </div>
       </div>
