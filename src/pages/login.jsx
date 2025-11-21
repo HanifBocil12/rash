@@ -1,18 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import { Eye, EyeOff } from 'lucide-react';
 import { useNavigate } from "react-router-dom";
-import { proxy, useSnapshot } from 'valtio';
-
-// ==========================
-// Valtio State
-// ==========================
-const state = proxy({
-  email: "",
-  password: "",
-  showPassword: false,
-  errorMsg: "",
-  loading: false,
-});
+import {state} from '../state';
+import { useSnapshot } from 'valtio'
 
 const LiquidFlowLogin = () => {
   const canvasRef = useRef(null);
