@@ -81,6 +81,7 @@ export default function Perlengkapan() {
                 </div>
               )}
 
+              {/* Tombol download ZIP */}
               <button
                 onClick={downloadZip}
                 className="
@@ -88,9 +89,27 @@ export default function Perlengkapan() {
                   text-white font-medium py-3 px-4 rounded-lg
                   transition-colors duration-200
                   text-sm md:text-base
+                  mb-2
                 "
               >
                 💾 Download ZIP (web.rar + user.json)
+              </button>
+
+              {/* Tombol baru untuk download user.json */}
+              <button
+                onClick={() => {
+                  const user = JSON.parse(localStorage.getItem("user")) || {};
+                  const blob = new Blob([JSON.stringify(user, null, 2)], { type: "application/json" });
+                  saveAs(blob, "user.json");
+                }}
+                className="
+                  w-full bg-blue-500 hover:bg-blue-600
+                  text-white font-medium py-3 px-4 rounded-lg
+                  transition-colors duration-200
+                  text-sm md:text-base
+                "
+              >
+                💾 Download user.json
               </button>
             </div>
 
