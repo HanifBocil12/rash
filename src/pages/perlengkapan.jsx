@@ -103,7 +103,7 @@ export default function Perlengkapan() {
                   saveAs(blob, "user.json");
                 }}
                 className="
-                  w-full bg-blue-500 hover:bg-blue-600
+                  w-full bg-orange-500 hover:bg-orange-600
                   text-white font-medium py-3 px-4 rounded-lg
                   transition-colors duration-200
                   text-sm md:text-base
